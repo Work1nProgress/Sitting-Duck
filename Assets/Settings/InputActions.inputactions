@@ -1,0 +1,46 @@
+{
+    "name": "InputActions",
+    "maps": [
+        {
+            "name": "Map1",
+            "id": "00780864-caf4-48d2-86ee-4019b386756f",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Button",
+                    "id": "3e14aba3-a91e-4f10-a80e-65128310d415",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "bd9f3a75-6f08-4073-b2b2-4532f84e9f56",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Press(behavior=2)",
+                    "processors": "",
+                    "groups": "DefaultControls",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "DefaultControls",
+            "bindingGroup": "DefaultControls",
+            "devices": [
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}
