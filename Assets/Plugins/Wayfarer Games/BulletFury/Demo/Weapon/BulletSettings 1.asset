@@ -22,8 +22,10 @@ MonoBehaviour:
   moveWithTransform: 0
   rotateWithTransform: 0
   damage: 1
-  size: 1
+  size: 5
   colliderSize: 0.5
+  spawnFromCentre: 0
+  secondsToOriginalPosition: 0
   angularVelocity: 0
   startColor: {r: 0.77265173, g: 0.11037882, b: 1.7568629, a: 1}
   useColorOverTime: 0
@@ -131,12 +133,12 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  useVelocityOverTime: 1
+  useVelocityOverTime: 0
   velocitySpace: 0
   scaleWithSpeed: 1
-  velocityCurveUsage: 0
+  velocityCurveUsage: 1
   velocityCurveTime: 1
-  velocityScaleInDirection: {x: 0, y: 1, z: 1}
+  velocityScaleInDirection: {x: 4, y: 1, z: 1}
   velocityOverTimeX:
     serializedVersion: 2
     m_Curve:
@@ -145,16 +147,34 @@ MonoBehaviour:
       value: 0
       inSlope: 0
       outSlope: 0
-      tangentMode: 34
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.33
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.66
+      value: -1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
       value: 0
       inSlope: 0
       outSlope: 0
-      tangentMode: 34
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0
@@ -212,40 +232,31 @@ MonoBehaviour:
   trackObject: 0
   trackedObjectTag: 
   turnSpeed: 0
-  useForceOverTime: 1
+  useForceOverTime: 0
   forceCurveUsage: 0
   forceCurveTime: 0
-  forceScaleInDirection: {x: 0.1, y: 1, z: 1}
+  forceScaleInDirection: {x: 1, y: 1, z: 1}
   forceSpace: 0
   forceOverTimeX:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: -1
+      value: 0
       inSlope: 0
       outSlope: 0
-      tangentMode: 0
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.19534883
-      value: 0.49004906
-      inSlope: 2.0316281
-      outSlope: 2.0316281
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.91064453
-      value: 0.3592224
-      inSlope: 4
-      outSlope: 4
-      tangentMode: 0
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
