@@ -400,7 +400,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 22.5
+  orthographic size: 11.25
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -444,7 +444,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ComponentVersion: 1
-  m_AssetsPPU: 16
+  m_AssetsPPU: 32
   m_RefResolutionX: 1280
   m_RefResolutionY: 720
   m_CropFrame: 0
@@ -1025,7 +1025,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 024a417e3af4b4c6e8f843f47c78cdb3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e21e5f7aecc6f41259dfbfd10c432570, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1117,7 +1117,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 0
 --- !u!114 &1916360760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1130,8 +1130,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81e7fbb590ea34b86b88b80891add927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxForce: 4000
-  ForceMultiplier: 10
+  MaxAcceleration: 1
+  AccelerationMultiplier: 1
+  MaxSteering: 1
+  SteeringMultiplier: 1
+  Damping: 1
 --- !u!1 &1948885585
 GameObject:
   m_ObjectHideFlags: 0
