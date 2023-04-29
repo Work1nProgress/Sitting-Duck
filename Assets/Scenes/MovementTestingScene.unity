@@ -1130,11 +1130,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81e7fbb590ea34b86b88b80891add927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxAcceleration: 1
+  MaxAcceleration: 10
   AccelerationMultiplier: 1
-  MaxSteering: 1
-  SteeringMultiplier: 1
   Damping: 1
+  MaxSteering: 19.4
 --- !u!1 &1948885585
 GameObject:
   m_ObjectHideFlags: 0
