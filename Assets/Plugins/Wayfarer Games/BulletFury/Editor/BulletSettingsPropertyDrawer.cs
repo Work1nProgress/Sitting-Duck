@@ -1,6 +1,7 @@
 using System;
 using BulletFury.Data;
 using UnityEditor;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 namespace BulletFury.Editor
@@ -86,6 +87,10 @@ namespace BulletFury.Editor
                 
             if (serializedObject.FindProperty("waitToStart").boolValue)
                 BulletFuryEditorUtils.AddRelativeProperty(ref serializedObject, "timeToPlayWhileWaiting", height, ref currentPos, ref numFields);
+            
+            BulletFuryEditorUtils.AddRelativeProperty(ref serializedObject, "spawnFromCentre", height, ref currentPos, ref numFields);
+            if (serializedObject.FindProperty("spawnFromCentre").boolValue)
+                BulletFuryEditorUtils.AddRelativeProperty(ref serializedObject, "secondsToOriginalPosition", height, ref currentPos, ref numFields);
 
             BulletFuryEditorUtils.AddRelativeProperty(ref serializedObject, "lifetime", height, ref currentPos, ref numFields);
 

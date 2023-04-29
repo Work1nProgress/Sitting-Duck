@@ -1,5 +1,5 @@
 using System;
-using BulletFury.Utils;
+using WayfarerGames.Common;
 using UnityEngine;
 
 namespace BulletFury.Data
@@ -161,6 +161,22 @@ namespace BulletFury.Data
         #if UNITY_EDITOR
         [SerializeField] private bool isExpanded;
         #endif
+
+        public void ResetFields()
+        {
+            _runtimeFireRate = null;
+            _runtimeBurstCount = null;
+            _runtimeBurstDelay = null;
+            _runtimeSpawnDir = null;
+            _runtimeDirectionArc = null;
+            _runtimeRandomise = null;
+            _runtimeOnEdge = null;
+            _runtimeNumSides = null;
+            _runtimeNumPerSide = null;
+            _runtimeRadius = null;
+            _runtimeArc = null;
+        }
+        
         /// <summary>
         /// Get a point based on the spawning settings
         /// </summary>

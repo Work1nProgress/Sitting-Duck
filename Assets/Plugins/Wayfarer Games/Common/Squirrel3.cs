@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Mathematics;
 using UnityEngine;
 
-namespace BulletFury.Utils
+namespace WayfarerGames.Common
 {
     public class Squirrel3
     {
@@ -15,6 +14,10 @@ namespace BulletFury.Utils
     
         private int _n = 0;
         private int _seed;
+
+        private static Squirrel3 _instance;
+
+        public static Squirrel3 Instance => _instance ??= new Squirrel3();
 
         public Squirrel3()
         {
@@ -49,7 +52,7 @@ namespace BulletFury.Utils
         
         private static double Lerp(double a, double b, double t)
         {
-            return a + (b - a) * math.clamp(t, 0d, 1d);
+            return a + (b - a) * Math.Clamp(t, 0d, 1d);
         }
         
         public int Range(int min, int max)
@@ -114,6 +117,6 @@ namespace BulletFury.Utils
 
     public interface IWeightedItem
     {
-        float Weight { get; }
+        public float Weight { get; }
     }
 }

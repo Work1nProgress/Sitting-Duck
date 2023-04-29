@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace BulletFury.Data
@@ -8,7 +9,7 @@ namespace BulletFury.Data
     /// Doing this means it'll show up as an event in the inspector
     /// </summary>
     [Serializable]
-    public class BulletCollisionEvent : UnityEvent<BulletContainer, BulletCollider>
+    public class BulletCollisionEvent : UnityEvent<BulletContainer, BulletCollider, GameObject>
     {}
 }
 

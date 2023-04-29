@@ -41,5 +41,8 @@ namespace BulletFury.Data
         public Quaternion Direction;
         public byte BouncedThisFrame;
         public float BounceTime;
+        public byte MovingToOrigin;
+        public float3 MoveToOriginVelocity;
+        public float3 OriginPosition;
     }
 }

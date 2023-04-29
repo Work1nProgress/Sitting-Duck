@@ -111,6 +111,14 @@ namespace BulletFury.Data
         
         [SerializeField, Tooltip("how big, as a percentage of size, the bullet's collider should be.")] 
         private float colliderSize = 1;
+        
+        [SerializeField, Tooltip("Should the bullets be forced to spawn from the centre?")] 
+        private bool spawnFromCentre = false;
+        public bool SpawnFromCentre => spawnFromCentre;
+
+        [SerializeField, Tooltip("How long should it take for the bullets to move to their original position?")] 
+        private float secondsToOriginalPosition;
+        public float SecondsToOriginalPosition => secondsToOriginalPosition;
 
         [NonSerialized] private float? _runtimeSize;
         public float Size
@@ -236,7 +244,21 @@ namespace BulletFury.Data
 
         private Dictionary<int, Transform> _trackedObjects = new Dictionary<int, Transform>();
 
-        
+
+        public void ResetFields()
+        {
+            // reset all _runtime fields to their non-runtime values
+            _runtimeMesh = mesh;
+            _runtimeMaterial = material;
+            _runtimeLifetime = lifetime;
+            _runtimeDamage = damage;
+            _runtimeSize = size;
+            _runtimeSpeed = speed;
+            _runtimeAngularVelocity = angularVelocity;
+            _runtimeColliderSize = colliderSize;
+            _runtimeStartColor = startColor;
+        }
+
         private void OnValidate()
         {
             if (Application.isPlaying)
@@ -271,7 +293,7 @@ namespace BulletFury.Data
         /// </summary>
         /// <param name="position">the starting value, as a percentage of the number of bullets spawned this cycle</param>
         /// <param name="bullet">a reference to the current bullet</param>
-        public void Init(ref BulletContainer bullet)
+        public void Init(Vector3 originPos, ref BulletContainer bullet)
         {
             bullet.Lifetime = Lifetime;
             bullet.AngularVelocity = AngularVelocity;
@@ -295,6 +317,18 @@ namespace BulletFury.Data
             }
             bullet.TrackObject = trackObject ? (byte) 1 : (byte) 0;
             bullet.Damage = Damage;
+
+            if (spawnFromCentre)
+            {
+                bullet.OriginPosition = bullet.Position;
+                bullet.Position = originPos;
+                bullet.MovingToOrigin = 1;
+                // set the bullet's MoveToOriginVelocity to the velocity needed to move the bullet to its OriginPosition over secondsToOriginalPosition seconds
+                bullet.MoveToOriginVelocity = (bullet.OriginPosition - bullet.Position) / secondsToOriginalPosition;
+                Debug.Log(bullet.MoveToOriginVelocity);
+            }
+            else
+                bullet.MovingToOrigin = 0;
         }
 
 
