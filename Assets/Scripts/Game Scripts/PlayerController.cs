@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D body;
 
     [SerializeField]
-    float MaxAcceleration, AccelerationMultiplier, Damping;
+    float MaxAcceleration, AccelerationMultiplier;
 
     [SerializeField]
     [Range(0,50f)]
