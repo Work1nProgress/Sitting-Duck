@@ -8,8 +8,14 @@ public class ControllerGame : GenericSingleton<ControllerGame>
 {
 
 
+    PlayerController playerController;
+
+    private void Start()
+    {
+        var player = PoolManager.Spawn<PlayerController>("Player", null);
+      
+    }
 
 
-    
 
 }
