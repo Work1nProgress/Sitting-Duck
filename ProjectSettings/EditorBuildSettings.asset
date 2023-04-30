@@ -4,6 +4,9 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/UrbiEtUrbiTestScene.unity
+    guid: eedda9e6ad715422fade0a3a71ff1be5
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 635c9d661b71a4afb8a897c8a9e7310f, type: 2}

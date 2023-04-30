@@ -17,7 +17,7 @@ public class ControllerInput : GenericSingleton<ControllerInput>
         var isUp = value.Get<float>() == 1;
         if (isUp)
         {
-            if (Mouse.current.position.value.y >= 648)
+            if (Mouse.current.position.value.y >= Screen.height -40f)
             {
                 startWasInDeadZone = true;
             }
