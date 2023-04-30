@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12733836, g: 0.13418841, b: 0.12118524, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311915, g: 0.3807396, b: 0.35872662, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -477,7 +477,6 @@ GameObject:
   m_Component:
   - component: {fileID: 224946842}
   - component: {fileID: 224946841}
-  - component: {fileID: 224946843}
   m_Layer: 0
   m_Name: Bullets
   m_TagString: Untagged
@@ -497,7 +496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4b3b583b5c6d4f4cab32fe763227ce5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderCamera: {fileID: 129305909}
+  renderCamera: {fileID: 0}
   manualFire: 0
   bulletSettings: {fileID: 11400000, guid: bbc7a91ff4b1144d2804517b02d6ec3e, type: 2}
   spawnSettings: {fileID: 11400000, guid: 77bf8fda05b9b4d2994f71ffce6eb58b, type: 2}
@@ -546,23 +545,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &224946843
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 224946839}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ddd9eebccd1f436fa435a67eb8d4e05, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  manager: {fileID: 224946841}
-  newSize: 0.5
-  newColor: {r: 1, g: 1, b: 1, a: 1}
-  newArc: 90
-  waitTime: 5
 --- !u!1 &330542881
 GameObject:
   m_ObjectHideFlags: 0

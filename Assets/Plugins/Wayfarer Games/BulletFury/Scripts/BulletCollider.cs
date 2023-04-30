@@ -10,6 +10,7 @@ using UnityEngine;
 namespace BulletFury
 {
     public enum ColliderShape {Sphere, AABB, OBB, Triangle}
+
     /// <summary>
     /// Tell an object to collide with bullets
     /// </summary>
@@ -27,6 +28,7 @@ namespace BulletFury
 
         // the bounding box that describes this collider
         [SerializeField] private Vector3 size = Vector3.one;
+        public Vector3 Size => size;
 
         [SerializeField] private bool destroyBullet = true;
         // the offset of the collider
@@ -34,8 +36,11 @@ namespace BulletFury
         
         // the three points that make up the triangle
         [SerializeField] private Vector3 pointA;
+        public Vector3 PointA => pointA;
         [SerializeField] private Vector3 pointB;
+        public Vector3 PointB => pointB;
         [SerializeField] private Vector3 pointC;
+        public Vector3 PointC => pointC;
         
         // Unity Event that fires when a bullet collides with this collider, can be set in the inspector like a button 
         // ReSharper disable once InconsistentNaming
@@ -58,14 +63,19 @@ namespace BulletFury
         private JobHandle _handle;
 
         private Vector3 _triangleCentroid, _sideANorm, _sideBNorm, _sideCNorm;
+        public Vector3 TriangleCentroid => _triangleCentroid;
+        public Vector3 SideANorm => _sideANorm;
+        public Vector3 SideBNorm => _sideBNorm;
+        public Vector3 SideCNorm => _sideCNorm;
+        
 
         // an array of bullets
         private BulletContainer[] _bullets;
-        private Bounds _bounds;
-
         private static List<BulletCollider> _colliders;
 
         public ColliderShape Shape => shape;
+        public float Radius => radius;
+        public Vector3 Center => center;
 
         private void Awake()
         {
@@ -102,9 +112,6 @@ namespace BulletFury
                 
                 if (Vector3.Dot(_sideCNorm, midpointC - _triangleCentroid) < 0)
                     _sideCNorm = -_sideCNorm;
-            } else if (shape == ColliderShape.AABB || shape == ColliderShape.OBB)
-            {
-                _bounds = new Bounds(transform.position + center, Vector3.Scale(transform.localScale, size) /2f);
             }
         }
 
@@ -285,7 +292,7 @@ namespace BulletFury
                             manager.BounceBullet(i, normal, bounciness, lifetimeLoss);
                         }
 
-                        OnCollide?.Invoke(_bullets[i], this);
+                        OnCollide?.Invoke(_bullets[i], this, manager.gameObject);
                     }
                 }
             }
@@ -454,7 +461,7 @@ namespace BulletFury
             }
         }
 
-        private Vector3 LocalPointToWorld(Vector3 point)
+        public Vector3 LocalPointToWorld(Vector3 point)
         {
             return transform.position + transform.rotation * Vector3.Scale(point, transform.localScale);
         }

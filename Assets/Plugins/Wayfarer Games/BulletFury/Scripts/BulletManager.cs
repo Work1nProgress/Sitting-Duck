@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using BulletFury.Data;
-using BulletFury.Utils;
+using WayfarerGames.Common;
 using Unity.Collections;
 using Unity.Jobs;
 using UnityEngine;
@@ -97,14 +97,27 @@ namespace BulletFury
         /// Unity function, happens when the object is first loaded.
         /// Initialise the data.
         /// </summary>
-        private void Awake()
+        private void Start()
         {
             if (!Application.isPlaying) return;
+            spawnSettings.ResetFields();
+            bulletSettings.ResetFields();
             if (_managers == null)
                 _managers = new List<BulletManager>();
             _managers.Add(this);
             
+            if (renderCamera == null)
+                renderCamera = Camera.main;
+            
             _bullets = new BulletContainer[BULLETS_MAX];
+            for (int i = 0; i < BULLETS_MAX; i++)
+            {
+                _bullets[i] = new BulletContainer
+                {
+                    Id = i,
+                    Dead = 1
+                };
+            }
             _matrices = new List<Matrix4x4>(BULLETS_MAX);
             _colors = new Vector4[BULLETS_MAX];
             _materialPropertyBlock = new MaterialPropertyBlock();
@@ -199,7 +212,10 @@ namespace BulletFury
         /// <param name="cam">The camera being used to render</param>
         private void Render(ScriptableRenderContext context, Camera cam)
         {
-            if (!gameObject.activeInHierarchy || !_enabled) return;
+            if (renderCamera == null)
+                renderCamera = Camera.main;
+
+            if (!gameObject.activeInHierarchy || !_enabled || cam != renderCamera) return;
             
             // create a new buffer - this will contain the render data
             var buffer = new CommandBuffer();
@@ -253,7 +269,7 @@ namespace BulletFury
             
             // draw all the meshes
             // n.b. this is why we can only have 1023 bullets per spawner
-            Graphics.DrawMeshInstanced(bulletSettings.Mesh, 0, bulletSettings.Material, _matrices, _materialPropertyBlock, ShadowCastingMode.Off, false, gameObject.layer, renderCamera);
+            Graphics.DrawMeshInstanced(bulletSettings.Mesh, 0, bulletSettings.Material, _matrices, _materialPropertyBlock, ShadowCastingMode.Off, false, gameObject.layer, cam);
             
             maxActiveBullets = Mathf.Max(maxActiveBullets, currentActiveBullets);
         }
@@ -262,7 +278,7 @@ namespace BulletFury
         /// Unity function, called every frame
         /// Update the values of the bullets that can't be done in a Job, and run the Job
         /// </summary>
-        private void Update()
+        private void FixedUpdate()
         {
             if (!Application.isPlaying) return;
             var deltaTime = Time.deltaTime;
@@ -291,13 +307,7 @@ namespace BulletFury
             
             if (!manualFire)
                 Spawn(transform.position, Plane == BulletPlane.XY ? transform.up : transform.forward);
-        }
-
-        private void LateUpdate()
-        {
-            if (!Application.isPlaying) return;
-            if (_bullets == null || !gameObject.activeSelf || !_bulletJob.Out.IsCreated )
-                return;
+            
             // make sure the job is finished this frame
             _handle.Complete();
             // grab the results
@@ -430,7 +440,7 @@ namespace BulletFury
                     };
                     
                     // initialise the bullet
-                    bulletSettings.Init(ref newContainer);
+                    bulletSettings.Init(obj.position, ref newContainer);
                     
                     var j = 0;
                     // find a bullet that isn't alive and replace it with this one
@@ -509,7 +519,7 @@ namespace BulletFury
                     };
                     
                     // initialise the bullet
-                    bulletSettings.Init(ref newContainer);
+                    bulletSettings.Init(position, ref newContainer);
                     
                     var j = 0;
                     // find a bullet that isn't alive and replace it with this one
@@ -688,11 +698,11 @@ namespace BulletFury
                         Dead = 0,
                         Position = positions[i],
                         Rotation = rotations[i],
-                        Id = Guid.NewGuid().GetHashCode()
+                        Id = Guid.NewGuid().GetHashCode(),
                     };
                     
                     // initialise the bullet
-                    bulletSettings.Init(ref newContainer);
+                    bulletSettings.Init(positions[i], ref newContainer);
                     
                     var j = 0;
                     // find a bullet that isn't alive and replace it with this one

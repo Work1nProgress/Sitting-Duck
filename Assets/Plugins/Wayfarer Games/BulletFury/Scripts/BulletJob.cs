@@ -25,6 +25,17 @@ namespace BulletFury
             if (container.Dead == 1 || container.Waiting == 1 && container.CurrentLifeSeconds > container.TimeToWait)
                 return;
 
+            if (container.MovingToOrigin == 1)
+            {
+                container.Position += container.MoveToOriginVelocity * DeltaTime;
+                if(math.distancesq(container.Position, container.OriginPosition) < 0.1f)
+                    container.MovingToOrigin = 0;
+                Out[index] = container;
+                
+                if (container.MovingToOrigin == 1)
+                    return;
+            }
+
             container.CurrentLifeSeconds += DeltaTime;
             if (container.CurrentLifeSeconds > container.Lifetime)
             {
