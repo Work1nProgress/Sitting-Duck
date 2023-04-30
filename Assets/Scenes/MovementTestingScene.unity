@@ -812,10 +812,6 @@ GameObject:
   - component: {fileID: 1077459846}
   - component: {fileID: 1077459848}
   - component: {fileID: 1077459843}
-<<<<<<< Updated upstream
-=======
-  - component: {fileID: 1077459848}
->>>>>>> Stashed changes
   - component: {fileID: 1077459847}
   m_Layer: 0
   m_Name: PatheticWeakling
