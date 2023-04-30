@@ -810,9 +810,11 @@ GameObject:
   - component: {fileID: 1077459845}
   - component: {fileID: 1077459844}
   - component: {fileID: 1077459846}
+  - component: {fileID: 1077459848}
   - component: {fileID: 1077459843}
+  - component: {fileID: 1077459847}
   m_Layer: 0
-  m_Name: Triangle
+  m_Name: PatheticWeakling
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -832,7 +834,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   renderCamera: {fileID: 613330158}
   manualFire: 1
-  bulletSettings: {fileID: 11400000, guid: 1d7348cb8904fe148b5750c040c7dc17, type: 2}
+  bulletSettings: {fileID: 11400000, guid: 8d87e764fceccf644949bc248b485ead, type: 2}
   spawnSettings: {fileID: 11400000, guid: c8317bce7071d124d8f888dde53fd37a, type: 2}
   currentActiveBullets: 0
   maxActiveBullets: 0
@@ -929,6 +931,39 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e74ab28cab7a9194eb4257b67ce111f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!50 &1077459847
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1077459842}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &1077459848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1077459842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd4d564460316eb4bbc95d1e0d03c4a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1223330303

@@ -5,7 +5,9 @@ using BulletFury;
 
 public class BulletSpawner : MonoBehaviour
 {
-    BulletManager _bManager;
+    private BulletManager _bManager;
+    private bool _firing = true;
+
     void Start()
     {
         _bManager = GetComponent<BulletManager>();
@@ -15,6 +17,17 @@ public class BulletSpawner : MonoBehaviour
     
     void Update()
     {
+        if(_firing)
         _bManager.Spawn(transform.position, transform.up);
+    }
+
+    public void BeginFiring()
+    {
+        _firing = true;
+    }
+
+    public void StopFiring()
+    {
+        _firing = false;
     }
 }
