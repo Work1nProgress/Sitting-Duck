@@ -10,8 +10,33 @@ public class ControllerInput : GenericSingleton<ControllerInput>
     public UnityEvent<bool> OnMouseClick;
 
 
+    bool startWasInDeadZone;
+
     void OnMove(InputValue value)
     {
-        OnMouseClick.Invoke(value.Get<float>() == 1);
+        var isUp = value.Get<float>() == 1;
+        if (isUp)
+        {
+            if (Mouse.current.position.value.y >= 648)
+            {
+                startWasInDeadZone = true;
+            }
+            else
+            {
+                OnMouseClick.Invoke(isUp);
+            }
+        }
+        else
+        {
+            if (!startWasInDeadZone)
+            {
+                OnMouseClick.Invoke(isUp);
+            }
+            startWasInDeadZone = false;
+        }
+       
+        
     }
 }
+
+   
