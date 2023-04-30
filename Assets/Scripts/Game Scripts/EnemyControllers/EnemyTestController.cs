@@ -21,35 +21,36 @@ public class EnemyTestController : EnemyController
         _state5 = new ChargingEnemyState();
 
         EnemyState.EnemyStateData stateData = new EnemyState.EnemyStateData(
-            transform,
+            null,
             _rigidbody,
             _bulletSpawner,
             new EnemyState[1],
             0,
+            false,
             "");
 
         stateData.transitionStates[0] = _state2;
-        stateData.TimeInState = 2f;
+        stateData.timeInState = 2f;
         stateData.stateName = "I'm hungry!";
         _state1.InitializeState(stateData);
 
         stateData.transitionStates[0] = _state3;
-        stateData.TimeInState = 2f;
+        stateData.timeInState = 2f;
         stateData.stateName = "I'm pissed off!";
         _state2.InitializeState(stateData);
 
         stateData.transitionStates[0] = _state4;
-        stateData.TimeInState = 2f;
+        stateData.timeInState = 2f;
         stateData.stateName = "I'm hungry!";
         _state3.InitializeState(stateData);
 
         stateData.transitionStates[0] = _state5;
-        stateData.TimeInState = 4f;
+        stateData.timeInState = 4f;
         stateData.stateName = "I'm pissed off!";
         _state4.InitializeState(stateData);
 
         stateData.transitionStates[0] = _state1;
-        stateData.TimeInState = 7f;
+        stateData.timeInState = 7f;
         stateData.stateName = "I'm worried that I'm going to die alone!";
         _state5.InitializeState(stateData);
 
