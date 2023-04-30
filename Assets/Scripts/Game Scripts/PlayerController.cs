@@ -6,16 +6,23 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
 
-    Vector2 StartPos;
+    Vector2 StartPos, InputDirection;
 
-    Rigidbody2D rb2d;
+    Rigidbody2D body;
 
     [SerializeField]
-    float MaxForce, ForceMultiplier;
+    float MaxAcceleration, AccelerationMultiplier;
 
+    [SerializeField]
+    [Range(0,50f)]
+    [Tooltip("Values larger than 50 are a no no")]
+    float MaxSteering;
+
+    float angle;
+    int steerDirection = 0;
     private void Awake()
     {
-        rb2d = GetComponent<Rigidbody2D>();
+        body = GetComponent<Rigidbody2D>();
         ControllerInput.Instance.OnMouseClick.AddListener(OnMouseClick);
     }
    
@@ -25,6 +32,8 @@ public class PlayerController : MonoBehaviour
         ControllerInput.Instance.OnMouseClick.RemoveListener(OnMouseClick);
     }
 
+
+
     void OnMouseClick(bool value)
     {
         if (value)
@@ -33,13 +42,28 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            InputDirection = -(StartPos - Mouse.current.position.value).normalized * Mathf.Min((StartPos - Mouse.current.position.value).magnitude * AccelerationMultiplier, MaxAcceleration);
 
-            rb2d.AddForce(-(StartPos - Mouse.current.position.value).normalized * Mathf.Min((StartPos - Mouse.current.position.value).magnitude* ForceMultiplier, MaxForce));
+            steerDirection = -(int)Mathf.Sign(Vector2.Dot(body.transform.right, InputDirection));
+          
+            angle = Vector2.Angle(body.transform.up, InputDirection);
+          
+        
+            body.velocity = Mathf.Min(InputDirection.magnitude, MaxAcceleration) * body.transform.up.normalized;
         }
 
     }
 
-   
+    private void FixedUpdate()
+    {
 
-    
+        var change = steerDirection * angle * Time.fixedDeltaTime * MaxSteering;
+        angle -= Mathf.Abs(change);
+        body.MoveRotation(Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z + change));
+        body.velocity = body.velocity.magnitude * body.transform.up; 
+    }
+
+
+
+
 }
