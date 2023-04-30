@@ -15,9 +15,19 @@ public abstract class EnemyState
     public event StateChangeSignature OnRequestStateChange;
     protected void InvokeStateChangeRequest(EnemyState newState) { OnRequestStateChange.Invoke(newState); }
 
-    public virtual void InitializeState() { _stateTimer.OnTimerExpired += TimeExpired; }
+    public virtual void InitializeState(EnemyStateData data)
+    {
+        _target = data.target;
+        _rigidBody = data.rigidBody;
+        _bulletSpawner = data.bulletSpawner;
+        _transitionStates = (EnemyState[]) data.transitionStates.Clone();
+        _stateTimer = new CountdownTimer(data.TimeInState, false, false);
+        _stateName = data.stateName;
 
-    public virtual void EnterState() { _stateTimer.Reset(); }
+        _stateTimer.OnTimerExpired += TimeExpired;
+    }
+
+    public virtual void EnterState() { _stateTimer.Reset(); _stateTimer.Resume(); }
 
     public virtual void UpdateState() { _stateTimer.Update(Time.deltaTime); }
 
@@ -28,8 +38,6 @@ public abstract class EnemyState
     public virtual void TimeExpired() { }
 
     public virtual void DecomissionState() { _stateTimer.OnTimerExpired -= TimeExpired; }
-
-    
 
     public struct EnemyStateData
     {
@@ -51,7 +59,7 @@ public abstract class EnemyState
             this.target = target;
             this.rigidBody = rigidBody;
             this.bulletSpawner = bulletSpawner;
-            this.transitionStates = transitionStates;
+            this.transitionStates = (EnemyState[]) transitionStates.Clone();
             this.TimeInState = TimeInState;
             this.stateName = stateName;
         }
@@ -60,24 +68,14 @@ public abstract class EnemyState
 
 public class ChargingEnemyState : EnemyState
 {
-    public ChargingEnemyState(EnemyStateData data)
-    {
-        _target = data.target;
-        _rigidBody = data.rigidBody;
-        _bulletSpawner = data.bulletSpawner;
-        _transitionStates = data.transitionStates;
-        _stateTimer = new CountdownTimer(data.TimeInState, false, false);
-        _stateName = data.stateName;
-    }
-
     public override void EnterState()
     {
         base.EnterState();
+        Debug.Log("Now " + _stateName);
     }
 
     public override void TimeExpired()
     {
-        Debug.Log("Change state from: " + _stateName);
         InvokeStateChangeRequest(_transitionStates[0]);
     }
 }
