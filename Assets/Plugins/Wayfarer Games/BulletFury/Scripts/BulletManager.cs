@@ -123,6 +123,14 @@ namespace BulletFury
             _materialPropertyBlock = new MaterialPropertyBlock();
             _previousPos = transform.position;
             _previousRot = transform.eulerAngles;
+            for (int i = 0; i < BULLETS_MAX; i++)
+            {
+                _bullets[i] = new BulletContainer
+                {
+                    Id = i,
+                    Dead = 1
+                };
+            }
             if (randomiseSeedOnAwake)
                 seed = Guid.NewGuid().ToString();
 
