@@ -16,6 +16,7 @@ public class ArrowMovementView : MonoBehaviour
     bool onMoveStatePrevious;
 
     Vector3 startPos;
+    Vector3 lastPos;
 
 
     private void Awake()
@@ -51,15 +52,30 @@ public class ArrowMovementView : MonoBehaviour
 
         if (onMoveState)
         {
+
             RectTransformUtility.ScreenPointToLocalPointInRectangle(transform.parent as RectTransform, Mouse.current.position.value, null, out var point);
 
             var currentPos = transform.parent.InverseTransformVector(point);
-            ImageArrowLine.rectTransform.sizeDelta = new Vector2(Vector3.Distance(currentPos, startPos), ImageArrowLine.rectTransform.sizeDelta.y );
+            var distance = Vector3.Distance(currentPos, startPos);
+            if (Vector3.Angle(currentPos - startPos, ControllerGame.Instance.Player.transform.up) > ControllerGame.Instance.DeadZone)
+            {
+                var right = Mathf.Sign(Vector3.Dot(currentPos - startPos, ControllerGame.Instance.Player.transform.right));
+                var lastRecalculated = right == -1 ? 2 * lastPos - startPos : lastPos;
+                currentPos = startPos + (lastRecalculated - startPos).normalized * distance;
+            }
+            else
+            {
+                lastPos = currentPos;
+            }
+            ImageArrowLine.rectTransform.sizeDelta = new Vector2(distance, ImageArrowLine.rectTransform.sizeDelta.y );
             ImageArrowLine.transform.localPosition = Vector3.Lerp(startPos, currentPos, 0.5f);
             var diff = currentPos - startPos;
             ImageArrowLine.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(diff.y, diff.x)*(180f/Mathf.PI));
             ImageArrowHead.transform.localPosition = currentPos - diff.normalized *( ImageArrowHead.sprite.textureRect.height/2+2);
             ImageArrowHead.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(diff.y, diff.x) * (180f / Mathf.PI) -90);
+        
+
+
         }
     }
 

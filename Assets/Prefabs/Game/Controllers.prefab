@@ -61,7 +61,7 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: DefaultControls
+  m_DefaultControlScheme: 
   m_DefaultActionMap: Map1
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
