@@ -12,7 +12,10 @@ public class GenericSingleton<T> : MonoBehaviour where T :  GenericSingleton<T>
         if(_instance == null)
         {
             _instance = this as T;
-            DontDestroyOnLoad(this);
+            if (transform.parent == null)
+            {
+                DontDestroyOnLoad(this);
+            }
             return;
         }
         Destroy(gameObject);

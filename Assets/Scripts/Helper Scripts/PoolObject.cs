@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class PoolObject : MonoBehaviour
 {
+
+    [HideInInspector]
+    public string key;
+
+
+    
+
     public virtual void Reuse()
     {
         this.gameObject.SetActive(true);
