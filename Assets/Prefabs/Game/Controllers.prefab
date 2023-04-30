@@ -77,6 +77,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 067bf704aee7a49e39ec8a236d614f93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RotateTowardsArrow: 0
+  AllowReverse: 0
+  ReverseMinAngle: 91
+  DeadZone: 0
+  LookSpeed: 1
 --- !u!114 &3654430990528085221
 MonoBehaviour:
   m_ObjectHideFlags: 0
