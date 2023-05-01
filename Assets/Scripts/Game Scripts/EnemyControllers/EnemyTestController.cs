@@ -10,7 +10,7 @@ public class EnemyTestController : EnemyController
     EnemyState _state4;
     EnemyState _state5;
 
-    protected override void Start()
+    protected override void Awake()
     {
         SetComponentReferences();
 
@@ -56,6 +56,6 @@ public class EnemyTestController : EnemyController
 
         _activeState = _state1;
 
-        base.Start();
+        base.Awake();
     }
 }

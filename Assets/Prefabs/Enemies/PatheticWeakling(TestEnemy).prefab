@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 973201739699793394}
   - component: {fileID: 973201739699793404}
   - component: {fileID: 973201739699793399}
+  - component: {fileID: 4357240285149041425}
   - component: {fileID: 973201739699793395}
   m_Layer: 0
   m_Name: PatheticWeakling(TestEnemy)
@@ -112,7 +113,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9c2eed2c43e2fd48a529beaba948faa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 100
   _walkSpeed: 0.45
   _attackPlayerRadius: 3
   _attackDamage: 1
@@ -151,6 +151,25 @@ MonoBehaviour:
   OnWeaponFired:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4357240285149041425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973201739699793398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc756a8294a7333488f96293e7f89239, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _entityType: 1
+  _maxHealth: 10
+  _experience: 0
+  _startLevel: 1
+  _maxLevel: 10
+  _tags:
+  - test enemy
 --- !u!50 &973201739699793395
 Rigidbody2D:
   serializedVersion: 4

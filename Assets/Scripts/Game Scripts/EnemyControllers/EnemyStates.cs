@@ -169,7 +169,7 @@ public class ApproachPlayerEnemyState : EnemyState
 public class MeleeAttackEnemyState : EnemyState
 {
     private float _windUpTime;
-    private float _attackBoxLength = 5;
+    private float _attackBoxLength = 4;
     private float _attackBoxwidth = 1;
     private int _damage;
 
@@ -210,7 +210,7 @@ public class MeleeAttackEnemyState : EnemyState
     private void BeginAttack()
     {
         ResetAttackTimers();
-        Debug.DrawLine(_rigidBody.position, (Vector3)_rigidBody.position + (_attackBoxLength / 2 * _rigidBody.transform.up), Color.yellow, _windUpTime);
+        Debug.DrawLine(_rigidBody.position, (Vector3)_rigidBody.position + (_attackBoxLength * _rigidBody.transform.up), Color.yellow, _windUpTime);
     }
 
     private void AttackHit()
