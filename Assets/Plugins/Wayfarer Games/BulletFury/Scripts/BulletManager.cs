@@ -183,6 +183,10 @@ namespace BulletFury
 
         public void CancelBullets(bool broadcast)
         {
+            if (_bullets == null)
+            {
+                return;
+            }
             for (var i = 0; i < _bullets.Length; i++)
             {
                 var bullet = _bullets[i];
@@ -281,6 +285,10 @@ namespace BulletFury
         private void FixedUpdate()
         {
             if (!Application.isPlaying) return;
+            if (_bullets == null)
+            {
+                return;
+            }
             var deltaTime = Time.deltaTime;
             // update the bullets according to the settings
             for (int i = _bullets.Length - 1; i >= 0; --i)
