@@ -22,6 +22,9 @@ public class DroneBase : PoolObject
 
     BulletSpawner bulletSpawner;
 
+    [SerializeField]
+    Animator Animator;
+
 
     public void Init(Vector3 offset, Quaternion rotationOffset)
     {
@@ -30,6 +33,7 @@ public class DroneBase : PoolObject
         isInitialized = true;
         bulletSpawner = GetComponent<BulletSpawner>();
         bulletSpawner?.BeginFiring();
+        Animator.SetFloat("Offset", Random.value);
         //Time.timeScale = 0.1f;
     }
 
@@ -48,6 +52,11 @@ public class DroneBase : PoolObject
         }
 
 
+    }
+
+    public void OnFire()
+    {
+        Animator.SetTrigger("Shoot");
     }
 
 }

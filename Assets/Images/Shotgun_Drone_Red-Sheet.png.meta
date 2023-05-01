@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8b36a12d3e9a0479ba41f61bb7f9d40c
+guid: 65d8b518289fc4faba8a9d969e36d1b7
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -141,7 +141,133 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Gun_Drone_Firing_Blue-Sheet_0
+      name: Shotgun_Drone_Red-Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b92d8aee5a5e410090d18a8a428973f
+      internalID: 2129631337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shotgun_Drone_Red-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b7efcb2ef38447ce80bf3799ea23d3f
+      internalID: 543339994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shotgun_Drone_Red-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 463c02740e7ee41d1a28da367c065cb4
+      internalID: 2023134790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shotgun_Drone_Red-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9e2ab9e12297424599e01cfdac57527
+      internalID: 1362216439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shotgun_Drone_Red-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66ce7ba8b855c4336a15522952d4945e
+      internalID: 743860286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shotgun_Drone_Red-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ffdf7dcd0d5e54b668dbb2b1f139e0dd
+      internalID: -1147429934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shotgun_Drone_Red-Sheet_6
       rect:
         serializedVersion: 2
         x: 0
@@ -155,113 +281,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 51e7af5a27332463f882a2b4d5442f65
-      internalID: 1580102581
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Gun_Drone_Firing_Blue-Sheet_1
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 911cae09f64aa47dfbd9a8feae73b797
-      internalID: -1492977645
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Gun_Drone_Firing_Blue-Sheet_2
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3f9807df3b393465f8fbce725942a751
-      internalID: 2033693386
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Gun_Drone_Firing_Blue-Sheet_3
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c2b049da7996a4940a49f4c7dc9a191f
-      internalID: -1674139378
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Gun_Drone_Firing_Blue-Sheet_4
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b13299c203cfe4d3a9746e84bcd00744
-      internalID: -944701266
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Gun_Drone_Firing_Blue-Sheet_5
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7d6c509cd503d4c0ea70c5618f6d3032
-      internalID: 883347240
+      spriteID: 36c97e3a14d6d4467b6c30af3072e742
+      internalID: -1966042906
       vertices: []
       indices: 
       edges: []
@@ -277,12 +298,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Gun_Drone_Firing_Blue-Sheet_0: 1580102581
-      Gun_Drone_Firing_Blue-Sheet_1: -1492977645
-      Gun_Drone_Firing_Blue-Sheet_2: 2033693386
-      Gun_Drone_Firing_Blue-Sheet_3: -1674139378
-      Gun_Drone_Firing_Blue-Sheet_4: -944701266
-      Gun_Drone_Firing_Blue-Sheet_5: 883347240
+      Shotgun_Drone_Red-Sheet_0: 2129631337
+      Shotgun_Drone_Red-Sheet_1: 543339994
+      Shotgun_Drone_Red-Sheet_2: 2023134790
+      Shotgun_Drone_Red-Sheet_3: 1362216439
+      Shotgun_Drone_Red-Sheet_4: 743860286
+      Shotgun_Drone_Red-Sheet_5: -1147429934
+      Shotgun_Drone_Red-Sheet_6: -1966042906
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
