@@ -51,11 +51,8 @@ public class ControllerGame : GenericSingleton<ControllerGame>
         playerController = PoolManager.Spawn<PlayerController>("Player", null);
         Camera.main.transform.parent.GetComponentInChildren<CinemachineVirtualCamera>().Follow = playerController.transform;
 
-        for (int i = 0; i < 2; i++)
-        {
-            var drone = PoolManager.Spawn<DroneBase>("Drone", null);
-            drone.Init(new Vector3((2*i - 1)*1.5f, -1, 0));
-        }
+       
+        GetComponent<ControllerDrones>().Init();
     }
 
 

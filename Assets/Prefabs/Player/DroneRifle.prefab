@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -1568448945139682787}
   - component: {fileID: 2620932504292568454}
   m_Layer: 0
-  m_Name: Drone
+  m_Name: DroneRifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

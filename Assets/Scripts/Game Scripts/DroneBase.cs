@@ -8,6 +8,7 @@ public class DroneBase : PoolObject
 
     
     Vector3 offset;
+    Quaternion rotationOffset;
 
     bool isInitialized = false;
 
@@ -22,12 +23,13 @@ public class DroneBase : PoolObject
     BulletSpawner bulletSpawner;
 
 
-    public void Init(Vector3 offset)
+    public void Init(Vector3 offset, Quaternion rotationOffset)
     {
         this.offset = offset;
+        this.rotationOffset = rotationOffset;
         isInitialized = true;
         bulletSpawner = GetComponent<BulletSpawner>();
-        bulletSpawner.BeginFiring();
+        bulletSpawner?.BeginFiring();
         //Time.timeScale = 0.1f;
     }
 
@@ -37,7 +39,7 @@ public class DroneBase : PoolObject
         if (isInitialized)
         {
             targetPosition = ControllerGame.Instance.Player.transform.position + (ControllerGame.Instance.Player.transform.rotation * offset);
-            targetRotation = ControllerGame.Instance.Player.transform.rotation;
+            targetRotation = ControllerGame.Instance.Player.transform.rotation * rotationOffset;
 
             var distanceT = Mathf.Min(1,Vector3.Distance(transform.position, targetPosition) / MaxDistance);
             var t = followRate * distanceT;

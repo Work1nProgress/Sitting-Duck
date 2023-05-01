@@ -37,7 +37,7 @@ public class PlayerController : PoolObject
     {
         body = GetComponent<Rigidbody2D>();
         ControllerInput.Instance.OnMouseClick.AddListener(OnMouseClick);
-        ControllerInput.Instance.OnShootClick.AddListener(OnShootClick);
+    //    ControllerInput.Instance.OnWeaponChange.AddListener(OnShootClick);
         bulletSpawner =GetComponent<BulletSpawner>();
         bulletSpawner.StopFiring();
         waitingForRelease = false;
@@ -48,7 +48,7 @@ public class PlayerController : PoolObject
     private void OnDestroy()
     {
         ControllerInput.Instance.OnMouseClick.RemoveListener(OnMouseClick);
-        ControllerInput.Instance.OnShootClick.RemoveListener(OnShootClick);
+  //      ControllerInput.Instance.OnWeaponChange.RemoveListener(OnShootClick);
     }
 
 
