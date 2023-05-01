@@ -98,6 +98,8 @@ GameObject:
   - component: {fileID: 2988496388571346634}
   - component: {fileID: 2988496388571346629}
   - component: {fileID: 446671978610672046}
+  - component: {fileID: 689540756101293144}
+  - component: {fileID: 4229925086037140570}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -175,6 +177,52 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.95
+--- !u!114 &689540756101293144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2988496388571346630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e74ab28cab7a9194eb4257b67ce111f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4229925086037140570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2988496388571346630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4b3b583b5c6d4f4cab32fe763227ce5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderCamera: {fileID: 0}
+  manualFire: 1
+  bulletSettings: {fileID: 11400000, guid: cb5762bcd3b2a4086b6767957e5759a3, type: 2}
+  spawnSettings: {fileID: 11400000, guid: c1f2955118b0a4486a39c4a7276348b2, type: 2}
+  currentActiveBullets: 0
+  maxActiveBullets: 0
+  seed: 
+  randomiseSeedOnAwake: 1
+  rotateSpeed: 0
+  playingEditorAnimation: 0
+  OnBulletDied:
+    m_PersistentCalls:
+      m_Calls: []
+  OnBulletCancelled:
+    m_PersistentCalls:
+      m_Calls: []
+  OnBulletSpawned:
+    m_PersistentCalls:
+      m_Calls: []
+  OnWeaponFired:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2988496389024406502
 GameObject:
   m_ObjectHideFlags: 0

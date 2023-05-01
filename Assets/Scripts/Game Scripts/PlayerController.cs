@@ -16,6 +16,8 @@ public class PlayerController : PoolObject
     public float GetMaxAcceleration => MaxAcceleration;
     public float GetAccelerationMultiplier => AccelerationMultiplier;
 
+
+
     [SerializeField]
     [Range(0,50f)]
     [Tooltip("Values larger than 50 are a no no")]
@@ -29,10 +31,15 @@ public class PlayerController : PoolObject
 
     bool waitingForRelease = false;
     bool canInteractWithCollider;
+    BulletSpawner bulletSpawner;
+
     private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
         ControllerInput.Instance.OnMouseClick.AddListener(OnMouseClick);
+        ControllerInput.Instance.OnShootClick.AddListener(OnShootClick);
+        bulletSpawner =GetComponent<BulletSpawner>();
+        bulletSpawner.StopFiring();
         waitingForRelease = false;
         canInteractWithCollider = true;
     }
@@ -41,6 +48,7 @@ public class PlayerController : PoolObject
     private void OnDestroy()
     {
         ControllerInput.Instance.OnMouseClick.RemoveListener(OnMouseClick);
+        ControllerInput.Instance.OnShootClick.RemoveListener(OnShootClick);
     }
 
 
@@ -79,15 +87,9 @@ public class PlayerController : PoolObject
                 }
 
             }
-            if (ControllerGame.Instance.AllowReverse && reversing)
-            {
-                body.velocity = Mathf.Min(InputDirection.magnitude, MaxAcceleration) * (-body.transform.up.normalized);
-            }
-            else
-            {
-                body.velocity = Mathf.Min(InputDirection.magnitude, MaxAcceleration) * body.transform.up.normalized;
 
-            }
+            SetVelocityForward(Mathf.Min(InputDirection.magnitude, MaxAcceleration));
+          
             waitingForRelease = false;
             canInteractWithCollider = true;
         }
@@ -95,16 +97,28 @@ public class PlayerController : PoolObject
     }
 
 
-
-    void SetVelocityForward()
+    void OnShootClick(bool value)
     {
-        if (ControllerGame.Instance.AllowReverse && reversing)
+        if (value)
         {
-            body.velocity = body.velocity = body.velocity.magnitude * (-body.transform.up);
+            bulletSpawner.BeginFiring();
         }
         else
         {
-            body.velocity = body.velocity = body.velocity.magnitude * body.transform.up;
+            bulletSpawner.StopFiring();
+        }
+    }
+
+
+    void SetVelocityForward(float magnitude)
+    {
+        if (ControllerGame.Instance.AllowReverse && reversing)
+        {
+            body.velocity = magnitude * (-body.transform.up);
+        }
+        else
+        {
+            body.velocity = magnitude * body.transform.up;
 
         }
 
@@ -139,7 +153,7 @@ public class PlayerController : PoolObject
         rotateFromCollision = false;
         
         body.MoveRotation(Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z + change));
-        SetVelocityForward();
+        SetVelocityForward(body.velocity.magnitude);
 
 
     }
