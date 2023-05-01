@@ -19,10 +19,7 @@ public class EnemyController : PoolObject
     protected virtual void Awake()
     {
         SetComponentReferences();
-    }
-
-    protected virtual void Start()
-    {
+        
         if (_activeState != null)
         {
             _activeState.EnterState();
@@ -30,6 +27,10 @@ public class EnemyController : PoolObject
         }
 
         _gameManager = _entityStats.GetGameManager();
+    }
+
+    protected virtual void Start()
+    {
     }
 
     protected virtual void Update()

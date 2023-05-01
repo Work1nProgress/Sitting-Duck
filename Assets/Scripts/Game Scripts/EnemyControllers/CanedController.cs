@@ -14,14 +14,16 @@ public class CanedController : EnemyController
 
     protected override void Awake()
     {
+        base.Awake();
         _approachPlayerState = new ApproachPlayerEnemyState(_walkSpeed, _attackPlayerRadius);
         _meleeAttackEnemyState = new MeleeAttackEnemyState(_attackWindUpTime, _attackDamage);
     }
 
     protected override void Start()
     {
-        EnemyState.EnemyStateData stateData = new EnemyState.EnemyStateData(
-            _gameManager.GetPlayerTransform(),
+        Debug.Log(ControllerGame.Instance.Player.transform);
+        /*EnemyState.EnemyStateData stateData = new EnemyState.EnemyStateData(
+            ControllerGame.Instance.Player.transform,
             _rigidbody,
             _bulletSpawner,
             new EnemyState[1] { _meleeAttackEnemyState },
@@ -37,6 +39,6 @@ public class CanedController : EnemyController
 
         _activeState = _approachPlayerState;
 
-        base.Awake();
+        base.Start();*/
     }
 }

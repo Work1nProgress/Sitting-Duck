@@ -42,7 +42,10 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
             _gameManager.AddEntityReference(this, _entityType);
     }
 
-    private void Start() { }
+    private void Start()
+    {
+        
+    }
 
     public void Damage(int ammount)
     {
