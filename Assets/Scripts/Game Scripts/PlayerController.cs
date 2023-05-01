@@ -11,7 +11,10 @@ public class PlayerController : PoolObject
     Rigidbody2D body;
 
     [SerializeField]
-    float MaxAcceleration, AccelerationMultiplier;
+    float MaxAcceleration, AccelerationMultiplier, MaxCollisionRidealong;
+
+    public float GetMaxAcceleration => MaxAcceleration;
+    public float GetAccelerationMultiplier => AccelerationMultiplier;
 
     [SerializeField]
     [Range(0,50f)]
@@ -25,11 +28,13 @@ public class PlayerController : PoolObject
     Vector3 lastPos;
 
     bool waitingForRelease = false;
+    bool canInteractWithCollider;
     private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
         ControllerInput.Instance.OnMouseClick.AddListener(OnMouseClick);
         waitingForRelease = false;
+        canInteractWithCollider = true;
     }
    
 
@@ -61,7 +66,6 @@ public class PlayerController : PoolObject
             steerDirection = -(int)Mathf.Sign(Vector2.Dot(body.transform.right, InputDirection));
             if (ControllerGame.Instance.AllowReverse)
             {
-                Debug.Log($"{angle} {ControllerGame.Instance.ReverseMinAngle} {steerDirection}");
                 if (angle > ControllerGame.Instance.ReverseMinAngle)
                 {
                     angle = (180-angle);
@@ -75,11 +79,6 @@ public class PlayerController : PoolObject
                 }
 
             }
-
-
-
-
-
             if (ControllerGame.Instance.AllowReverse && reversing)
             {
                 body.velocity = Mathf.Min(InputDirection.magnitude, MaxAcceleration) * (-body.transform.up.normalized);
@@ -90,6 +89,23 @@ public class PlayerController : PoolObject
 
             }
             waitingForRelease = false;
+            canInteractWithCollider = true;
+        }
+
+    }
+
+
+
+    void SetVelocityForward()
+    {
+        if (ControllerGame.Instance.AllowReverse && reversing)
+        {
+            body.velocity = body.velocity = body.velocity.magnitude * (-body.transform.up);
+        }
+        else
+        {
+            body.velocity = body.velocity = body.velocity.magnitude * body.transform.up;
+
         }
 
     }
@@ -111,20 +127,68 @@ public class PlayerController : PoolObject
         }
  
 
-        var change = steerDirection * angle * Time.fixedDeltaTime * MaxSteering;
-        angle -= Mathf.Abs(change);
-        body.MoveRotation(Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z + change));
-        if (ControllerGame.Instance.AllowReverse && reversing)
+        var change = rotateFromCollision ? changeFromCollision : steerDirection * angle * Time.fixedDeltaTime * MaxSteering;
+        if (rotateFromCollision)
         {
-            body.velocity = body.velocity = body.velocity.magnitude * (-body.transform.up);
+            angle = 0;
         }
         else
         {
-            body.velocity = body.velocity = body.velocity.magnitude * body.transform.up;
+            angle -= Mathf.Abs(change);
+        }
+        rotateFromCollision = false;
+        
+        body.MoveRotation(Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z + change));
+        SetVelocityForward();
+
+
+    }
+
+
+    bool rotateFromCollision = false;
+    float changeFromCollision = 0;
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (!canInteractWithCollider)
+        {
+            HandleCollistion(collision);
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        HandleCollistion(collision);
+    }
+
+    void HandleCollistion(Collision2D collision)
+    {
+        foreach (var contact in collision.contacts)
+        {
+            if (contact.collider.gameObject.layer == LayerMask.NameToLayer("Walls"))
+            {
+                canInteractWithCollider = false;
+                var point = contact.point - contact.normal;
+                var dir = -contact.normal;
+
+                RaycastHit2D hitInfo = Physics2D.Raycast(point, dir, 1, LayerMask.GetMask("Walls"));
+                var normal = hitInfo.normal;
+
+                var dotRight = Vector2.Dot(normal, body.transform.right);
+                if (Mathf.Abs(dotRight) > MaxCollisionRidealong)
+                {
+
+                    var ridealongDirection = Mathf.Sign(dotRight);
+                    var tangent = new Vector2(-normal.y, normal.x) * ridealongDirection;
+                    changeFromCollision = Vector2.SignedAngle(body.transform.up, tangent);
+                    rotateFromCollision = true;
+                }
+                
+            }
 
         }
-       
     }
+
+   
 
 
 

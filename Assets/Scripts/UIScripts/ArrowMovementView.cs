@@ -57,6 +57,7 @@ public class ArrowMovementView : MonoBehaviour
 
             var currentPos = transform.parent.InverseTransformVector(point);
             var distance = Vector3.Distance(currentPos, startPos);
+            var isMaxed = Vector3.Distance(currentPos, startPos) * ControllerGame.Instance.Player.GetAccelerationMultiplier >= ControllerGame.Instance.Player.GetMaxAcceleration;
             if (Vector3.Angle(currentPos - startPos, ControllerGame.Instance.Player.transform.up) > ControllerGame.Instance.DeadZone)
             {
                 var right = Mathf.Sign(Vector3.Dot(currentPos - startPos, ControllerGame.Instance.Player.transform.right));
@@ -66,6 +67,21 @@ public class ArrowMovementView : MonoBehaviour
             else
             {
                 lastPos = currentPos;
+            }
+
+            if (Vector3.Angle(currentPos - startPos, ControllerGame.Instance.Player.transform.up) > ControllerGame.Instance.ReverseMinAngle)
+            {
+                var color = isMaxed ? Color.red : Color.yellow;
+                ImageArrowLine.color = color;
+                ImageArrowHead.color = color;
+
+
+            }
+            else
+            {
+                var color = isMaxed ? Color.green : Color.white;
+                ImageArrowLine.color = color;
+                ImageArrowHead.color = color;
             }
             ImageArrowLine.rectTransform.sizeDelta = new Vector2(distance, ImageArrowLine.rectTransform.sizeDelta.y );
             ImageArrowLine.transform.localPosition = Vector3.Lerp(startPos, currentPos, 0.5f);
