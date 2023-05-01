@@ -6,7 +6,7 @@ using BulletFury;
 public class BulletSpawner : MonoBehaviour
 {
     private BulletManager _bManager;
-    private bool _firing = true;
+    [SerializeField] private bool _firing = true;
 
     void Awake()
     {

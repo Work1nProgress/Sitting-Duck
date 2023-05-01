@@ -37,13 +37,12 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
         GameObject gm = GameObject.Find("GameManager");
         if(gm != false)
         _gameManager = gm.GetComponent<GameManager>();
-    }
 
-    private void Start()
-    {
         if (_gameManager != null)
             _gameManager.AddEntityReference(this, _entityType);
     }
+
+    private void Start() { }
 
     public void Damage(int ammount)
     {
@@ -98,6 +97,8 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
 
         return false;
     }
+
+    public GameManager GetGameManager() { return _gameManager; }
 }
 
 public enum EntityType
