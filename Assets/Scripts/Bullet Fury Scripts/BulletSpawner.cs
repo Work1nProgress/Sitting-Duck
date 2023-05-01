@@ -8,9 +8,13 @@ public class BulletSpawner : MonoBehaviour
     private BulletManager _bManager;
     private bool _firing = true;
 
+
+    
+
     void Awake()
     {
         _bManager = GetComponent<BulletManager>();
+
         
     }
 
@@ -18,7 +22,7 @@ public class BulletSpawner : MonoBehaviour
     void Update()
     {
         if(_firing)
-        _bManager.Spawn(transform.position, transform.up);
+        _bManager.Spawn(transform);
     }
 
     public void BeginFiring()

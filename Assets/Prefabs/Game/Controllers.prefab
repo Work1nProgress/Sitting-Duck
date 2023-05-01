@@ -48,6 +48,9 @@ MonoBehaviour:
   - poolObject: {fileID: 2988496388571346634, guid: 15db0a133c8b340238d255ac4b3fba99, type: 3}
     initialPoolSize: 1
     maxPoolSize: 1
+  - poolObject: {fileID: 3146679714670608304, guid: 2fb91077c0c5443e29095723970ef608, type: 3}
+    initialPoolSize: 2
+    maxPoolSize: 2
 --- !u!1 &5749553159213732891
 GameObject:
   m_ObjectHideFlags: 0
@@ -143,6 +146,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OnMouseClick:
+    m_PersistentCalls:
+      m_Calls: []
+  OnShootClick:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &7934809518516100438

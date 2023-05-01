@@ -12,7 +12,9 @@ public class ControllerGame : GenericSingleton<ControllerGame>
     PlayerController playerController;
     public PlayerController Player => playerController;
 
-    [SerializeField]
+    public Vector2 PlayerPosition => new Vector2(Player.transform.position.x, Player.transform.position.y);
+
+    
      
 
     #region Debug settings
@@ -48,6 +50,12 @@ public class ControllerGame : GenericSingleton<ControllerGame>
     {
         playerController = PoolManager.Spawn<PlayerController>("Player", null);
         Camera.main.transform.parent.GetComponentInChildren<CinemachineVirtualCamera>().Follow = playerController.transform;
+
+        for (int i = 0; i < 2; i++)
+        {
+            var drone = PoolManager.Spawn<DroneBase>("Drone", null);
+            drone.Init(new Vector3((2*i - 1)*1.5f, -1, 0));
+        }
     }
 
 
