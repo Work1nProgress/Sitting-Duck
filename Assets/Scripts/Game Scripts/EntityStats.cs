@@ -59,6 +59,7 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
             return;
         }
 
+        if(OnHealthChanged != null)
         OnHealthChanged.Invoke(_health, newHealth, _maxHealth);
         _health = newHealth;
     }
@@ -73,6 +74,7 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
             return;
         }
         
+        if(OnHealthChanged != null)
         OnHealthChanged.Invoke(_health, newHealth, _maxHealth);
         _health = newHealth;
     }
@@ -85,9 +87,11 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
         if(_currentLevel + 1 <= _maxLevel)
         {
             _currentLevel++;
+            if (OnLevelUpSuccess != null)
             OnLevelUpSuccess.Invoke();
         }
-        else { OnLevelUpFail.Invoke(); }
+        else { if (OnLevelUpFail != null)
+                OnLevelUpFail.Invoke(); }
     }
 
     public bool IsTaggedWith(string searchTag)

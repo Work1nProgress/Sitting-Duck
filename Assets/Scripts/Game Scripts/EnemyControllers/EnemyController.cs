@@ -19,7 +19,11 @@ public class EnemyController : PoolObject
     protected virtual void Awake()
     {
         SetComponentReferences();
-        
+        _entityStats.OnDeath += HandleDeath;
+    }
+
+    protected virtual void Start()
+    {
         if (_activeState != null)
         {
             _activeState.EnterState();
@@ -27,10 +31,6 @@ public class EnemyController : PoolObject
         }
 
         _gameManager = _entityStats.GetGameManager();
-    }
-
-    protected virtual void Start()
-    {
     }
 
     protected virtual void Update()
@@ -61,5 +61,10 @@ public class EnemyController : PoolObject
         _rigidbody = GetComponent<Rigidbody2D>();
         _bulletSpawner = GetComponent<BulletSpawner>();
         _entityStats = GetComponent<EntityStats>();
+    }
+
+    protected void HandleDeath()
+    {
+        PoolManager.Despawn(this);
     }
 }

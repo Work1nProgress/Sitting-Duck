@@ -4,22 +4,21 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    private PoolManager _poolManager;
-    void Awake()
+    CountdownTimer _spawnTimer;
+    private void Awake()
     {
-        GameObject pm = GameObject.Find("Pooler");
-        if (pm != null)
-            _poolManager = pm.GetComponent<PoolManager>();
+        _spawnTimer = new CountdownTimer(2, false, true);
+        _spawnTimer.OnTimerExpired += SpawnEnemy;
     }
 
-    void Start()
+    private void Update()
     {
-        
+        _spawnTimer.Update(Time.deltaTime);
     }
 
-    
-    void Update()
+    private void SpawnEnemy()
     {
-        
+        PoolManager.Spawn<EnemyController>("TestEnemy", null, Vector3.zero);
     }
+
 }

@@ -13,7 +13,7 @@ public abstract class EnemyState
 
     public delegate void StateChangeSignature(EnemyState state);
     public event StateChangeSignature OnRequestStateChange;
-    protected void InvokeStateChangeRequest(EnemyState newState) { OnRequestStateChange.Invoke(newState); }
+    protected void InvokeStateChangeRequest(EnemyState newState) { if(OnRequestStateChange != null)OnRequestStateChange.Invoke(newState); }
 
     public virtual void InitializeState(EnemyStateData data)
     {

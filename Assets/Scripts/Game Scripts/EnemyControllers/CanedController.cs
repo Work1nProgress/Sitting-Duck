@@ -12,25 +12,34 @@ public class CanedController : EnemyController
     EnemyState _approachPlayerState;
     EnemyState _meleeAttackEnemyState;
 
-    protected override void Awake()
-    {
-        base.Awake();
-        _approachPlayerState = new ApproachPlayerEnemyState(_walkSpeed, _attackPlayerRadius);
-        _meleeAttackEnemyState = new MeleeAttackEnemyState(_attackWindUpTime, _attackDamage);
-    }
-
     protected override void Start()
     {
-        Debug.Log(ControllerGame.Instance.Player.transform);
-        /*EnemyState.EnemyStateData stateData = new EnemyState.EnemyStateData(
-            ControllerGame.Instance.Player.transform,
-            _rigidbody,
-            _bulletSpawner,
-            new EnemyState[1] { _meleeAttackEnemyState },
-            1,
-            true,
-            "Approach Player"
-            );
+        _approachPlayerState = new ApproachPlayerEnemyState(_walkSpeed, _attackPlayerRadius);
+        _meleeAttackEnemyState = new MeleeAttackEnemyState(_attackWindUpTime, _attackDamage);
+
+        if (ControllerGame.Instance.Player == null)
+        {
+            StartCoroutine(WaitForPlayer());
+            return;
+        }
+
+        Init();
+
+    }
+
+
+
+    private void Init()
+    {
+        EnemyState.EnemyStateData stateData = new EnemyState.EnemyStateData(
+       ControllerGame.Instance.Player.transform,
+       _rigidbody,
+       _bulletSpawner,
+       new EnemyState[1] { _meleeAttackEnemyState },
+       1,
+       true,
+       "Approach Player"
+       );
         _approachPlayerState.InitializeState(stateData);
 
         stateData.transitionStates = new EnemyState[1] { _approachPlayerState };
@@ -38,7 +47,12 @@ public class CanedController : EnemyController
         _meleeAttackEnemyState.InitializeState(stateData);
 
         _activeState = _approachPlayerState;
+        base.Start();
+    }
 
-        base.Start();*/
+    private IEnumerator WaitForPlayer()
+    {
+        yield return new WaitUntil(() => ControllerGame.Instance.Player != null);
+        Init();
     }
 }
