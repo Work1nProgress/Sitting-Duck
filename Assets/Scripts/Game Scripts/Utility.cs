@@ -8,6 +8,14 @@ public interface IEntityHealth
     public void Damage(int ammount);
 }
 
+public interface IExperience
+{
+    public int GetExperienceValue();
+    public void ChangeExperienceValue(int change);
+    public int GetLevel();
+    public void IncreaseLevel();
+}
+
 public class CountdownTimer
 {
     private float _timeLeft;

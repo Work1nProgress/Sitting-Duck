@@ -12,7 +12,7 @@ public class CanedController : EnemyController
     EnemyState _approachPlayerState;
     EnemyState _meleeAttackEnemyState;
 
-    protected override void Start()
+    protected override void Awake()
     {
         SetComponentReferences();
 
@@ -36,6 +36,6 @@ public class CanedController : EnemyController
 
         _activeState = _approachPlayerState;
 
-        base.Start();
+        base.Awake();
     }
 }

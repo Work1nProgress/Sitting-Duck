@@ -8,7 +8,7 @@ public class BulletSpawner : MonoBehaviour
     private BulletManager _bManager;
     private bool _firing = true;
 
-    void Start()
+    void Awake()
     {
         _bManager = GetComponent<BulletManager>();
         
