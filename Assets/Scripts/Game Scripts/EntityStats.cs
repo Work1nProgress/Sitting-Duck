@@ -37,12 +37,14 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
         GameObject gm = GameObject.Find("GameManager");
         if(gm != false)
         _gameManager = gm.GetComponent<GameManager>();
+
+        if (_gameManager != null)
+            _gameManager.AddEntityReference(this, _entityType);
     }
 
     private void Start()
     {
-        if (_gameManager != null)
-            _gameManager.AddEntityReference(this, _entityType);
+        
     }
 
     public void Damage(int ammount)
@@ -57,6 +59,7 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
             return;
         }
 
+        if(OnHealthChanged != null)
         OnHealthChanged.Invoke(_health, newHealth, _maxHealth);
         _health = newHealth;
     }
@@ -71,6 +74,7 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
             return;
         }
         
+        if(OnHealthChanged != null)
         OnHealthChanged.Invoke(_health, newHealth, _maxHealth);
         _health = newHealth;
     }
@@ -83,9 +87,11 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
         if(_currentLevel + 1 <= _maxLevel)
         {
             _currentLevel++;
+            if (OnLevelUpSuccess != null)
             OnLevelUpSuccess.Invoke();
         }
-        else { OnLevelUpFail.Invoke(); }
+        else { if (OnLevelUpFail != null)
+                OnLevelUpFail.Invoke(); }
     }
 
     public bool IsTaggedWith(string searchTag)
@@ -98,6 +104,8 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
 
         return false;
     }
+
+    public GameManager GetGameManager() { return _gameManager; }
 }
 
 public enum EntityType

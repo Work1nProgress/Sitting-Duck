@@ -12,39 +12,27 @@ public class CanedController : EnemyController
     EnemyState _approachPlayerState;
     EnemyState _meleeAttackEnemyState;
 
-    protected override void Awake()
+    protected override void Start()
     {
-        SetComponentReferences();
-
         _approachPlayerState = new ApproachPlayerEnemyState(_walkSpeed, _attackPlayerRadius);
         _meleeAttackEnemyState = new MeleeAttackEnemyState(_attackWindUpTime, _attackDamage);
 
-        if (ControllerGame.Instance == null)
-        {
-            StartCoroutine(WaitForController());
-            return;
-        }
-
-        BeforeInit();
-
-    }
-
-    private void BeforeInit()
-    {
         if (ControllerGame.Instance.Player == null)
         {
             StartCoroutine(WaitForPlayer());
+            return;
         }
-        else
-        {
-            Init();
-        }
+
+        Init();
+
     }
+
+
 
     private void Init()
     {
         EnemyState.EnemyStateData stateData = new EnemyState.EnemyStateData(
-      ControllerGame.Instance.Player.transform,
+       ControllerGame.Instance.Player.transform,
        _rigidbody,
        _bulletSpawner,
        new EnemyState[1] { _meleeAttackEnemyState },
@@ -59,22 +47,12 @@ public class CanedController : EnemyController
         _meleeAttackEnemyState.InitializeState(stateData);
 
         _activeState = _approachPlayerState;
-        base.Awake();
+        base.Start();
     }
 
     private IEnumerator WaitForPlayer()
     {
         yield return new WaitUntil(() => ControllerGame.Instance.Player != null);
         Init();
-        
-
-    }
-
-    private IEnumerator WaitForController()
-    {
-        yield return new WaitUntil(() => ControllerGame.Instance != null);
-        BeforeInit();
-
-
     }
 }
