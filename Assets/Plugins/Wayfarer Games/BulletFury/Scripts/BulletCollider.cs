@@ -151,17 +151,19 @@ namespace BulletFury
         private void FixedUpdate()
         {
             if (!gameObject.activeInHierarchy) return;
-            
+
+           
             for (var index = _hitByBullets.Count - 1; index >= 0; index--)
             {
                 if (index >= _hitByBullets.Count)
                     return;
                 var manager = _hitByBullets[index];
                 if (manager == null || !manager.enabled || !manager.gameObject.activeSelf ||
-                    manager.GetBullets() == null)
+                    manager.GetBullets() == null ||  manager.GetLiveBullets().Length == 0)
                     continue;
                 // grab the bullets in the bullet manager
                 _bullets = manager.GetLiveBullets();
+                
 
                 if (shape == ColliderShape.Sphere)
                 {
@@ -372,7 +374,7 @@ namespace BulletFury
         public void AddManagerToBullets(BulletManager manager)
         {
             _hitByBullets.Add(manager);
-            Debug.Log(_hitByBullets.Count);
+//            Debug.Log(_hitByBullets.Count);
         }
 
         public void RemoveManagerFromBullets(BulletManager manager)
