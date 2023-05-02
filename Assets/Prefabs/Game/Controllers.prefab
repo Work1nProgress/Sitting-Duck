@@ -135,6 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 067bf704aee7a49e39ec8a236d614f93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _levelResetDelay: 10
   RotateTowardsArrow: 0
   AllowReverse: 1
   ReverseMinAngle: 130

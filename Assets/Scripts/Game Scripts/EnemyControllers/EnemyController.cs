@@ -30,7 +30,6 @@ public class EnemyController : PoolObject
             _activeState.OnRequestStateChange += ChangeState;
         }
 
-        _gameManager = _entityStats.GetGameManager();
     }
 
     protected virtual void Update()

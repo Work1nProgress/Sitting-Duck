@@ -19,7 +19,7 @@ public class DebugButton : MonoBehaviour
     }
     public void OnToggleLookAtArrow()
     {
-        ControllerGame.Instance.ToggleRotateTowardsArrow();
+      //  ControllerGame.Instance.ToggleRotateTowardsArrow();
         if (label)
         {
             label.text = ControllerGame.Instance.RotateTowardsArrow ? "look at arrow" : "no look";
@@ -29,7 +29,7 @@ public class DebugButton : MonoBehaviour
 
     public void OnToggleReverse()
     {
-        ControllerGame.Instance.ToggleReverse();
+       // ControllerGame.Instance.ToggleReverse();
         if (label)
         {
             label.text = ControllerGame.Instance.AllowReverse ? "reverse" : "forward";
