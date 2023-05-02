@@ -182,6 +182,7 @@ GameObject:
   - component: {fileID: 446671978610672046}
   - component: {fileID: 689540756101293144}
   - component: {fileID: 4229925086037140570}
+  - component: {fileID: 2795538405735603950}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -273,6 +274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e74ab28cab7a9194eb4257b67ce111f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _firing: 1
 --- !u!114 &4229925086037140570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,6 +309,25 @@ MonoBehaviour:
   OnWeaponFired:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2795538405735603950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2988496388571346630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc756a8294a7333488f96293e7f89239, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _entityType: 0
+  _maxHealth: 5
+  _experience: 0
+  _startLevel: 1
+  _maxLevel: 10
+  _tags:
+  - player
 --- !u!1 &2988496389024406502
 GameObject:
   m_ObjectHideFlags: 0

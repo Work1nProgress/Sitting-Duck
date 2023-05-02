@@ -61,9 +61,10 @@ public class GameManager : MonoBehaviour
                 _playerEntity.OnDeath += StartCurrentSceneReset;
                 break;
             case EntityType.Enemy:
-
                 _enemyEntities.Add(entity);
                 break;
         }
     }
+
+    public Transform GetPlayerTransform() { return _playerEntity.transform; }
 }

@@ -15,8 +15,10 @@ GameObject:
   - component: {fileID: 973201739699793399}
   - component: {fileID: 4357240285149041425}
   - component: {fileID: 973201739699793395}
+  - component: {fileID: 1225142422}
+  - component: {fileID: -1857588742393845953}
   m_Layer: 0
-  m_Name: PatheticWeakling(TestEnemy)
+  m_Name: TestEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -101,6 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e74ab28cab7a9194eb4257b67ce111f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _firing: 1
 --- !u!114 &973201739699793404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -113,6 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9c2eed2c43e2fd48a529beaba948faa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  key: 
   _walkSpeed: 0.45
   _attackPlayerRadius: 3
   _attackDamage: 1
@@ -183,11 +187,68 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_LinearDrag: 100
+  m_AngularDrag: 100
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!70 &1225142422
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973201739699793398}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.03}
+  m_Size: {x: 0.79, y: 0.76}
+  m_Direction: 0
+--- !u!114 &-1857588742393845953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973201739699793398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9add1c9d0cf8e4cb28a0121845c457c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletLayersToBeHitBy:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  shape: 0
+  radius: 0.5
+  size: {x: 1, y: 1, z: 1}
+  destroyBullet: 1
+  center: {x: 0, y: 0, z: 0}
+  pointA: {x: 0, y: 0, z: 0}
+  pointB: {x: 0, y: 0, z: 0}
+  pointC: {x: 0, y: 0, z: 0}
+  OnCollide:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4357240285149041425}
+        m_TargetAssemblyTypeName: EntityStats, GameAssembly
+        m_MethodName: Damage
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  bounce: 0
+  lifetimeLoss: 0
+  bounciness: 0
