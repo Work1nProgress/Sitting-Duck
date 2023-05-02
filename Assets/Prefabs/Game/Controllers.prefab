@@ -48,6 +48,15 @@ MonoBehaviour:
   - poolObject: {fileID: 2988496388571346634, guid: 15db0a133c8b340238d255ac4b3fba99, type: 3}
     initialPoolSize: 1
     maxPoolSize: 1
+  - poolObject: {fileID: 3146679714670608304, guid: 2fb91077c0c5443e29095723970ef608, type: 3}
+    initialPoolSize: 2
+    maxPoolSize: 2
+  - poolObject: {fileID: 8658500344892181619, guid: 213d6bbfc028a4f00b705e6dbfb03bb8, type: 3}
+    initialPoolSize: 2
+    maxPoolSize: 2
+  - poolObject: {fileID: 2878622044698395734, guid: 6b7bc4be59e7a491f8214910a3aef5a4, type: 3}
+    initialPoolSize: 2
+    maxPoolSize: 2
 --- !u!1 &5749553159213732891
 GameObject:
   m_ObjectHideFlags: 0
@@ -60,6 +69,7 @@ GameObject:
   - component: {fileID: 6891434429105733043}
   - component: {fileID: 5246157497173579132}
   - component: {fileID: 249656483032421127}
+  - component: {fileID: 9049648557668262232}
   m_Layer: 0
   m_Name: GameControllers
   m_TagString: Untagged
@@ -145,6 +155,43 @@ MonoBehaviour:
   OnMouseClick:
     m_PersistentCalls:
       m_Calls: []
+  OnWeaponChange:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &9049648557668262232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5749553159213732891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bf28bc9a99ce4b9c802b05e8808f317, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Weapons:
+  - WeaponType: 0
+    NumberOfDrones: 2
+    Drones:
+    - OffsetPosition: {x: -1.5, y: -1, z: 0}
+      OffsetRotation: 0
+    - OffsetPosition: {x: 1.5, y: -1, z: 0}
+      OffsetRotation: 0
+  - WeaponType: 1
+    NumberOfDrones: 2
+    Drones:
+    - OffsetPosition: {x: -1.5, y: 0, z: 0}
+      OffsetRotation: -90
+    - OffsetPosition: {x: 1.5, y: 0, z: 0}
+      OffsetRotation: 90
+  - WeaponType: 2
+    NumberOfDrones: 2
+    Drones:
+    - OffsetPosition: {x: 0, y: 1, z: 0}
+      OffsetRotation: 0
+    - OffsetPosition: {x: 0, y: -1, z: 0}
+      OffsetRotation: 180
 --- !u!1 &7934809518516100438
 GameObject:
   m_ObjectHideFlags: 0

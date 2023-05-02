@@ -22,10 +22,10 @@ MonoBehaviour:
   moveWithTransform: 0
   rotateWithTransform: 0
   damage: 1
-  size: 1
+  size: 2
   colliderSize: 1
   spawnFromCentre: 0
-  secondsToOriginalPosition: 0
+  secondsToOriginalPosition: 1
   angularVelocity: 0
   startColor: {r: 1, g: 1, b: 1, a: 1}
   useColorOverTime: 0
@@ -237,4 +237,4 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  isExpanded: 1
+  isExpanded: 0

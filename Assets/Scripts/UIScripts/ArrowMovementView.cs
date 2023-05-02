@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using DG.Tweening;
+
 
 public class ArrowMovementView : MonoBehaviour
 {
@@ -10,6 +12,11 @@ public class ArrowMovementView : MonoBehaviour
     [SerializeField]
     Image ImageArrowHead, ImageArrowLine;
 
+    [SerializeField]
+    CanvasGroup cg;
+
+
+    Tween fadeTween;
 
 
     bool onMoveState;
@@ -41,6 +48,11 @@ public class ArrowMovementView : MonoBehaviour
         {
             if (onMoveState)
             {
+                if (fadeTween != null)
+                {
+                    fadeTween.Kill();
+                }
+                cg.alpha = 1;
                 RectTransformUtility.ScreenPointToLocalPointInRectangle(transform.parent as RectTransform, Mouse.current.position.value, null, out var point);
 
                 startPos = transform.parent.InverseTransformVector(point);
@@ -87,11 +99,16 @@ public class ArrowMovementView : MonoBehaviour
             ImageArrowLine.transform.localPosition = Vector3.Lerp(startPos, currentPos, 0.5f);
             var diff = currentPos - startPos;
             ImageArrowLine.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(diff.y, diff.x)*(180f/Mathf.PI));
-            ImageArrowHead.transform.localPosition = currentPos - diff.normalized *( ImageArrowHead.sprite.textureRect.height/2+2);
+            ImageArrowHead.transform.localPosition = currentPos - diff.normalized *( ImageArrowHead.sprite.textureRect.height/2-2);
             ImageArrowHead.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(diff.y, diff.x) * (180f / Mathf.PI) -90);
-        
 
 
+            if (fadeTween != null)
+            {
+                fadeTween.Kill();
+            }
+
+            fadeTween = cg.DOFade(0, 0.3f).SetDelay(0.5f).SetEase(Ease.OutCirc);
         }
     }
 
