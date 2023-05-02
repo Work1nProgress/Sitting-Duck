@@ -100,7 +100,6 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
         return false;
     }
 
-    public GameManager GetGameManager() { return _gameManager; }
     public EntityType GetEntityType() { return _entityType; }
 }
 

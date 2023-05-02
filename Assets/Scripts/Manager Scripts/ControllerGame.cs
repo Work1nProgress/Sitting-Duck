@@ -22,7 +22,7 @@ public class ControllerGame : ControllerLocal
     private CountdownTimer[] _allTimers;
 
     private EntityStats _playerEntity;
-    private List<EntityStats> _enemyEntities;
+    private List<EntityStats> _enemyEntities = new List<EntityStats>();
 
 
 
@@ -59,12 +59,12 @@ public class ControllerGame : ControllerLocal
             _levelResetTimer
         };
 
-        _enemyEntities = new List<EntityStats>();
         playerController = PoolManager.Spawn<PlayerController>("Player", null);
         Camera.main.transform.parent.GetComponentInChildren<CinemachineVirtualCamera>().Follow = playerController.transform;
 
 
         GetComponent<ControllerDrones>().Init();
+        GetComponent < EnemyManager>().Init();
         base.Init();
     }
         

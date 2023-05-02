@@ -25,6 +25,7 @@ public class GameManager : GenericSingleton<GameManager>
 
     public void ResetCurrentScene()
     {
+        Debug.Log($"load scene");
         LoadNewScene(_currentScene);
     }
 
