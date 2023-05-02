@@ -112,7 +112,7 @@ public class ApproachPlayerEnemyState : EnemyState
     {
         base.EnterState();
 
-        _bulletSpawner.StopFiring();
+        _bulletSpawner?.StopFiring();
     }
 
     public override void UpdateState()

@@ -78,6 +78,7 @@ public class ControllerGame : ControllerLocal
 
     public void StartCurrentSceneReset()
     {
+        return;
         _levelResetTimer.Resume();
         Debug.Log("Resetting scene with delay of: " + _levelResetDelay + " seconds");
     }

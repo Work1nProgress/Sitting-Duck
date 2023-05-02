@@ -2148,7 +2148,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5.625
+  orthographic size: 11.25
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2178,8 +2178,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ComponentVersion: 1
   m_AssetsPPU: 32
-  m_RefResolutionX: 640
-  m_RefResolutionY: 360
+  m_RefResolutionX: 1280
+  m_RefResolutionY: 720
   m_CropFrame: 0
   m_GridSnapping: 1
   m_UpscaleRT: 0
@@ -2307,7 +2307,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerEntityBlocksSpawn: 0
-  _maximumEntitiesInRadius: 0
+  _maximumEntitiesInRadius: 10
   _entityCheckRadius: 10
 --- !u!4 &1410198223
 Transform:
@@ -4214,6 +4214,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4114037173755203972, guid: cb93f5f42ac574297a5e01626395d9be, type: 3}
+      propertyPath: pooledObjects.Array.data[4].maxPoolSize
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7934809518516100438, guid: cb93f5f42ac574297a5e01626395d9be, type: 3}
       propertyPath: m_Name
       value: Controllers
@@ -4261,6 +4265,10 @@ PrefabInstance:
     - target: {fileID: 7934809518516100439, guid: cb93f5f42ac574297a5e01626395d9be, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9049648557668262232, guid: cb93f5f42ac574297a5e01626395d9be, type: 3}
+      propertyPath: Weapons.Array.data[0].NumberOfDrones
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb93f5f42ac574297a5e01626395d9be, type: 3}

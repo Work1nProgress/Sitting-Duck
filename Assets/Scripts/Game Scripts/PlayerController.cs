@@ -31,15 +31,13 @@ public class PlayerController : PoolObject
 
     bool waitingForRelease = false;
     bool canInteractWithCollider;
-    BulletSpawner bulletSpawner;
+
 
     private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
         ControllerInput.Instance.OnMouseClick.AddListener(OnMouseClick);
-    //    ControllerInput.Instance.OnWeaponChange.AddListener(OnShootClick);
-        bulletSpawner =GetComponent<BulletSpawner>();
-        bulletSpawner.StopFiring();
+       
         waitingForRelease = false;
         canInteractWithCollider = true;
     }
@@ -48,7 +46,6 @@ public class PlayerController : PoolObject
     private void OnDestroy()
     {
         ControllerInput.Instance.OnMouseClick.RemoveListener(OnMouseClick);
-  //      ControllerInput.Instance.OnWeaponChange.RemoveListener(OnShootClick);
     }
 
 
@@ -97,17 +94,7 @@ public class PlayerController : PoolObject
     }
 
 
-    void OnShootClick(bool value)
-    {
-        if (value)
-        {
-            bulletSpawner.BeginFiring();
-        }
-        else
-        {
-            bulletSpawner.StopFiring();
-        }
-    }
+ 
 
 
     void SetVelocityForward(float magnitude)

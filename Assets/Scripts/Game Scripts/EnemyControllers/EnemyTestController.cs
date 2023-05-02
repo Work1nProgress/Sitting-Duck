@@ -23,7 +23,7 @@ public class EnemyTestController : EnemyController
         EnemyState.EnemyStateData stateData = new EnemyState.EnemyStateData(
             null,
             _rigidbody,
-            _bulletSpawner,
+            null,
             new EnemyState[1],
             0,
             false,

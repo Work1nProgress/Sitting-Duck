@@ -161,7 +161,7 @@ namespace BulletFury
                     manager.GetBullets() == null)
                     continue;
                 // grab the bullets in the bullet manager
-                _bullets = manager.GetBullets();
+                _bullets = manager.GetLiveBullets();
 
                 if (shape == ColliderShape.Sphere)
                 {
@@ -372,6 +372,7 @@ namespace BulletFury
         public void AddManagerToBullets(BulletManager manager)
         {
             _hitByBullets.Add(manager);
+            Debug.Log(_hitByBullets.Count);
         }
 
         public void RemoveManagerFromBullets(BulletManager manager)
