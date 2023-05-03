@@ -278,6 +278,7 @@ MonoBehaviour:
   _experience: 0
   _startLevel: 1
   _maxLevel: 10
+  _levelupThresholds: 14000000
   _tags:
   - player
 --- !u!114 &423751046601950062
