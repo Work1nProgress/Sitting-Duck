@@ -59,6 +59,7 @@ public class EnemyController : PoolObject
 
     protected void HandleDeath()
     {
+        _entityStats.Heal(1000);
         PoolManager.Despawn(this);
     }
 }
