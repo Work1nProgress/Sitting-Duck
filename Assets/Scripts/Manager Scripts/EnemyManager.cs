@@ -9,12 +9,13 @@ public class EnemyManager : MonoBehaviour
 
     List<SpawnLocation> _spawnLocations;
 
-    private void Awake()
+    public void Init()
     {
         _spawnLocations = new List<SpawnLocation>();
-        for(int i = 0; i < transform.childCount; i++)
+        var spawnLocationsInGame = FindObjectsOfType<SpawnLocation>();
+        for(int i = 0; i < spawnLocationsInGame.Length; i++)
         {
-            SpawnLocation spawnLocation = transform.GetChild(i).GetComponent<SpawnLocation>();
+            SpawnLocation spawnLocation = spawnLocationsInGame[i];
             if (spawnLocation != null)
                 _spawnLocations.Add(spawnLocation);
         }

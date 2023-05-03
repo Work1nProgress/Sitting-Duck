@@ -16,7 +16,6 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
 
     [SerializeField]private string[] _tags;
 
-    GameManager _gameManager;
 
     public delegate void EnemyHealthChangeSignature(int oldHealth, int newHealth, int maxHealth);
     public event EnemyHealthChangeSignature OnHealthChanged;
@@ -34,12 +33,8 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
         _experience = Mathf.Abs(_experience);
         _health = _maxHealth;
 
-        GameObject gm = GameObject.Find("GameManager");
-        if(gm != false)
-        _gameManager = gm.GetComponent<GameManager>();
 
-        if (_gameManager != null)
-            _gameManager.AddEntityReference(this, _entityType);
+        ControllerGame.Instance.AddEntityReference(this, _entityType);
     }
 
     private void Start()
@@ -105,7 +100,6 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
         return false;
     }
 
-    public GameManager GetGameManager() { return _gameManager; }
     public EntityType GetEntityType() { return _entityType; }
 }
 

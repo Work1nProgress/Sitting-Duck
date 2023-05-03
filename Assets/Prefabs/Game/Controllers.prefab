@@ -57,6 +57,9 @@ MonoBehaviour:
   - poolObject: {fileID: 2878622044698395734, guid: 6b7bc4be59e7a491f8214910a3aef5a4, type: 3}
     initialPoolSize: 2
     maxPoolSize: 2
+  - poolObject: {fileID: 973201739699793404, guid: 00ca4a719036ef84fb9b95ba1795e9a5, type: 3}
+    initialPoolSize: 2
+    maxPoolSize: 2
 --- !u!1 &5749553159213732891
 GameObject:
   m_ObjectHideFlags: 0
@@ -70,6 +73,7 @@ GameObject:
   - component: {fileID: 5246157497173579132}
   - component: {fileID: 249656483032421127}
   - component: {fileID: 9049648557668262232}
+  - component: {fileID: 658692819}
   m_Layer: 0
   m_Name: GameControllers
   m_TagString: Untagged
@@ -135,6 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 067bf704aee7a49e39ec8a236d614f93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _levelResetDelay: 10
   RotateTowardsArrow: 0
   AllowReverse: 1
   ReverseMinAngle: 130
@@ -192,6 +197,38 @@ MonoBehaviour:
       OffsetRotation: 0
     - OffsetPosition: {x: 0, y: -1, z: 0}
       OffsetRotation: 180
+--- !u!114 &658692819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5749553159213732891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d8fa298f65e4a6498ae3a9ba01df850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spawnPatterns:
+  - _enemy: 3
+    _spawnBatchSize: 1
+    _limitSpawnEvents: 0
+    _maximumSpawnEvents: 0
+    _startWithDelay: 0
+    _delay: 0
+    _spawnTimeRange:
+      randomizeSpawnTime: 0
+      spawnTime: 0
+      minimumSpawnTime: 0
+      reduceSpawnTime: 0
+      spawnTimeReduction: 0
+    _sequenceThroughTimeRanges: 0
+    _timeRanges:
+    - randomizeSpawnTime: 0
+      spawnTime: 0
+      minimumSpawnTime: 0
+      reduceSpawnTime: 0
+      spawnTimeReduction: 0
 --- !u!1 &7934809518516100438
 GameObject:
   m_ObjectHideFlags: 0

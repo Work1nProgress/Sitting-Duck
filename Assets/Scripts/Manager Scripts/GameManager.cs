@@ -3,68 +3,47 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManager : GenericSingleton<GameManager>
 {
-    [SerializeField] private float _levelResetDelay;
-
-    private CountdownTimer _levelResetTimer;
-    private CountdownTimer[] _allTimers;
-
     private string _currentScene;
 
-    private EntityStats _playerEntity;
-    private List<EntityStats> _enemyEntities;
+ 
 
-    void Awake()
+    protected override void Awake()
     {
-        _levelResetTimer = new CountdownTimer(_levelResetDelay, true, false);
-        _levelResetTimer.OnTimerExpired += ResetCurrentScene;
-
-        _allTimers = new CountdownTimer[]
-        {
-            _levelResetTimer
-        };
-
-        _currentScene = SceneManager.GetActiveScene().name;
-
-        _enemyEntities = new List<EntityStats>();
+        base.Awake();
+        _currentScene = SceneManager.GetActiveScene().name;    
     }
 
-    void Update()
-    {
-        foreach (CountdownTimer timer in _allTimers)
-            timer.Update(Time.deltaTime);
-    }
-
-    public void StartCurrentSceneReset()
-    {
-        _levelResetTimer.Resume();
-        Debug.Log("Resetting scene with delay of: " + _levelResetDelay + " seconds");
-    }
+  
 
     public void LoadNewScene(string sceneName)
     {
+        SceneManager.sceneLoaded += OnAfterSceneLoaded;
         SceneManager.LoadScene(sceneName);
     }
 
-    private void ResetCurrentScene()
+    public void ResetCurrentScene()
     {
+        Debug.Log($"load scene");
         LoadNewScene(_currentScene);
     }
 
-    public void AddEntityReference(EntityStats entity, EntityType type)
+    void OnAfterSceneLoaded(Scene s, LoadSceneMode loadSceneMode)
     {
-        switch (type)
+        SceneManager.sceneLoaded -= OnAfterSceneLoaded;
+        _currentScene = SceneManager.GetActiveScene().name;
+        var controllerLocal = FindFirstObjectByType<ControllerLocal>();
+        if (controllerLocal != null)
         {
-            case EntityType.Player:
-                _playerEntity = entity;
-                _playerEntity.OnDeath += StartCurrentSceneReset;
-                break;
-            case EntityType.Enemy:
-                _enemyEntities.Add(entity);
-                break;
+            controllerLocal.Init();
         }
+       
+
+
     }
 
-    public Transform GetPlayerTransform() { return _playerEntity.transform; }
+   
+
+    
 }

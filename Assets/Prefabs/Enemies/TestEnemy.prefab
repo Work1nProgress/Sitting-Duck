@@ -10,9 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 973201739699793393}
   - component: {fileID: 973201739699793392}
-  - component: {fileID: 973201739699793394}
   - component: {fileID: 973201739699793404}
-  - component: {fileID: 973201739699793399}
   - component: {fileID: 4357240285149041425}
   - component: {fileID: 973201739699793395}
   - component: {fileID: 1225142422}
@@ -91,19 +89,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &973201739699793394
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 973201739699793398}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e74ab28cab7a9194eb4257b67ce111f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _firing: 1
 --- !u!114 &973201739699793404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,40 +106,6 @@ MonoBehaviour:
   _attackPlayerRadius: 3
   _attackDamage: 1
   _attackWindUpTime: 1.5
---- !u!114 &973201739699793399
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 973201739699793398}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4b3b583b5c6d4f4cab32fe763227ce5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  renderCamera: {fileID: 0}
-  manualFire: 1
-  bulletSettings: {fileID: 11400000, guid: 1d7348cb8904fe148b5750c040c7dc17, type: 2}
-  spawnSettings: {fileID: 11400000, guid: c8317bce7071d124d8f888dde53fd37a, type: 2}
-  currentActiveBullets: 0
-  maxActiveBullets: 0
-  seed: 
-  randomiseSeedOnAwake: 1
-  rotateSpeed: 0
-  playingEditorAnimation: 0
-  OnBulletDied:
-    m_PersistentCalls:
-      m_Calls: []
-  OnBulletCancelled:
-    m_PersistentCalls:
-      m_Calls: []
-  OnBulletSpawned:
-    m_PersistentCalls:
-      m_Calls: []
-  OnWeaponFired:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &4357240285149041425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,7 +176,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletLayersToBeHitBy:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 128
   shape: 0
   radius: 0.5
   size: {x: 1, y: 1, z: 1}

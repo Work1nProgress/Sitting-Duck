@@ -278,6 +278,21 @@ namespace BulletFury
             maxActiveBullets = Mathf.Max(maxActiveBullets, currentActiveBullets);
         }
 
+        public BulletContainer[] GetLiveBullets()
+        {
+          return  Array.FindAll(_bullets, x => x.Dead == 0);
+
+        }
+
+        public void ApplyBulletChange(BulletContainer[] bullets)
+        {
+            for (int i = 0; i < bullets.Length; i++) {
+
+                _bullets[bullets[i].Id] = bullets[i];
+            }
+
+        }
+
         /// <summary>
         /// Unity function, called every frame
         /// Update the values of the bullets that can't be done in a Job, and run the Job
@@ -295,16 +310,18 @@ namespace BulletFury
                 bulletSettings.SetValues(ref _bullets[i], deltaTime, transform, _previousPos, _previousRot, gameObject.activeInHierarchy);
 
             // create a new job
+
+            var liveBullets = GetLiveBullets();
             _bulletJob = new BulletJob
             {
                 DeltaTime = deltaTime,
-                In = new NativeArray<BulletContainer>(_bullets, Allocator.TempJob),
-                Out = new NativeArray<BulletContainer>(_bullets, Allocator.TempJob)
+                In = new NativeArray<BulletContainer>(liveBullets, Allocator.TempJob),
+                Out = new NativeArray<BulletContainer>(liveBullets, Allocator.TempJob)
             };
             _activeNativeArrays = true;
 
             // start the job
-            _handle = _bulletJob.Schedule(_bullets.Length, 256);
+            _handle = _bulletJob.Schedule(liveBullets.Length, 256);
 
             // increment the current timer
             _currentTime += deltaTime;
@@ -319,7 +336,11 @@ namespace BulletFury
             // make sure the job is finished this frame
             _handle.Complete();
             // grab the results
-            _bulletJob.Out.CopyTo(_bullets);
+            
+
+            _bulletJob.Out.CopyTo(liveBullets);
+
+            ApplyBulletChange(liveBullets);
             // dispose the native arrays 
             _bulletJob.In.Dispose();
             _bulletJob.Out.Dispose();
@@ -455,6 +476,7 @@ namespace BulletFury
                     for (j = 0; j < _bullets.Length; ++j)
                     {
                         if (_bullets[j].Dead == 0) continue;
+                        newContainer.Id = j;
                         _bullets[j] = newContainer;
                         break;
                     }
@@ -534,6 +556,7 @@ namespace BulletFury
                     for (j = 0; j < _bullets.Length; ++j)
                     {
                         if (_bullets[j].Dead == 0) continue;
+                        newContainer.Id = j;
                         _bullets[j] = newContainer;
                         break;
                     }
@@ -717,6 +740,7 @@ namespace BulletFury
                     for (j = 0; j < _editorBullets.Length; ++j)
                     {
                         if (_editorBullets[j].Dead == 0) continue;
+                        newContainer.Id = j;
                         _editorBullets[j] = newContainer;
                         break;
                     }

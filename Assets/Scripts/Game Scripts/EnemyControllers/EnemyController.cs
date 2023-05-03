@@ -2,16 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(BulletSpawner))]
 [RequireComponent(typeof(EntityStats))]
 public class EnemyController : PoolObject
 {
 
     protected Rigidbody2D _rigidbody;
-    protected BulletSpawner _bulletSpawner;
 
-    protected GameManager _gameManager;
     protected EntityStats _entityStats;
 
     protected EnemyState _activeState;
@@ -30,7 +26,6 @@ public class EnemyController : PoolObject
             _activeState.OnRequestStateChange += ChangeState;
         }
 
-        _gameManager = _entityStats.GetGameManager();
     }
 
     protected virtual void Update()
@@ -59,7 +54,6 @@ public class EnemyController : PoolObject
     protected void SetComponentReferences()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
-        _bulletSpawner = GetComponent<BulletSpawner>();
         _entityStats = GetComponent<EntityStats>();
     }
 

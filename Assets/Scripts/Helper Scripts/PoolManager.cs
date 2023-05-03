@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class PoolManager : GenericSingleton<PoolManager>
+public class PoolManager : LocalSingleton<PoolManager>
 {
     private static Dictionary<string,Pool> _poolDictionary;
 
     [SerializeField]
     List<PoolDefinition> pooledObjects;
 
-    protected override void Awake() {
-        base.Awake();
+    
+    public void Init()
+    {
         _poolDictionary = new Dictionary<string, Pool>();
         foreach (var poolDeifinition in pooledObjects)
         {
             CreatePool(poolDeifinition);
         }
-        
     }
 
     public void CreatePool(GameObject prefab,int poolSize)
