@@ -60,6 +60,8 @@ public class EnemyController : PoolObject
     protected void HandleDeath()
     {
         _entityStats.Heal(1000);
+        XPSource xpOrb = PoolManager.Spawn<XPSource>("XPOrb", null, transform.position);
+        xpOrb.Initialize(_entityStats.GetExperienceValue(), 5);
         PoolManager.Despawn(this);
     }
 }

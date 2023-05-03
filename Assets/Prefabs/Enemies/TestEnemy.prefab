@@ -119,10 +119,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _entityType: 1
-  _maxHealth: 10
-  _experience: 0
+  _maxHealth: 25
+  _experience: 5
   _startLevel: 1
   _maxLevel: 10
+  _levelupThresholds: 
   _tags:
   - test enemy
 --- !u!50 &973201739699793395
