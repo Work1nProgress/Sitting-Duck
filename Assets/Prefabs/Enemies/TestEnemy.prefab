@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 973201739699793393}
   - component: {fileID: 973201739699793392}
-  - component: {fileID: 973201739699793404}
   - component: {fileID: 4357240285149041425}
   - component: {fileID: 1225142422}
+  - component: {fileID: 1368914721132045261}
   m_Layer: 0
   m_Name: TestEnemy
   m_TagString: Untagged
@@ -87,23 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &973201739699793404
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 973201739699793398}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9c2eed2c43e2fd48a529beaba948faa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  key: 
-  _walkSpeed: 0.65
-  _attackPlayerRadius: 3
-  _attackDamage: 1
-  _attackWindUpTime: 1.5
 --- !u!114 &4357240285149041425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,3 +123,21 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.03}
   m_Size: {x: 0.79, y: 0.76}
   m_Direction: 0
+--- !u!114 &1368914721132045261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973201739699793398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57f169e03c825f24faaa21d1265461ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 
+  _walkSpeed: 0.45
+  _chargeSpeedMultiplier: 7
+  _chargePlayerRadius: 15
+  _chargeDelay: 0.75
+  _attackDamage: 1
