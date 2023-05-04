@@ -5,49 +5,42 @@ using UnityEngine.Rendering;
 
 public class BulletPool {
 
-    Rigidbody2D BulletPrefab;
-
     Transform m_DeadBulletContainer;
 
 
-    #region rendering
-    private Camera renderCamera;
-    private List<Matrix4x4> _matrices;
-    private MaterialPropertyBlock _materialPropertyBlock;
-    bool _hasBullets = false;
-    BulletContainer _currentBullet;
-    private Vector4[] _colors;
-    private static readonly int ColorProperty = Shader.PropertyToID("_Color");
-    #endregion
+    //#region rendering
+    //private Camera renderCamera;
+    //private List<Matrix4x4> _matrices;
+    //private MaterialPropertyBlock _materialPropertyBlock;
+    //bool _hasBullets = false;
+    //BulletContainer _currentBullet;
+    //private Vector4[] _colors;
+    //private static readonly int ColorProperty = Shader.PropertyToID("_Color");
+    //#endregion
 
 
-    int m_MaxBullets;
-    int PoolID;
+    
     BulletContainer[] m_Bullets;
+    BulletSettings settings;
 
 
-    public void Init(int maxBullets, int poolID, Transform deadBulletContainer, Rigidbody2D bulletPrefab)
+    public void Init(BulletSettings settings, Transform deadBulletContainer)
     {
-        m_Bullets = new BulletContainer[maxBullets];
-        _colors = new Vector4[maxBullets];
-        for (int i = 0; i < maxBullets; i++)
-        {
-            _colors[i] = Vector4.one;
-        }
+        m_Bullets = new BulletContainer[settings.MaxBullets];
+     //   _colors = new Vector4[maxBullets];
+        //for (int i = 0; i < maxBullets; i++)
+        //{
+        //    _colors[i] = Vector4.one;
+        //}
         m_DeadBulletContainer = deadBulletContainer;
-        m_MaxBullets = maxBullets;
-        PoolID = poolID;
-        BulletPrefab = bulletPrefab;
-        for (int i = 0; i < m_MaxBullets/2; i++)
+        this.settings = settings;
+       
+        for (int i = 0; i < settings.MaxBullets / 2; i++)
         {
-            var bullet = m_Bullets[i];
-            if (!bullet.IsInitialized)
+            if (!m_Bullets[i].IsInitialized)
             {
-                bullet.Bullet = Object.Instantiate(BulletPrefab);
-                bullet.Bullet.gameObject.transform.name = $"{i}";
-                bullet.IsInitialized = true;
+                m_Bullets[i] = InitializeBullet(i);
             }
-            m_Bullets[i] = bullet;
             continue;
 
 
@@ -55,26 +48,36 @@ public class BulletPool {
         }
     }
 
-    public void RequestBullet(Vector3 position, Vector3 direction, float speed, Transform parent)
+    public BulletContainer InitializeBullet(int i)
     {
-        for (int i = 0; i < m_MaxBullets; i++)
+
+        m_Bullets[i].PoolID = settings.ID;
+        m_Bullets[i].ID = i;
+        m_Bullets[i].Bullet = Object.Instantiate(settings.Prefab);
+        m_Bullets[i].Bullet.gameObject.transform.name = $"{settings.ID}_{i}";
+        m_Bullets[i].renderer = m_Bullets[i].Bullet.GetComponent<SpriteRenderer>();
+        m_Bullets[i].IsInitialized = true;
+        return m_Bullets[i];
+    }
+
+    public void RequestBullet(Vector3 position, Vector3 direction, Transform parent)
+    {
+        for (int i = 0; i < settings.MaxBullets; i++)
         {
             var bullet = m_Bullets[i];
             if (!bullet.IsAlive)
             {
                 if (!bullet.IsInitialized)
                 {
-                    bullet.Bullet = Object.Instantiate(BulletPrefab);
-                    bullet.Bullet.gameObject.transform.name = $"{i}";
-                    bullet.IsInitialized = true;
+                    m_Bullets[i] = InitializeBullet(i);
                 }
-                bullet.PoolID = PoolID;
-                bullet.ID = i;
+               
+                
                 bullet.Bullet.transform.SetParent(parent);
                 bullet.Bullet.transform.position = position;
                 bullet.IsAlive = true;
                 bullet.Bullet.gameObject.SetActive(true);
-                bullet.Bullet.velocity = direction * speed;
+                bullet.Bullet.velocity = direction * settings.Speed;
                 bullet.lifetime = 2f;
                 m_Bullets[i] = bullet;
                 return;
@@ -86,13 +89,16 @@ public class BulletPool {
     public int UpdateLifetime(float deltaTime)
     {
         int bullets = 0;
-        for (int i = 0; i < m_MaxBullets; i++)
+        for (int i = 0; i < settings.MaxBullets; i++)
         {
             if (!m_Bullets[i].IsAlive) continue;
             bullets++;
             var bullet = m_Bullets[i];
 
             bullet.timer += deltaTime;
+
+
+            bullet.renderer.sprite = settings.Sprites[(int)((bullet.timer * settings.AnimationSpeed) % settings.Sprites.Length)];
             if (bullet.timer > bullet.lifetime)
             {
                 ReturnBullet(bullet.ID);
@@ -114,6 +120,7 @@ public class BulletPool {
 
     public void ReturnBullet(int ID)
     {
+      
         m_Bullets[ID].timer = 0;
         m_Bullets[ID].IsAlive = false;
         m_Bullets[ID].Bullet.gameObject.SetActive(false);
@@ -186,11 +193,13 @@ public class BulletPool {
 
 public struct BulletContainer
 {
+    public Rigidbody2D Bullet;
+    public SpriteRenderer renderer;
+    public float lifetime;
+    public float timer;
     public bool IsInitialized;
     public int ID;
     public int PoolID;
-    public Rigidbody2D Bullet;
     public bool IsAlive;
-    public float lifetime;
-    public float timer;
+
 }

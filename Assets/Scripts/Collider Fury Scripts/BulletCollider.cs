@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class BulletCollider : MonoBehaviour
 {
-    
+
+    string[] split;
+
+    public delegate void OnBulletHit(BulletType bulletType);
+    public event OnBulletHit OnBulletHitEvent;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
-
-     //   Debug.Log("hit trigger");
-
-        BulletManager.Instance.ReturnBullet(int.Parse(collision.transform.name));
-
+        split = collision.transform.name.Split('_');
+        (int pool, int id) = (int.Parse(split[0]), int.Parse(split[1]));
+        OnBulletHitEvent.Invoke((BulletType)pool);
+        BulletManager.Instance.ReturnBullet(pool, id);
     }
 
 

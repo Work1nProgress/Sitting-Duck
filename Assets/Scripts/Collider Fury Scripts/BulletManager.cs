@@ -6,86 +6,125 @@ using UnityEngine.InputSystem;
 
 public class BulletManager : MonoBehaviour
 {
-
-    [SerializeField]
-    Rigidbody2D prefab;
-
-    [SerializeField]
-    Collider2D c;
-
     [SerializeField]
     TextMeshProUGUI bulletCount, enemyCount, bulletsPershot;
 
-    BulletPool bp;
+    BulletPool[] bp;
     static BulletManager m_Instance;
     public static BulletManager Instance => m_Instance;
-    float timer = 0;
-    public void Start()
+
+
+
+    [SerializeField]
+    BulletSettings[] BulletSettings;
+
+    public void Init()
     {
         m_Instance = this;
-        bp = new BulletPool();
-        bp.Init(1000, 0, transform, prefab);
-        //for (int i = 0; i < 1000; i++)
-        //{
-        //    bp.RequestBullet(new Vector3(), new Vector3(Random.Range(-1f,1f), Random.Range(-1f, 1f), 0), 1f, null);
-        //}
-        var enemies = 500;
-        for (int i = 0; i < enemies; i++)
+        bp = new BulletPool[BulletSettings.Length];
+        for (int i = 0; i < BulletSettings.Length; i++)
         {
-            Instantiate(c, new Vector3(Random.Range(-5, 5f), Random.Range(-5f, 5f), 0), Quaternion.identity, null);
+            var pool = new BulletPool();
+            pool.Init(BulletSettings[i], transform);
+            bp[i] = pool;
 
-        }
-        enemyCount.text = $"EnemyCount: {enemies}";
-        c.gameObject.SetActive(false);
-        prefab.gameObject.SetActive(false);
+        }     
     }
-    float shootSpeed = 0.1f;
-    int bullets = 1;
-    void FixedUpdate()
+
+    #region debug
+
+    float timer = 0;
+    //[SerializeField]
+    //bool fixedUpdate = true;
+    //void FixedUpdate()
+    //{
+    //    if (fixedUpdate)
+    //    {
+    //        UpdateFrame(Time.fixedDeltaTime);
+    //    }
+
+    //}
+
+    private void Update()
     {
-        if (Keyboard.current.upArrowKey.value > 0)
-        {
-            bullets++;
+
+            UpdateFrame(Time.deltaTime);
+    }
+
+    void UpdateFrame(float deltaTime)
+    {
+        for (int i = 0; i < bp.Length; i++) {
+            bp[i].UpdateLifetime(deltaTime);
         }
-        else if(Keyboard.current.downArrowKey.value > 0)
-        {
-            bullets--;
-        }
-        bullets = Mathf.Max(1, bullets);
+        //if (Keyboard.current.upArrowKey.value > 0)
+        //{
+        //    bullets++;
+        //}
+        //else if (Keyboard.current.downArrowKey.value > 0)
+        //{
+        //    bullets--;
+        //}
+        //bullets = Mathf.Max(1, bullets);
 
-        if (timer > shootSpeed)
-        {
-            timer = 0;
-            if (Mouse.current.leftButton.value > 0)
-            {
-                var circle = Mathf.PI * 2;
+        //if (timer > shootSpeed)
+        //{
+        //    timer = 0;
+        //    if (Mouse.current.leftButton.value > 0)
+        //    {
+        //        var circle = Mathf.PI * 2;
 
-                var delta = circle / bullets;
-                var angle = Time.timeSinceLevelLoad % Mathf.PI;
-                for (int i = 0; i < bullets; i++)
-                {
-                    var pos = Camera.main.ScreenToWorldPoint(Mouse.current.position.value);
-                    bp.RequestBullet(new Vector3(pos.x, pos.y, 0), new Vector3(Mathf.Sin(angle), Mathf.Cos(angle)), 10f, null);
-                    angle += delta;
-                }
-            }
+        //        var delta = circle / bullets;
+        //        var angle = Time.timeSinceLevelLoad % Mathf.PI;
+        //        for (int i = 0; i < bullets; i++)
+        //        {
+        //            var pos = Camera.main.ScreenToWorldPoint(Mouse.current.position.value);
+        //            bp[0].RequestBullet(new Vector3(pos.x, pos.y, 0), new Vector3(Mathf.Sin(angle), Mathf.Cos(angle)), null);
+        //            angle += delta;
+        //        }
+        //    }
 
-        }
-        timer += Time.fixedDeltaTime;
-        bulletCount.text = $"bulletCount {bp.UpdateLifetime(Time.fixedDeltaTime)}";
-        bulletsPershot.text = $"bulets per shot: {bullets}";
-
+        //}
+        //timer += deltaTime;
+        //bulletCount.text = $"bulletCount {}";
+        //bulletsPershot.text = $"bulets per shot: {bullets}";
 
     }
+    #endregion
 
     public void ReturnBullet(int poolID, Transform t)
     {
-        bp.ReturnBullet(t);
+        bp[poolID].ReturnBullet(t);
     }
 
-    public void ReturnBullet(int ID)
+    public void ReturnBullet(int poolID, int ID)
     {
-        bp.ReturnBullet(ID);
+        bp[poolID].ReturnBullet(ID);
     }
 
+    public void RequestBullet(BulletType bulletType, Vector3 position, Vector3 direction)
+    {
+
+        bp[(int)bulletType].RequestBullet(position, direction, null);
+    }
+
+}
+
+[System.Serializable]
+public class BulletSettings
+{
+    public int ID;
+    public Sprite[] Sprites;
+    public int InitialPoolSize;
+    public Rigidbody2D Prefab;
+    public float AnimationSpeed;
+    public int MaxBullets;
+    public float Speed;
+
+
+}
+
+public enum BulletType
+{
+    Player = 0,
+    Enemy = 1
 }
