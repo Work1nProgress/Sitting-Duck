@@ -8,11 +8,16 @@ public class Projectile : PoolObject
     int _damage;
     float _speed;
 
-    public void Initialize(int damage, EntityType typeToHit, float speed)
+    CountdownTimer _projectileLifeTimer;
+
+    public virtual void Initialize(int damage, EntityType typeToHit, float speed)
     {
         _damage = damage;
         _typeToHit = typeToHit;
         _speed = speed;
+
+        _projectileLifeTimer = new CountdownTimer(5f, false, false);
+        _projectileLifeTimer.OnTimerExpired += Despawn;
     }
 
     void Start()
@@ -20,11 +25,17 @@ public class Projectile : PoolObject
         
     }
 
-    void FixedUpdate()
+    protected virtual void Update()
+    {
+        if(_projectileLifeTimer != null)
+        _projectileLifeTimer.Update(Time.deltaTime);
+    }
+
+    protected virtual void FixedUpdate()
     {
         transform.position = transform.position + transform.up * _speed;
 
-        
+        CheckForHit();
     }
 
     private void CheckForHit()
@@ -43,6 +54,11 @@ public class Projectile : PoolObject
         }
 
         if (hitSuccess)
-            PoolManager.Despawn(this);
+            Despawn();
+    }
+
+    protected void Despawn()
+    {
+        PoolManager.Despawn(this);
     }
 }

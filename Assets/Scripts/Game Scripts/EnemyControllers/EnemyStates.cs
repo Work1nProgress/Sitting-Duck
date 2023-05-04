@@ -39,18 +39,24 @@ public abstract class EnemyState
 
     public virtual void DecomissionState() { _stateTimer.OnTimerExpired -= TimeExpired; }
 
-    public void LookAtPosition(Vector3 position)
+    public virtual void LookAtPosition(Vector3 position)
     {
         Vector3 positionDifference = (position - _transform.position).normalized;
         float angle = Mathf.Atan2(positionDifference.y, positionDifference.x) * Mathf.Rad2Deg;
         _transform.rotation = Quaternion.Euler(0, 0, angle - 90);
     }
 
-    public void MoveTowardsPosition(Vector3 position, float speed)
+    public virtual void MoveTowardsPosition(Vector3 position, float speed)
     {
         _transform.position = _transform.position +
                 (position - _transform.position).normalized *
                 speed * 0.1f;
+    }
+
+    protected virtual void FireProjectile()
+    {
+        Projectile projectile = PoolManager.Spawn<Projectile>("Projectile", null, _transform.position + _transform.up * 0.5f, _transform.rotation);
+        projectile.Initialize(1, EntityType.Player, 0.5f);
     }
 
     public struct EnemyStateData
@@ -103,7 +109,7 @@ public class ApproachPlayerEnemyState : EnemyState
     private float _attackPlayerRadius;
 
     private CountdownTimer _updateTargetPositionTimer;
-
+    private CountdownTimer _fireProjectileTimer;
 
     public ApproachPlayerEnemyState(float walkSpeed, float attackPlayerRadius)
     {
@@ -120,6 +126,9 @@ public class ApproachPlayerEnemyState : EnemyState
         _updateTargetPositionTimer = new CountdownTimer(0.125f, false, true);
         _updateTargetPositionTimer.OnTimerExpired += UpdateTargetPosition;
         _updateTargetPositionTimer.OnTimerExpired += CheckForPlayer;
+
+        _fireProjectileTimer = new CountdownTimer(0.5f, false, true);
+        _fireProjectileTimer.OnTimerExpired += FireProjectile;
     }
 
     public override void EnterState()
@@ -134,6 +143,7 @@ public class ApproachPlayerEnemyState : EnemyState
         base.UpdateState();
 
         _updateTargetPositionTimer.Update(Time.deltaTime);
+        _fireProjectileTimer.Update(Time.deltaTime);
     }
 
     public override void FixedUpdateState()
