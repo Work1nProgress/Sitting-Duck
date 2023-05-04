@@ -5,8 +5,10 @@ using UnityEngine;
 public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
 {
     [SerializeField] EntityType _entityType;
-
+    public int MaxHealth => _maxHealth;
     [SerializeField] private int _maxHealth;
+
+    public int Health => _health;
     private int _health;
 
     [SerializeField] private int _experience;
