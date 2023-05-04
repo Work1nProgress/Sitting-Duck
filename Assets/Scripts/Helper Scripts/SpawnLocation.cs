@@ -31,7 +31,6 @@ public class SpawnLocation : MonoBehaviour
                 else
                     entitiesInRadius++;
         }
-
         if (entitiesInRadius > _maximumEntitiesInRadius)
             canSpawn = false;
 

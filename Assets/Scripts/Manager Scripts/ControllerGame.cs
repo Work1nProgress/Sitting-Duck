@@ -44,6 +44,11 @@ public class ControllerGame : ControllerLocal
 
     #endregion
 
+    [SerializeField]
+    int PlayerBulletDamage = 10;
+
+    [SerializeField]
+    int EnemyBulletDamage = 1;
 
 
     public override void Init()
@@ -65,6 +70,7 @@ public class ControllerGame : ControllerLocal
 
         GetComponent<ControllerDrones>().Init();
         GetComponent < EnemyManager>().Init();
+        GetComponentInChildren<BulletManager>().Init();
         base.Init();
     }
         
@@ -101,6 +107,20 @@ public class ControllerGame : ControllerLocal
     private void OnDestroy()
     {
         _levelResetTimer.OnTimerExpired -= GameManager.Instance.ResetCurrentScene;
+    }
+
+    public void OnBulletHit(EntityStats stats, BulletType bulletType)
+    {
+        switch (bulletType)
+        {
+            case BulletType.Player:
+                stats.Damage(PlayerBulletDamage);
+                break;
+            case BulletType.Enemy:
+                stats.Damage(EnemyBulletDamage);
+                break;
+        }
+
     }
 
 

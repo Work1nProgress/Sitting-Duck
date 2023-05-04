@@ -17,7 +17,8 @@ public class PlayerController : PoolObject
     public float GetAccelerationMultiplier => AccelerationMultiplier;
 
 
-
+    [SerializeField]
+    Animator animator;
     [SerializeField]
     [Range(0,50f)]
     [Tooltip("Values larger than 50 are a no no")]
@@ -59,6 +60,7 @@ public class PlayerController : PoolObject
         }
         else
         {
+            animator.SetTrigger("Roll");
             var currentPos = Mouse.current.position.value;
             var magnitude = (StartPos - currentPos).magnitude;
             if (Vector3.Angle(currentPos - StartPos, ControllerGame.Instance.Player.transform.up) > ControllerGame.Instance.DeadZone)

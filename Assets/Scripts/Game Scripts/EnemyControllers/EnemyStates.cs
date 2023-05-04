@@ -6,7 +6,6 @@ public abstract class EnemyState
 {
     protected Transform _target;
     protected Transform _transform;
-    protected BulletSpawner _bulletSpawner;
     protected EnemyState[] _transitionStates;
     protected CountdownTimer _stateTimer;
     protected string _stateName;
@@ -19,7 +18,6 @@ public abstract class EnemyState
     {
         _target = data.target;
         _transform = data.transform;
-        _bulletSpawner = data.bulletSpawner;
         _transitionStates = (EnemyState[]) data.transitionStates.Clone();
         _stateTimer = new CountdownTimer(data.timeInState, data.timerStartsPaused, false);
         _stateName = data.stateName;
@@ -55,15 +53,14 @@ public abstract class EnemyState
 
     protected virtual void FireProjectile()
     {
-        Projectile projectile = PoolManager.Spawn<Projectile>("Projectile", null, _transform.position + _transform.up * 0.5f, _transform.rotation);
-        projectile.Initialize(1, EntityType.Player, 0.5f);
+        //Projectile projectile = PoolManager.Spawn<Projectile>("Projectile", null, _transform.position + _transform.up * 0.5f, _transform.rotation);
+        //projectile.Initialize(1, EntityType.Player, 0.5f);
     }
 
     public struct EnemyStateData
     {
         public Transform target;
         public Transform transform;
-        public BulletSpawner bulletSpawner;
         public EnemyState[] transitionStates;
         public float timeInState;
         public bool timerStartsPaused;
@@ -72,7 +69,6 @@ public abstract class EnemyState
         public EnemyStateData(
         Transform target,
         Transform transform,
-        BulletSpawner bulletSpawner,
         EnemyState[] transitionStates,
         float timeInState,
         bool timerStartsPaused,
@@ -80,7 +76,6 @@ public abstract class EnemyState
         {
             this.target = target;
             this.transform = transform;
-            this.bulletSpawner = bulletSpawner;
             this.transitionStates = (EnemyState[]) transitionStates.Clone();
             this.timeInState = timeInState;
             this.timerStartsPaused = timerStartsPaused;

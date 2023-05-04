@@ -23,6 +23,9 @@ public class CountdownTimer
     private bool _timerPaused;
     private bool _restartOnExpiration;
 
+    public float TimeLeft => _timeLeft;
+    public bool TimerPaused => _timerPaused;
+
     public delegate void TimerExpiredSignature();
     public event TimerExpiredSignature OnTimerExpired;
 
@@ -41,13 +44,14 @@ public class CountdownTimer
 
         if (_timeLeft <= 0)
         {
+            if (!_restartOnExpiration)
+                Pause();
+
             if (OnTimerExpired != null)
                 OnTimerExpired.Invoke();
 
             Reset();
 
-            if (!_restartOnExpiration)
-                Pause();
         }
     }
     public void Pause() { _timerPaused = true; }

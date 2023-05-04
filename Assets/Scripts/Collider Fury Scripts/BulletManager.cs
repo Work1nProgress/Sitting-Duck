@@ -6,8 +6,7 @@ using UnityEngine.InputSystem;
 
 public class BulletManager : MonoBehaviour
 {
-    [SerializeField]
-    TextMeshProUGUI bulletCount, enemyCount, bulletsPershot;
+  
 
     BulletPool[] bp;
     static BulletManager m_Instance;
@@ -17,6 +16,7 @@ public class BulletManager : MonoBehaviour
 
     [SerializeField]
     BulletSettings[] BulletSettings;
+    bool isInitialized;
 
     public void Init()
     {
@@ -28,12 +28,13 @@ public class BulletManager : MonoBehaviour
             pool.Init(BulletSettings[i], transform);
             bp[i] = pool;
 
-        }     
+        }
+        isInitialized = true;
     }
 
     #region debug
 
-    float timer = 0;
+    //float timer = 0;
     //[SerializeField]
     //bool fixedUpdate = true;
     //void FixedUpdate()
@@ -47,8 +48,10 @@ public class BulletManager : MonoBehaviour
 
     private void Update()
     {
+        if (isInitialized){
 
             UpdateFrame(Time.deltaTime);
+        }
     }
 
     void UpdateFrame(float deltaTime)
@@ -101,10 +104,10 @@ public class BulletManager : MonoBehaviour
         bp[poolID].ReturnBullet(ID);
     }
 
-    public void RequestBullet(BulletType bulletType, Vector3 position, Vector3 direction)
+    public void RequestBullet(BulletType bulletType, Vector3 position, Vector3 direction, float rotation, float lifetime)
     {
 
-        bp[(int)bulletType].RequestBullet(position, direction, null);
+        bp[(int)bulletType].RequestBullet(position, direction,rotation, null, lifetime);
     }
 
 }

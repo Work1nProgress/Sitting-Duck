@@ -10,20 +10,51 @@ public class BulletCollider : MonoBehaviour
     public delegate void OnBulletHit(BulletType bulletType);
     public event OnBulletHit OnBulletHitEvent;
 
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
+
+        if (OnBulletHitEvent == null)
+        {
+            return;
+        }
+
+        //this handles chainsaw drones
+        if (collision.attachedRigidbody.gameObject.layer == 7 && gameObject.layer == 10)
+        {
+            Debug.Log($"on trigger enter chainsaw", this);
+          
+            OnBulletHitEvent.Invoke(BulletType.Player);
+            return;
+        }
+
         split = collision.transform.name.Split('_');
         (int pool, int id) = (int.Parse(split[0]), int.Parse(split[1]));
         OnBulletHitEvent.Invoke((BulletType)pool);
         BulletManager.Instance.ReturnBullet(pool, id);
     }
 
+  
 
-    Vector3 Direction;
-    private void FixedUpdate()
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        Direction +=  new Vector3(Random.Range(-0.1f, 0.1f), Random.Range(-0.1f, 0.1f), 0) * Time.deltaTime;
-        transform.position += Direction;
-    }
+        if (OnBulletHitEvent == null)
+        {
+            return;
+        }
 
+        //this handles chainsaw drones
+        if (collision.attachedRigidbody.gameObject.layer == 7 && gameObject.layer == 10)
+        {
+            Debug.Log($"on trigger stay chainsaw", this);
+            OnBulletHitEvent.Invoke(BulletType.Player);
+            return;
+        }
+
+        split = collision.transform.name.Split('_');
+        (int pool, int id) = (int.Parse(split[0]), int.Parse(split[1]));
+        OnBulletHitEvent.Invoke((BulletType)pool);
+        BulletManager.Instance.ReturnBullet(pool, id);
+    }
 }

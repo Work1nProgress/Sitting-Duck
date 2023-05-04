@@ -56,11 +56,13 @@ public class BulletPool {
         m_Bullets[i].Bullet = Object.Instantiate(settings.Prefab);
         m_Bullets[i].Bullet.gameObject.transform.name = $"{settings.ID}_{i}";
         m_Bullets[i].renderer = m_Bullets[i].Bullet.GetComponent<SpriteRenderer>();
+        m_Bullets[i].Bullet.gameObject.SetActive(false);
+        m_Bullets[i].Bullet.transform.SetParent(m_DeadBulletContainer);
         m_Bullets[i].IsInitialized = true;
         return m_Bullets[i];
     }
 
-    public void RequestBullet(Vector3 position, Vector3 direction, Transform parent)
+    public void RequestBullet(Vector3 position, Vector3 direction, float rotation, Transform parent, float lifetime)
     {
         for (int i = 0; i < settings.MaxBullets; i++)
         {
@@ -75,10 +77,11 @@ public class BulletPool {
                 
                 bullet.Bullet.transform.SetParent(parent);
                 bullet.Bullet.transform.position = position;
+                bullet.Bullet.transform.rotation = Quaternion.Euler(0, 0, rotation);
                 bullet.IsAlive = true;
                 bullet.Bullet.gameObject.SetActive(true);
                 bullet.Bullet.velocity = direction * settings.Speed;
-                bullet.lifetime = 2f;
+                bullet.lifetime = lifetime;
                 m_Bullets[i] = bullet;
                 return;
                

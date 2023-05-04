@@ -23,7 +23,6 @@ public class EnemyTestController : EnemyController
         EnemyState.EnemyStateData stateData = new EnemyState.EnemyStateData(
             null,
             transform,
-            null,
             new EnemyState[1],
             0,
             false,

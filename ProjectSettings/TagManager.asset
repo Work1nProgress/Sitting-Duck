@@ -16,8 +16,8 @@ TagManager:
   - 
   - PlayerBullet
   - PlayerBulletTarget
-  - 
-  - 
+  - EnemyBullet
+  - EnemyBulletTarget
   - 
   - 
   - 

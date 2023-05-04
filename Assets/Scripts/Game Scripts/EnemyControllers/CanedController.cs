@@ -31,10 +31,9 @@ public class CanedController : EnemyController
 
     private void Init()
     {
-        EnemyState.EnemyStateData stateData = new EnemyState.EnemyStateData(
+       EnemyState.EnemyStateData stateData = new EnemyState.EnemyStateData(
        ControllerGame.Instance.Player.transform,
        transform,
-       null,
        new EnemyState[1] { _meleeAttackEnemyState },
        1,
        true,

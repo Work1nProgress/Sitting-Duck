@@ -70,4 +70,67 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 2620932504292568454, guid: 2fb91077c0c5443e29095723970ef608, type: 3}
     - {fileID: -1568448945139682787, guid: 2fb91077c0c5443e29095723970ef608, type: 3}
+    - {fileID: 2370755010369763635, guid: 2fb91077c0c5443e29095723970ef608, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2fb91077c0c5443e29095723970ef608, type: 3}
+--- !u!1 &2878622044698395721 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3146679714670608303, guid: 2fb91077c0c5443e29095723970ef608, type: 3}
+  m_PrefabInstance: {fileID: 889931486613289958}
+  m_PrefabAsset: {fileID: 0}
+--- !u!50 &5144884933739662296
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2878622044698395721}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!58 &1554211024540197603
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2878622044698395721}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.8
+--- !u!114 &7857731923107750939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2878622044698395721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31ff40838670b4fdebc0eb3e1f0c538a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 
+  followRate: 60
+  Animator: {fileID: 8338353702314586061}
+--- !u!95 &8338353702314586061 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9218414868548490283, guid: 2fb91077c0c5443e29095723970ef608, type: 3}
+  m_PrefabInstance: {fileID: 889931486613289958}
+  m_PrefabAsset: {fileID: 0}
