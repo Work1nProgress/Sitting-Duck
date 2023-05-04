@@ -6,7 +6,6 @@ public abstract class EnemyState
 {
     protected Transform _target;
     protected Rigidbody2D _rigidBody;
-    protected BulletSpawner _bulletSpawner;
     protected EnemyState[] _transitionStates;
     protected CountdownTimer _stateTimer;
     protected string _stateName;
@@ -19,7 +18,6 @@ public abstract class EnemyState
     {
         _target = data.target;
         _rigidBody = data.rigidBody;
-        _bulletSpawner = data.bulletSpawner;
         _transitionStates = (EnemyState[]) data.transitionStates.Clone();
         _stateTimer = new CountdownTimer(data.timeInState, data.timerStartsPaused, false);
         _stateName = data.stateName;
@@ -43,7 +41,6 @@ public abstract class EnemyState
     {
         public Transform target;
         public Rigidbody2D rigidBody;
-        public BulletSpawner bulletSpawner;
         public EnemyState[] transitionStates;
         public float timeInState;
         public bool timerStartsPaused;
@@ -52,7 +49,6 @@ public abstract class EnemyState
         public EnemyStateData(
         Transform target,
         Rigidbody2D rigidBody,
-        BulletSpawner bulletSpawner,
         EnemyState[] transitionStates,
         float timeInState,
         bool timerStartsPaused,
@@ -60,7 +56,6 @@ public abstract class EnemyState
         {
             this.target = target;
             this.rigidBody = rigidBody;
-            this.bulletSpawner = bulletSpawner;
             this.transitionStates = (EnemyState[]) transitionStates.Clone();
             this.timeInState = timeInState;
             this.timerStartsPaused = timerStartsPaused;
@@ -111,8 +106,6 @@ public class ApproachPlayerEnemyState : EnemyState
     public override void EnterState()
     {
         base.EnterState();
-
-        _bulletSpawner?.StopFiring();
     }
 
     public override void UpdateState()

@@ -20,7 +20,6 @@ public class DroneBase : PoolObject
 
     float MaxDistance = 5;
 
-    BulletSpawner bulletSpawner;
 
     [SerializeField]
     Animator Animator;
@@ -31,8 +30,6 @@ public class DroneBase : PoolObject
         this.offset = offset;
         this.rotationOffset = rotationOffset;
         isInitialized = true;
-        bulletSpawner = GetComponent<BulletSpawner>();
-        bulletSpawner?.BeginFiring();
         Animator.SetFloat("Offset", Random.value);
         //Time.timeScale = 0.1f;
     }
