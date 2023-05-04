@@ -7,7 +7,8 @@ public class GameManager : GenericSingleton<GameManager>
 {
     private string _currentScene;
 
- 
+    public delegate void OnSceneLoadedSignature();
+    public event OnSceneLoadedSignature OnSceneLoaded;
 
     protected override void Awake()
     {
@@ -38,12 +39,7 @@ public class GameManager : GenericSingleton<GameManager>
         {
             controllerLocal.Init();
         }
-       
 
-
+        OnSceneLoaded?.Invoke();
     }
-
-   
-
-    
 }

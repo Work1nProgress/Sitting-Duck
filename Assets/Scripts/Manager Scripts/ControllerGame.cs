@@ -60,6 +60,7 @@ public class ControllerGame : ControllerLocal
         };
 
         playerController = PoolManager.Spawn<PlayerController>("Player", null);
+        
         Camera.main.transform.parent.GetComponentInChildren<CinemachineVirtualCamera>().Follow = playerController.transform;
 
 
