@@ -33,7 +33,7 @@ public class CanedController : EnemyController
     {
         EnemyState.EnemyStateData stateData = new EnemyState.EnemyStateData(
        ControllerGame.Instance.Player.transform,
-       _rigidbody,
+       transform,
        null,
        new EnemyState[1] { _meleeAttackEnemyState },
        1,
