@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class EnemyState
 {
     protected Transform _target;
-    protected Rigidbody2D _rigidBody;
+    protected Transform _transform;
     protected BulletSpawner _bulletSpawner;
     protected EnemyState[] _transitionStates;
     protected CountdownTimer _stateTimer;
@@ -18,7 +18,7 @@ public abstract class EnemyState
     public virtual void InitializeState(EnemyStateData data)
     {
         _target = data.target;
-        _rigidBody = data.rigidBody;
+        _transform = data.transform;
         _bulletSpawner = data.bulletSpawner;
         _transitionStates = (EnemyState[]) data.transitionStates.Clone();
         _stateTimer = new CountdownTimer(data.timeInState, data.timerStartsPaused, false);
@@ -42,7 +42,7 @@ public abstract class EnemyState
     public struct EnemyStateData
     {
         public Transform target;
-        public Rigidbody2D rigidBody;
+        public Transform transform;
         public BulletSpawner bulletSpawner;
         public EnemyState[] transitionStates;
         public float timeInState;
@@ -51,7 +51,7 @@ public abstract class EnemyState
 
         public EnemyStateData(
         Transform target,
-        Rigidbody2D rigidBody,
+        Transform transform,
         BulletSpawner bulletSpawner,
         EnemyState[] transitionStates,
         float timeInState,
@@ -59,7 +59,7 @@ public abstract class EnemyState
         string stateName)
         {
             this.target = target;
-            this.rigidBody = rigidBody;
+            this.transform = transform;
             this.bulletSpawner = bulletSpawner;
             this.transitionStates = (EnemyState[]) transitionStates.Clone();
             this.timeInState = timeInState;
@@ -126,16 +126,14 @@ public class ApproachPlayerEnemyState : EnemyState
     {
         base.FixedUpdateState();
 
-        if(_rigidBody != null)
-        {
-            _rigidBody.MovePosition(_rigidBody.position +
-                ((Vector2)_targetPosition - _rigidBody.position).normalized *
-                _walkSpeed * 0.1f);
+        
+            _transform.position = _transform.position +
+                (_targetPosition - _transform.position).normalized *
+                _walkSpeed * 0.1f;
 
-            Quaternion newRotation = Quaternion.LookRotation(_target.transform.position - (Vector3)_rigidBody.position, Vector3.back);
-
-            _rigidBody.SetRotation(newRotation);
-        }
+        Vector3 positionDifference = (_target.position - _transform.position).normalized;
+        float angle = Mathf.Atan2(positionDifference.y, positionDifference.x) * Mathf.Rad2Deg;
+        _transform.rotation = Quaternion.Euler(0, 0, angle - 90);
     }
 
     public override void DecomissionState()
@@ -153,7 +151,7 @@ public class ApproachPlayerEnemyState : EnemyState
 
     private void CheckForPlayer()
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(_rigidBody.position, _attackPlayerRadius);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(_transform.position, _attackPlayerRadius);
 
         foreach(Collider2D collider in colliders)
         {
@@ -207,27 +205,40 @@ public class MeleeAttackEnemyState : EnemyState
         _hitTimer.Update(Time.deltaTime);
     }
 
+    public override void FixedUpdateState()
+    {
+        base.FixedUpdateState();
+
+        Vector3 positionDifference = (_target.position - _transform.position).normalized;
+        float angle = Mathf.Atan2(positionDifference.y, positionDifference.x) * Mathf.Rad2Deg;
+        _transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+    }
+
     private void BeginAttack()
     {
         ResetAttackTimers();
-        Debug.DrawLine(_rigidBody.position, (Vector3)_rigidBody.position + (_attackBoxLength * _rigidBody.transform.up), Color.yellow, _windUpTime);
+        Debug.DrawLine(_transform.position, _transform.position + (_attackBoxLength * _transform.up), Color.yellow, _windUpTime);
     }
 
     private void AttackHit()
     {
-        Debug.DrawLine(_rigidBody.position, (Vector3)_rigidBody.position + (_rigidBody.transform.up * _attackBoxLength), Color.red, 0.125f);
+        Debug.DrawLine(_transform.position, _transform.position + (_transform.up * _attackBoxLength), Color.red, 0.125f);
+
+        Vector3 something;
+        float angle;
+        _transform.rotation.ToAngleAxis(out angle, out something);
 
         Collider2D[] colliders = Physics2D.OverlapBoxAll(
-            (Vector3)_rigidBody.position +
-            (_attackBoxLength / 2 * _rigidBody.transform.up),
+            _transform.position +
+            (_attackBoxLength / 2 * _transform.up),
             new Vector2(_attackBoxwidth, _attackBoxLength),
-            _rigidBody.rotation);
+            angle);
 
         foreach(Collider2D collider in colliders)
         {
             IEntityHealth healthComponent = collider.GetComponent<IEntityHealth>();
             if(healthComponent != null &&
-                collider.gameObject != _rigidBody.gameObject)
+                collider.gameObject != _transform.gameObject)
             {
                 healthComponent.Damage(_damage);
             }
