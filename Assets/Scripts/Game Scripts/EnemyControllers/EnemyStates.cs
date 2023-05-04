@@ -39,6 +39,20 @@ public abstract class EnemyState
 
     public virtual void DecomissionState() { _stateTimer.OnTimerExpired -= TimeExpired; }
 
+    public void LookAtPosition(Vector3 position)
+    {
+        Vector3 positionDifference = (position - _transform.position).normalized;
+        float angle = Mathf.Atan2(positionDifference.y, positionDifference.x) * Mathf.Rad2Deg;
+        _transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+    }
+
+    public void MoveTowardsPosition(Vector3 position, float speed)
+    {
+        _transform.position = _transform.position +
+                (position - _transform.position).normalized *
+                speed * 0.1f;
+    }
+
     public struct EnemyStateData
     {
         public Transform target;
@@ -126,14 +140,8 @@ public class ApproachPlayerEnemyState : EnemyState
     {
         base.FixedUpdateState();
 
-        
-            _transform.position = _transform.position +
-                (_targetPosition - _transform.position).normalized *
-                _walkSpeed * 0.1f;
-
-        Vector3 positionDifference = (_target.position - _transform.position).normalized;
-        float angle = Mathf.Atan2(positionDifference.y, positionDifference.x) * Mathf.Rad2Deg;
-        _transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+        MoveTowardsPosition(_targetPosition, _walkSpeed);
+        LookAtPosition(_target.position);
     }
 
     public override void DecomissionState()
@@ -209,9 +217,7 @@ public class MeleeAttackEnemyState : EnemyState
     {
         base.FixedUpdateState();
 
-        Vector3 positionDifference = (_target.position - _transform.position).normalized;
-        float angle = Mathf.Atan2(positionDifference.y, positionDifference.x) * Mathf.Rad2Deg;
-        _transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+        LookAtPosition(_target.position);
     }
 
     private void BeginAttack()
