@@ -1378,7 +1378,7 @@ PrefabInstance:
     - target: {fileID: 55297085178276502, guid: be2cf19b1ab154c8aa4bf1baeb790ae2, type: 3}
       propertyPath: BulletSettings.Array.data[0].Prefab
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1226640097604625738, guid: 44ddfee59a7c5421ba074fab5ac3af72, type: 3}
     - target: {fileID: 55297085178276503, guid: be2cf19b1ab154c8aa4bf1baeb790ae2, type: 3}
       propertyPath: m_RootOrder
       value: 2
