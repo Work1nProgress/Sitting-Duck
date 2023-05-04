@@ -12,9 +12,7 @@ GameObject:
   - component: {fileID: 973201739699793392}
   - component: {fileID: 973201739699793404}
   - component: {fileID: 4357240285149041425}
-  - component: {fileID: 973201739699793395}
   - component: {fileID: 1225142422}
-  - component: {fileID: -1857588742393845953}
   m_Layer: 0
   m_Name: TestEnemy
   m_TagString: Untagged
@@ -77,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 5
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
   m_Color: {r: 0.5566038, g: 0.107645065, b: 0.107645065, a: 1}
   m_FlipX: 0
@@ -102,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: 
-  _walkSpeed: 0.45
+  _walkSpeed: 0.65
   _attackPlayerRadius: 3
   _attackDamage: 1
   _attackWindUpTime: 1.5
@@ -119,33 +117,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _entityType: 1
-  _maxHealth: 10
-  _experience: 0
+  _maxHealth: 25
+  _experience: 5
   _startLevel: 1
   _maxLevel: 10
+  _levelupThresholds: 
   _tags:
   - test enemy
---- !u!50 &973201739699793395
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 973201739699793398}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 100
-  m_AngularDrag: 100
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!70 &1225142422
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -162,44 +140,3 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.03}
   m_Size: {x: 0.79, y: 0.76}
   m_Direction: 0
---- !u!114 &-1857588742393845953
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 973201739699793398}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9add1c9d0cf8e4cb28a0121845c457c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletLayersToBeHitBy:
-    serializedVersion: 2
-    m_Bits: 128
-  shape: 0
-  radius: 0.5
-  size: {x: 1, y: 1, z: 1}
-  destroyBullet: 1
-  center: {x: 0, y: 0, z: 0}
-  pointA: {x: 0, y: 0, z: 0}
-  pointB: {x: 0, y: 0, z: 0}
-  pointC: {x: 0, y: 0, z: 0}
-  OnCollide:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4357240285149041425}
-        m_TargetAssemblyTypeName: EntityStats, GameAssembly
-        m_MethodName: Damage
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  bounce: 0
-  lifetimeLoss: 0
-  bounciness: 0

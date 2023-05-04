@@ -129,7 +129,8 @@ public class SpawnPattern
     private void SpawnEnemyBatch()
     {
         _SpawnEventsExecuted++;
-        if (_SpawnEventsExecuted >= _maximumSpawnEvents)
+        if (_SpawnEventsExecuted >= _maximumSpawnEvents &&
+            _limitSpawnEvents)
             _spawnTimer.Pause();
 
         for (int i = 0; i < _spawnBatchSize; i++)
