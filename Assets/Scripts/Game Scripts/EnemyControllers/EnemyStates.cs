@@ -98,6 +98,8 @@ public class ChargingEnemyState : EnemyState
     CountdownTimer _chargeDurationTimer;
     Vector3 _chargePoint;
 
+    Vector3 _positionLastFrame = Vector3.zero;
+
     bool _charging;
 
     public ChargingEnemyState(float delay, float speed, float duration)
@@ -119,10 +121,12 @@ public class ChargingEnemyState : EnemyState
 
         _chargePoint = _target.position;
         _chargeDurationTimer.Reset();
+        _animator.SetBool("ChargeWindup", true);
 
         if (_delay > 0)
         {
             _chargeDelay.SetNewTime(_delay);
+            _chargeDelay.Reset();
             _chargeDelay.Resume();
         }
         else BeginCharge();
@@ -134,6 +138,11 @@ public class ChargingEnemyState : EnemyState
 
         _chargeDelay.Update(Time.deltaTime);
         _chargeDurationTimer.Update(Time.deltaTime);
+
+        if (_charging && (_chargePoint - _transform.position).magnitude < 0.5f)
+            EndCharge();
+
+        _positionLastFrame = _transform.position;
     }
 
     public override void FixedUpdateState()
@@ -152,6 +161,8 @@ public class ChargingEnemyState : EnemyState
     private void BeginCharge()
     {
         _charging = true;
+        _animator.SetBool("ChargeWindup", false);
+        _animator.SetBool("Charge", true);
         _chargeDurationTimer.Resume();
     }
 
@@ -160,6 +171,53 @@ public class ChargingEnemyState : EnemyState
         _charging = false;
         _chargeDurationTimer.Reset();
         _chargeDurationTimer.Pause();
+        _animator.SetBool("ChargeWindup", false);
+        _animator.SetBool("Charge", false);
+        InvokeStateChangeRequest(_transitionStates[0]);
+    }
+}
+
+public class SmashEnemyState : EnemyState
+{
+    private int _attackDamage;
+    private float _hitRange = 7;
+    CountdownTimer _hitDelayTimer;
+
+    public SmashEnemyState(int attackDamage, float damageDelay)
+    {
+        _attackDamage = attackDamage;
+        _hitDelayTimer = new CountdownTimer(damageDelay, false, false);
+        _hitDelayTimer.OnTimerExpired += () =>
+        {
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(_transform.position, _hitRange);
+            foreach (Collider2D collider in colliders)
+            {
+                EntityStats entity = collider.GetComponent<EntityStats>();
+                if (entity != null)
+                    if (entity.GetEntityType() == EntityType.Player)
+                        entity.Damage(_attackDamage);
+            }
+        };
+    }
+
+    public override void EnterState()
+    {
+        base.EnterState();
+        _animator.SetBool("Smash", true);
+        _hitDelayTimer.Resume();
+    }
+
+    public override void ExitState()
+    {
+        base.ExitState();
+        _animator.SetBool("Smash", false);
+        _hitDelayTimer.Reset();
+        _hitDelayTimer.Pause();
+    }
+
+    public override void TimeExpired()
+    {
+        base.TimeExpired();
         InvokeStateChangeRequest(_transitionStates[0]);
     }
 }
@@ -239,6 +297,12 @@ public class ApproachPlayerEnemyState : EnemyState
         {
             if (collider.gameObject.name == _target.name)
             {
+                if (_transitionStates.Length > 1 &&
+                    (collider.transform.position - _transform.position).magnitude <= 7)
+                {
+                    InvokeStateChangeRequest(_transitionStates[1]);
+                }
+
                 if( _transitionStates[0] != null)
                     InvokeStateChangeRequest(_transitionStates[0]);
             }

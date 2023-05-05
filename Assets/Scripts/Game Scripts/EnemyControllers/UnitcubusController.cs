@@ -12,6 +12,7 @@ public class UnitcubusController : EnemyController
 
     EnemyState _approachPlayerState;
     EnemyState _chargePlayerState;
+    EnemyState _smashEnemyState;
 
     protected override void Start()
     {
@@ -20,6 +21,7 @@ public class UnitcubusController : EnemyController
 
         _approachPlayerState = new ApproachPlayerEnemyState(_walkSpeed, _chargePlayerRadius);
         _chargePlayerState = new ChargingEnemyState(_chargeDelay, _walkSpeed * _chargeSpeedMultiplier, 3);
+        _smashEnemyState = new SmashEnemyState(_attackDamage, 0.5f);
 
         if (ControllerGame.Instance.Player == null)
         {
@@ -40,7 +42,7 @@ public class UnitcubusController : EnemyController
        ControllerGame.Instance.Player.transform,
        transform,
        _animator,
-       new EnemyState[1] { _chargePlayerState },
+       new EnemyState[2] { _chargePlayerState, _smashEnemyState },
        1000,
        true,
        "Approach Player"
@@ -54,6 +56,11 @@ public class UnitcubusController : EnemyController
         stateData.timeInState = 0.9f;
         stateData.stateName = "Death State";
         _deathState.InitializeState(stateData);
+
+        stateData.timeInState = 0.9f;
+        stateData.stateName = "Smash State";
+        _smashEnemyState.InitializeState(stateData);
+
 
         _activeState = _approachPlayerState;
         base.Start();
