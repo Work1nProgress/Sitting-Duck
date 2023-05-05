@@ -40,7 +40,14 @@ public class CountdownTimer
     public void Update(float deltaTime)
     {
         if (!_timerPaused)
+        {
             _timeLeft -= deltaTime;
+
+        }
+        else
+        {
+            return;
+        }
 
         if (_timeLeft <= 0)
         {

@@ -47,12 +47,15 @@ public class DroneBase : PoolObject
             transform.position = Vector3.Lerp(transform.position, targetPosition, t * Time.deltaTime);
             transform.rotation = targetRotation;
         }
-
-
     }
 
-    
+    public void Animate()
+    {
+        Animator.SetTrigger("Shoot");
+    }
 
-   
+
+
+
 
 }
