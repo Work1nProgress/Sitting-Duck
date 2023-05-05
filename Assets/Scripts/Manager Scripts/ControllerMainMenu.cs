@@ -5,7 +5,7 @@ using UnityEngine;
 public class ControllerMainMenu : ControllerLocal
 {
 
-    string mainScene = "UrbiEtUrbiTestScene";//"GameScene";
+    string mainScene = "GameScene";
     public override void Init()
     {
 

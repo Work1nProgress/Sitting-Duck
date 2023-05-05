@@ -35,7 +35,6 @@ public class UnitcubusController : EnemyController
         EnemyState.EnemyStateData stateData = new EnemyState.EnemyStateData(
        ControllerGame.Instance.Player.transform,
        transform,
-       null,
        new EnemyState[1] { _chargePlayerState },
        1000,
        true,

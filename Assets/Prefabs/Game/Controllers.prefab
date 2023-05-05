@@ -57,15 +57,18 @@ MonoBehaviour:
   - poolObject: {fileID: 7358077560889218892, guid: 213d6bbfc028a4f00b705e6dbfb03bb8, type: 3}
     initialPoolSize: 2
     maxPoolSize: 8
-  - poolObject: {fileID: 973201739699793404, guid: 00ca4a719036ef84fb9b95ba1795e9a5, type: 3}
-    initialPoolSize: 2
-    maxPoolSize: 100
-  - poolObject: {fileID: 9048206466664320461, guid: 49ee072e417086f42adff5d82988809b, type: 3}
+  - poolObject: {fileID: 1368914721132045261, guid: 00ca4a719036ef84fb9b95ba1795e9a5, type: 3}
     initialPoolSize: 20
-    maxPoolSize: 20
+    maxPoolSize: 100
   - poolObject: {fileID: 4202625424547587684, guid: 31e39c2c1844c1e4c92eec5ca2e16d87, type: 3}
     initialPoolSize: 20
     maxPoolSize: 20
+  - poolObject: {fileID: 8591724009998296848, guid: 1956208742caa44bfb96d4afc5dd1620, type: 3}
+    initialPoolSize: 20
+    maxPoolSize: 20
+  - poolObject: {fileID: 4984201115601849450, guid: 4b224d12de4d64cb89691209b4319135, type: 3}
+    initialPoolSize: 20
+    maxPoolSize: 100
 --- !u!1 &5749553159213732891
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,7 +225,26 @@ MonoBehaviour:
   - _enemy: 3
     _spawnBatchSize: 1
     _limitSpawnEvents: 0
-    _maximumSpawnEvents: 0
+    _maximumSpawnEvents: 3
+    _startWithDelay: 0
+    _delay: 0
+    _spawnTimeRange:
+      randomizeSpawnTime: 0
+      spawnTime: 0.5
+      minimumSpawnTime: 0
+      reduceSpawnTime: 0
+      spawnTimeReduction: 0
+    _sequenceThroughTimeRanges: 0
+    _timeRanges:
+    - randomizeSpawnTime: 0
+      spawnTime: 0
+      minimumSpawnTime: 0
+      reduceSpawnTime: 0
+      spawnTimeReduction: 0
+  - _enemy: 0
+    _spawnBatchSize: 1
+    _limitSpawnEvents: 0
+    _maximumSpawnEvents: 3
     _startWithDelay: 0
     _delay: 0
     _spawnTimeRange:

@@ -18,6 +18,7 @@ public class HeartContainer : MonoBehaviour
 
     private void Wakey()
     {
+        GameManager.Instance.OnSceneLoaded -= Wakey;
         _playerStats = ControllerGame.Instance.Player.GetComponent<EntityStats>();
         _maxHealth = _playerStats.MaxHealth;
         _currentHealth = _playerStats.Health;
@@ -26,7 +27,14 @@ public class HeartContainer : MonoBehaviour
 
     private void HealthChanged(int oldhealth, int newhealth, int maxhealth)
     {
-        Debug.Log(newhealth);
+        for (int i = _hearts.Count-1; i >= 0; i--)
+        {
+            if (i >= newhealth)
+            {
+                Destroy(_hearts[i]);
+                _hearts.RemoveAt(i);
+            }
+        }
     }
 
     private void Start()

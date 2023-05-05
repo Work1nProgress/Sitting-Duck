@@ -42,7 +42,7 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
         _health = _maxHealth;
 
 
-   //     Debug.Log($"add on bullet hit listener", this);
+        Debug.Log($"add on bullet hit listener", this);
         _collider = GetComponent<BulletCollider>();
 
         if(_entityType == EntityType.Player)
