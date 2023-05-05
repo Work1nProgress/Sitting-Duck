@@ -16,6 +16,8 @@ public class CanedController : EnemyController
     {
         _approachPlayerState = new ApproachPlayerEnemyState(_walkSpeed, _attackPlayerRadius);
         _meleeAttackEnemyState = new MeleeAttackEnemyState(_attackWindUpTime, _attackDamage);
+        _deathState = new DeathState();
+        _deathState.OnDeathStateExited += DespawnSelf;
 
         if (ControllerGame.Instance.Player == null)
         {
@@ -32,8 +34,10 @@ public class CanedController : EnemyController
     private void Init()
     {
        EnemyState.EnemyStateData stateData = new EnemyState.EnemyStateData(
+       this,
        ControllerGame.Instance.Player.transform,
        transform,
+       _animator,
        new EnemyState[1] { _meleeAttackEnemyState },
        1,
        true,
@@ -44,6 +48,10 @@ public class CanedController : EnemyController
         stateData.transitionStates = new EnemyState[1] { _approachPlayerState };
         stateData.stateName = "Melee Attack Player";
         _meleeAttackEnemyState.InitializeState(stateData);
+
+        stateData.timeInState = 0.9f;
+        stateData.stateName = "Death State";
+        _deathState.InitializeState(stateData);
 
         _activeState = _approachPlayerState;
         base.Start();

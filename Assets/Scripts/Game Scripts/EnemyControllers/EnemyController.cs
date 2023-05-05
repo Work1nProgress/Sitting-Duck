@@ -6,11 +6,13 @@ using UnityEngine;
 public class EnemyController : PoolObject
 {
 
-    protected Rigidbody2D _rigidbody;
-
     protected EntityStats _entityStats;
 
     protected EnemyState _activeState;
+
+    protected DeathState _deathState;
+
+    protected Animator _animator;
 
 
 
@@ -55,16 +57,22 @@ public class EnemyController : PoolObject
 
     protected void SetComponentReferences()
     {
-        _rigidbody = GetComponent<Rigidbody2D>();
         _entityStats = GetComponent<EntityStats>();
+        _animator = GetComponent<Animator>();
     }
 
     protected void HandleDeath()
     {
         _entityStats.Heal(1000);
+        _entityStats._canHealthChange = false;
         XPSource xpOrb = PoolManager.Spawn<XPSource>("XPOrb", null, transform.position);
         xpOrb.Initialize(_entityStats.GetExperienceValue(), 5);
-        PoolManager.Spawn<PoolObjectTimed>("bloodparticles", null, transform.position);
+        ChangeState(_deathState);
+    }
+
+    protected void DespawnSelf()
+    {
+        _entityStats._canHealthChange = true;
         PoolManager.Despawn(this);
     }
 }

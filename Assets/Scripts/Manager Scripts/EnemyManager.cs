@@ -48,7 +48,7 @@ public class EnemyManager : MonoBehaviour
                 key = "";
                 break;
             case SpawnEnemyType.UNITCUBUS:
-                key = "";
+                key = "UnitcubusEnemy";
                 break;
             case SpawnEnemyType.TESTENEMY:
                 key = "TestEnemy";

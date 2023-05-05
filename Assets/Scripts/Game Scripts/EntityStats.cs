@@ -5,6 +5,9 @@ using UnityEngine;
 public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
 {
     [SerializeField] EntityType _entityType;
+
+    public bool _canHealthChange = true;
+
     public int MaxHealth => _maxHealth;
     [SerializeField] private int _maxHealth;
 
@@ -42,7 +45,7 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
         _health = _maxHealth;
 
 
-    //    Debug.Log($"add on bullet hit listener", this);
+        Debug.Log($"add on bullet hit listener", this);
         _collider = GetComponent<BulletCollider>();
 
         if(_entityType == EntityType.Player)
@@ -82,34 +85,46 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
 
     public void Damage(int ammount)
     {
-        int newHealth = _health - ammount;
-        newHealth = Mathf.Clamp(newHealth, 0, _maxHealth);
-
-        if (newHealth == 0)
+        if (_entityType != EntityType.Player)
         {
-            if(OnDeath != null)
-            OnDeath.Invoke();
-            return;
+            var spawn = PoolManager.Spawn<FloatingDamageNumber>("FloatingDamageNumber", gameObject.transform, gameObject.transform.position + Vector3.up);
+            spawn.Init(ammount);
         }
+        
+        if (_canHealthChange)
+        {
+            int newHealth = _health - ammount;
+            newHealth = Mathf.Clamp(newHealth, 0, _maxHealth);
 
-        if(OnHealthChanged != null)
-        OnHealthChanged.Invoke(_health, newHealth, _maxHealth);
-        _health = newHealth;
+            if (newHealth == 0)
+            {
+                if (OnDeath != null)
+                    OnDeath.Invoke();
+                return;
+            }
+
+            if (OnHealthChanged != null)
+                OnHealthChanged.Invoke(_health, newHealth, _maxHealth);
+            _health = newHealth;
+        }
     }
     public void Heal(int ammount)
     {
-        int newHealth = _health + ammount;
-        newHealth = Mathf.Clamp(newHealth, 0, _maxHealth);
-
-        if (newHealth == 0)
+        if (_canHealthChange)
         {
-            OnDeath.Invoke();
-            return;
+            int newHealth = _health + ammount;
+            newHealth = Mathf.Clamp(newHealth, 0, _maxHealth);
+
+            if (newHealth == 0)
+            {
+                OnDeath.Invoke();
+                return;
+            }
+
+            if (OnHealthChanged != null)
+                OnHealthChanged.Invoke(_health, newHealth, _maxHealth);
+            _health = newHealth;
         }
-        
-        if(OnHealthChanged != null)
-        OnHealthChanged.Invoke(_health, newHealth, _maxHealth);
-        _health = newHealth;
     }
 
     public int GetExperienceValue() { return _experience; }
