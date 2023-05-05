@@ -47,9 +47,9 @@ public class XPSource : PoolObject
             move = new Vector3(move.x, move.y, 0);
             if (distance > 0)
             {
-                move = move.normalized* Mathf.Min(Time.deltaTime * MagnetStrenght / distance, distance);
+                transform.position += move.normalized* Mathf.Min(Time.deltaTime * MagnetStrenght / distance, distance);
             }
-            
+           
         }
 
 
