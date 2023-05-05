@@ -6,7 +6,7 @@ using UnityEngine;
 public class HeartContainer : MonoBehaviour
 {
     [SerializeField] private GameObject heart;
-    private List<GameObject> _hearts = new List<GameObject>();
+    private List<Heart> _hearts = new List<Heart>();
     private EntityStats _playerStats;
     private int _maxHealth;
     private int _currentHealth;
@@ -29,10 +29,9 @@ public class HeartContainer : MonoBehaviour
     {
         for (int i = _hearts.Count-1; i >= 0; i--)
         {
-            if (i >= newhealth)
+            if (i >= newhealth &&  i < oldhealth)
             {
-                Destroy(_hearts[i]);
-                _hearts.RemoveAt(i);
+                _hearts[i].ToggleHeart();
             }
         }
     }
@@ -46,7 +45,7 @@ public class HeartContainer : MonoBehaviour
     {
         for (var i = 0; i < _maxHealth; i++)
         {
-            var newHeart = Instantiate(heart, gameObject.transform);
+            var newHeart = Instantiate(heart, gameObject.transform).GetComponent<Heart>();
             _hearts.Add(newHeart);
         }
     }
