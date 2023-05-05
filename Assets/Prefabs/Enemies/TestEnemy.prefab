@@ -10,12 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 973201739699793393}
   - component: {fileID: 973201739699793392}
-  - component: {fileID: 973201739699793404}
   - component: {fileID: 4357240285149041425}
   - component: {fileID: 1225142422}
-  - component: {fileID: 5247593051715537252}
-  - component: {fileID: 8070364135695224276}
-  m_Layer: 10
+  - component: {fileID: 1368914721132045261}
+  m_Layer: 0
   m_Name: TestEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 973201739699793398}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5.72, y: -1.13, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 2}
+  m_LocalScale: {x: 2, y: 4, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -78,8 +76,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 118145388, guid: 2dce71ffc2b414811ad8a5be537d0058, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
+  m_Color: {r: 0.5566038, g: 0.107645065, b: 0.107645065, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -89,23 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &973201739699793404
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 973201739699793398}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9c2eed2c43e2fd48a529beaba948faa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  key: 
-  _walkSpeed: 0.65
-  _attackPlayerRadius: 3
-  _attackDamage: 1
-  _attackWindUpTime: 1.5
 --- !u!114 &4357240285149041425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,13 +117,13 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.03}
   m_Size: {x: 0.79, y: 0.76}
   m_Direction: 0
---- !u!114 &5247593051715537252
+--- !u!114 &1368914721132045261
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -151,27 +132,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 973201739699793398}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe2d0ee96050b4438af1beea1a2288ac, type: 3}
+  m_Script: {fileID: 11500000, guid: 57f169e03c825f24faaa21d1265461ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!95 &8070364135695224276
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 973201739699793398}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 494d3d68f6e134d9aaedd10ddde54b77, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  key: 
+  _walkSpeed: 0.45
+  _chargeSpeedMultiplier: 7
+  _chargePlayerRadius: 15
+  _chargeDelay: 0.75
+  _attackDamage: 1

@@ -86,13 +86,76 @@ public abstract class EnemyState
 
 public class ChargingEnemyState : EnemyState
 {
+    float _delay;
+    float _chargeSpeed;
+    float _chargeTime;
+
+    CountdownTimer _chargeDelay;
+    CountdownTimer _chargeDurationTimer;
+    Vector3 _chargePoint;
+
+    bool _charging;
+
+    public ChargingEnemyState(float delay, float speed, float duration)
+    {
+        _delay = delay;
+        _chargeSpeed = speed;
+        _chargeTime = duration;
+
+        _chargeDelay = new CountdownTimer(delay, false, false);
+        _chargeDelay.OnTimerExpired += BeginCharge;
+
+        _chargeDurationTimer = new CountdownTimer(duration, true, false);
+        _chargeDurationTimer.OnTimerExpired += EndCharge;
+    }
+
     public override void EnterState()
     {
         base.EnterState();
+
+        _chargePoint = _target.position;
+        _chargeDurationTimer.Reset();
+
+        if (_delay > 0)
+        {
+            _chargeDelay.SetNewTime(_delay);
+            _chargeDelay.Resume();
+        }
+        else BeginCharge();
+    }
+
+    public override void UpdateState()
+    {
+        base.UpdateState();
+
+        _chargeDelay.Update(Time.deltaTime);
+        _chargeDurationTimer.Update(Time.deltaTime);
+    }
+
+    public override void FixedUpdateState()
+    {
+        base.FixedUpdateState();
+
+        if (_charging)
+            MoveTowardsPosition(_chargePoint, _chargeSpeed);
     }
 
     public override void TimeExpired()
     {
+        InvokeStateChangeRequest(_transitionStates[0]);
+    }
+
+    private void BeginCharge()
+    {
+        _charging = true;
+        _chargeDurationTimer.Resume();
+    }
+
+    private void EndCharge()
+    {
+        _charging = false;
+        _chargeDurationTimer.Reset();
+        _chargeDurationTimer.Pause();
         InvokeStateChangeRequest(_transitionStates[0]);
     }
 }
@@ -104,7 +167,6 @@ public class ApproachPlayerEnemyState : EnemyState
     private float _attackPlayerRadius;
 
     private CountdownTimer _updateTargetPositionTimer;
-    private CountdownTimer _fireProjectileTimer;
 
     public ApproachPlayerEnemyState(float walkSpeed, float attackPlayerRadius)
     {
@@ -121,9 +183,6 @@ public class ApproachPlayerEnemyState : EnemyState
         _updateTargetPositionTimer = new CountdownTimer(0.125f, false, true);
         _updateTargetPositionTimer.OnTimerExpired += UpdateTargetPosition;
         _updateTargetPositionTimer.OnTimerExpired += CheckForPlayer;
-
-        _fireProjectileTimer = new CountdownTimer(0.5f, false, true);
-        _fireProjectileTimer.OnTimerExpired += FireProjectile;
     }
 
     public override void EnterState()
@@ -136,7 +195,6 @@ public class ApproachPlayerEnemyState : EnemyState
         base.UpdateState();
 
         _updateTargetPositionTimer.Update(Time.deltaTime);
-        _fireProjectileTimer.Update(Time.deltaTime);
     }
 
     public override void FixedUpdateState()
