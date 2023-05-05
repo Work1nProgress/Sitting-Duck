@@ -15,6 +15,9 @@ public class UnitcubusController : EnemyController
 
     protected override void Start()
     {
+        _deathState = new DeathState();
+        _deathState.OnDeathStateExited += DespawnSelf;
+
         _approachPlayerState = new ApproachPlayerEnemyState(_walkSpeed, _chargePlayerRadius);
         _chargePlayerState = new ChargingEnemyState(_chargeDelay, _walkSpeed * _chargeSpeedMultiplier, 3);
 
@@ -33,8 +36,10 @@ public class UnitcubusController : EnemyController
     private void Init()
     {
         EnemyState.EnemyStateData stateData = new EnemyState.EnemyStateData(
+       this,
        ControllerGame.Instance.Player.transform,
        transform,
+       _animator,
        new EnemyState[1] { _chargePlayerState },
        1000,
        true,
@@ -45,6 +50,10 @@ public class UnitcubusController : EnemyController
         stateData.transitionStates = new EnemyState[1] { _approachPlayerState };
         stateData.stateName = "Charge Player";
         _chargePlayerState.InitializeState(stateData);
+
+        stateData.timeInState = 0.9f;
+        stateData.stateName = "Death State";
+        _deathState.InitializeState(stateData);
 
         _activeState = _approachPlayerState;
         base.Start();
