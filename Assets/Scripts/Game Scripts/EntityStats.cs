@@ -154,7 +154,7 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
 
     public void PickupXPOrbs()
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 2);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 1);
         foreach (Collider2D collider in colliders)
         {
             XPSource xp = collider.GetComponent<XPSource>();

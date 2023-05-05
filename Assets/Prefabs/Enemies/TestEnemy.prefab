@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 973201739699793393}
   - component: {fileID: 973201739699793392}
   - component: {fileID: 4357240285149041425}
-  - component: {fileID: 1225142422}
   - component: {fileID: 1368914721132045261}
   - component: {fileID: 1996052893867143606}
   - component: {fileID: 922018495364782275}
+  - component: {fileID: 5946792963588790175}
   m_Layer: 10
   m_Name: TestEnemy
   m_TagString: Untagged
@@ -102,6 +102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _entityType: 1
+  _canHealthChange: 1
   _maxHealth: 250
   _experience: 5
   _startLevel: 1
@@ -109,22 +110,6 @@ MonoBehaviour:
   _levelupThresholds: 
   _tags:
   - test enemy
---- !u!70 &1225142422
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 973201739699793398}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.012297392, y: -0.2159462}
-  m_Size: {x: 1.4540544, y: 1.4540544}
-  m_Direction: 0
 --- !u!114 &1368914721132045261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,3 +161,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!58 &5946792963588790175
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973201739699793398}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.12}
+  serializedVersion: 2
+  m_Radius: 0.38

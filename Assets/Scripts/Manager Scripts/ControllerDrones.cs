@@ -145,7 +145,7 @@ public class ControllerDrones : MonoBehaviour
 
     public void Animate()
     {
-        Debug.Log("animate");
+
         foreach (var d in drones)
         {
             d.Animate();

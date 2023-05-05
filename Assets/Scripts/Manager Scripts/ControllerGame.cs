@@ -24,9 +24,10 @@ public class ControllerGame : ControllerLocal
     private EntityStats _playerEntity;
     private List<EntityStats> _enemyEntities = new List<EntityStats>();
 
-   
 
 
+
+    public float OrbDuration = 10;
 
 
     #region Debug settings
@@ -43,6 +44,8 @@ public class ControllerGame : ControllerLocal
     [Range(0, 50f)]
     public float LookSpeed = 1f;
 
+
+   
 
 
     #endregion

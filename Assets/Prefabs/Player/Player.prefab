@@ -221,7 +221,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: 
-  MaxAcceleration: 30
+  MaxAcceleration: 20
   AccelerationMultiplier: 0.08
   MaxCollisionRidealong: 0.3
   animator: {fileID: 6601173424045009222}
@@ -262,7 +262,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.95
+  m_Radius: 0.475
 --- !u!114 &2795538405735603950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,6 +276,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _entityType: 0
+  _canHealthChange: 1
   _maxHealth: 5
   _experience: 0
   _startLevel: 1
