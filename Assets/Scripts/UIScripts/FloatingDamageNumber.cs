@@ -19,8 +19,8 @@ public class FloatingDamageNumber : PoolObject
         text.text = _damageAmount.ToString(CultureInfo.InvariantCulture);
         gameObject.transform.SetParent(null, true);
         transform.rotation = Quaternion.identity;
-        transform.DOScale(new Vector3(2, 2, 2), .5f);
-        transform.DOShakePosition(.3f, .5f);
+        transform.DOScale(new Vector3(2, 2, 2), .5f).SetAutoKill();
+        transform.DOShakePosition(.3f, .5f).SetAutoKill();
     }
 
     private void OnEnable()

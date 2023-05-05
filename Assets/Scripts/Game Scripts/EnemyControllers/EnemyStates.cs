@@ -121,6 +121,7 @@ public class ChargingEnemyState : EnemyState
 
         _chargePoint = _target.position;
         _chargeDurationTimer.Reset();
+        Debug.Log("windupstate", _transform);
         _animator.SetBool("ChargeWindup", true);
 
         if (_delay > 0)
@@ -390,7 +391,7 @@ public class MeleeAttackEnemyState : EnemyState
         {
             IEntityHealth healthComponent = collider.GetComponent<IEntityHealth>();
             if(healthComponent != null &&
-                collider.gameObject != _transform.gameObject)
+                collider.gameObject != _transform.gameObject && collider.gameObject.layer == 12)
             {
                 healthComponent.Damage(_damage);
             }

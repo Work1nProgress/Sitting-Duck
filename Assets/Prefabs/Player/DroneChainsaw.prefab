@@ -19,6 +19,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DroneChainsaw
       objectReference: {fileID: 0}
+    - target: {fileID: 3146679714670608303, guid: 2fb91077c0c5443e29095723970ef608, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 3146679714670608304, guid: 2fb91077c0c5443e29095723970ef608, type: 3}
       propertyPath: followRate
       value: 100

@@ -91,9 +91,18 @@ public class ControllerGame : ControllerLocal
         if (!isInitialized) return;
         foreach (CountdownTimer timer in _allTimers)
             timer.Update(Time.deltaTime);
+
+        for (int i = chainsawTimers.Count-1; i >= 0; i--)
+        {
+            var ct = chainsawTimers[i];
+            if (ct != null)
+            {
+                ct.Update(Time.deltaTime);
+            }
+        }
     }
 
-    public void StartCurrentSceneReset()
+    public void StartCurrentSceneReset(EntityStats player)
     {
         return;
         _levelResetTimer.Resume();
@@ -118,6 +127,101 @@ public class ControllerGame : ControllerLocal
     private void OnDestroy()
     {
         _levelResetTimer.OnTimerExpired -= GameManager.Instance.ResetCurrentScene;
+    }
+
+    List<CountdownTimer> chainsawTimers = new List<CountdownTimer>();
+    List<EntityStats> enemiesInChainSaw = new List<EntityStats>();
+    Dictionary<EntityStats, float> enemyToDamage = new Dictionary<EntityStats, float>();
+
+
+    public void AddChainsawDamage(EntityStats stats)
+    {
+        if (stats == null || stats.Health <= 0)
+        {
+            return;
+        }
+        if (enemyToDamage.ContainsKey(stats))
+        {
+            enemyToDamage[stats] += PlayerBulletDamage * Random.Range(0.7f, 1.3f) * Time.fixedDeltaTime;
+        }
+        else
+        {
+
+            var ct = new CountdownTimer(1, false, true);
+            ct.OnTimerExpired += () => ApplyChainSawDamage(stats);
+            stats.OnDeath += OnEnemyDied;
+            chainsawTimers.Add(ct);
+            enemiesInChainSaw.Add(stats);
+            enemyToDamage.Add(stats, 0);
+        }
+
+    }
+
+    void OnEnemyDied(EntityStats stats)
+    {
+        if (stats == null)
+        {
+            return;
+        }
+        var idx = enemiesInChainSaw.FindIndex(x => stats);
+        if (idx == -1)
+        {
+            return;
+        }
+        else
+        {
+            RemoveFromChainsaw(idx, stats);
+        }
+    }
+
+    public void OnChainSawExit(EntityStats stats)
+    {
+        if (stats == null)
+        {
+            return;
+        }
+        var idx = enemiesInChainSaw.FindIndex(x => stats);
+        if (idx == -1)
+        {
+            return;
+        }
+        else
+        {
+            ApplyChainSawDamage(stats);
+            RemoveFromChainsaw(idx, stats);
+        }
+    }
+
+    void RemoveFromChainsaw(int idx, EntityStats stats)
+    {
+        if (stats == null || chainsawTimers.Count == 0 || enemiesInChainSaw.Count == 0)
+        {
+            for (int i = 0; i < chainsawTimers.Count; i++)
+            {
+                chainsawTimers[i].Pause();
+            }
+
+            chainsawTimers.Clear();
+            enemiesInChainSaw.Clear();
+            enemyToDamage.Clear();
+            return;
+        }
+      
+        stats.OnDeath -= OnEnemyDied;
+        enemyToDamage.Remove(stats);
+        chainsawTimers[idx].Pause();
+        chainsawTimers[idx] = null;
+        chainsawTimers.RemoveAt(idx);
+        enemiesInChainSaw.RemoveAt(idx);
+
+     
+    }
+
+    void ApplyChainSawDamage(EntityStats entityStats) {
+        if (enemyToDamage.ContainsKey(entityStats))
+        {
+            entityStats.Damage(Mathf.FloorToInt(enemyToDamage[entityStats]));
+        }
     }
 
     public void OnBulletHit(EntityStats stats, BulletType bulletType)
