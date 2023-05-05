@@ -4,8 +4,10 @@ using UnityEngine;
 
 public abstract class EnemyState
 {
+    protected EnemyController _controller;
     protected Transform _target;
     protected Transform _transform;
+    protected Animator _animator;
     protected EnemyState[] _transitionStates;
     protected CountdownTimer _stateTimer;
     protected string _stateName;
@@ -16,8 +18,10 @@ public abstract class EnemyState
 
     public virtual void InitializeState(EnemyStateData data)
     {
+        _controller = data.controller;
         _target = data.target;
         _transform = data.transform;
+        _animator = data.animator;
         _transitionStates = (EnemyState[]) data.transitionStates.Clone();
         _stateTimer = new CountdownTimer(data.timeInState, data.timerStartsPaused, false);
         _stateName = data.stateName;
@@ -51,35 +55,35 @@ public abstract class EnemyState
                 speed * 0.1f;
     }
 
-    protected virtual void FireProjectile()
-    {
-        //Projectile projectile = PoolManager.Spawn<Projectile>("Projectile", null, _transform.position + _transform.up * 0.5f, _transform.rotation);
-        //projectile.Initialize(1, EntityType.Player, 0.5f);
-    }
-
     public struct EnemyStateData
     {
+        public EnemyController controller;
         public Transform target;
         public Transform transform;
+        public Animator animator;
         public EnemyState[] transitionStates;
         public float timeInState;
         public bool timerStartsPaused;
         public string stateName;
 
         public EnemyStateData(
+        EnemyController controller,
         Transform target,
         Transform transform,
+        Animator animator,
         EnemyState[] transitionStates,
         float timeInState,
         bool timerStartsPaused,
         string stateName)
         {
+            this.controller = controller;
             this.target = target;
             this.transform = transform;
             this.transitionStates = (EnemyState[]) transitionStates.Clone();
             this.timeInState = timeInState;
             this.timerStartsPaused = timerStartsPaused;
             this.stateName = stateName;
+            this.animator = animator;
         }
     }
 }
@@ -93,6 +97,8 @@ public class ChargingEnemyState : EnemyState
     CountdownTimer _chargeDelay;
     CountdownTimer _chargeDurationTimer;
     Vector3 _chargePoint;
+
+    Vector3 _positionLastFrame = Vector3.zero;
 
     bool _charging;
 
@@ -115,10 +121,12 @@ public class ChargingEnemyState : EnemyState
 
         _chargePoint = _target.position;
         _chargeDurationTimer.Reset();
+        _animator.SetBool("ChargeWindup", true);
 
         if (_delay > 0)
         {
             _chargeDelay.SetNewTime(_delay);
+            _chargeDelay.Reset();
             _chargeDelay.Resume();
         }
         else BeginCharge();
@@ -130,6 +138,11 @@ public class ChargingEnemyState : EnemyState
 
         _chargeDelay.Update(Time.deltaTime);
         _chargeDurationTimer.Update(Time.deltaTime);
+
+        if (_charging && (_chargePoint - _transform.position).magnitude < 0.5f)
+            EndCharge();
+
+        _positionLastFrame = _transform.position;
     }
 
     public override void FixedUpdateState()
@@ -148,6 +161,8 @@ public class ChargingEnemyState : EnemyState
     private void BeginCharge()
     {
         _charging = true;
+        _animator.SetBool("ChargeWindup", false);
+        _animator.SetBool("Charge", true);
         _chargeDurationTimer.Resume();
     }
 
@@ -156,6 +171,53 @@ public class ChargingEnemyState : EnemyState
         _charging = false;
         _chargeDurationTimer.Reset();
         _chargeDurationTimer.Pause();
+        _animator.SetBool("ChargeWindup", false);
+        _animator.SetBool("Charge", false);
+        InvokeStateChangeRequest(_transitionStates[0]);
+    }
+}
+
+public class SmashEnemyState : EnemyState
+{
+    private int _attackDamage;
+    private float _hitRange = 7;
+    CountdownTimer _hitDelayTimer;
+
+    public SmashEnemyState(int attackDamage, float damageDelay)
+    {
+        _attackDamage = attackDamage;
+        _hitDelayTimer = new CountdownTimer(damageDelay, false, false);
+        _hitDelayTimer.OnTimerExpired += () =>
+        {
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(_transform.position, _hitRange);
+            foreach (Collider2D collider in colliders)
+            {
+                EntityStats entity = collider.GetComponent<EntityStats>();
+                if (entity != null)
+                    if (entity.GetEntityType() == EntityType.Player)
+                        entity.Damage(_attackDamage);
+            }
+        };
+    }
+
+    public override void EnterState()
+    {
+        base.EnterState();
+        _animator.SetBool("Smash", true);
+        _hitDelayTimer.Resume();
+    }
+
+    public override void ExitState()
+    {
+        base.ExitState();
+        _animator.SetBool("Smash", false);
+        _hitDelayTimer.Reset();
+        _hitDelayTimer.Pause();
+    }
+
+    public override void TimeExpired()
+    {
+        base.TimeExpired();
         InvokeStateChangeRequest(_transitionStates[0]);
     }
 }
@@ -188,6 +250,8 @@ public class ApproachPlayerEnemyState : EnemyState
     public override void EnterState()
     {
         base.EnterState();
+
+        _animator.SetBool("Walk", true);
     }
 
     public override void UpdateState()
@@ -203,6 +267,13 @@ public class ApproachPlayerEnemyState : EnemyState
 
         MoveTowardsPosition(_targetPosition, _walkSpeed);
         LookAtPosition(_target.position);
+    }
+
+    public override void ExitState()
+    {
+        base.ExitState();
+
+        _animator.SetBool("Walk", false);
     }
 
     public override void DecomissionState()
@@ -226,6 +297,12 @@ public class ApproachPlayerEnemyState : EnemyState
         {
             if (collider.gameObject.name == _target.name)
             {
+                if (_transitionStates.Length > 1 &&
+                    (collider.transform.position - _transform.position).magnitude <= 7)
+                {
+                    InvokeStateChangeRequest(_transitionStates[1]);
+                }
+
                 if( _transitionStates[0] != null)
                     InvokeStateChangeRequest(_transitionStates[0]);
             }
@@ -263,6 +340,7 @@ public class MeleeAttackEnemyState : EnemyState
     {
         base.EnterState();
 
+        _animator.SetBool("Attack", true);
         BeginAttack();
     }
 
@@ -279,6 +357,13 @@ public class MeleeAttackEnemyState : EnemyState
         base.FixedUpdateState();
 
         LookAtPosition(_target.position);
+    }
+
+    public override void ExitState()
+    {
+        base.ExitState();
+
+        _animator.SetBool("Attack", false);
     }
 
     private void BeginAttack()
@@ -330,4 +415,29 @@ public class MeleeAttackEnemyState : EnemyState
     }
 }
 
+public class DeathState : EnemyState
+{
+    public delegate void DeathStateExitSignature();
+    public event DeathStateExitSignature OnDeathStateExited;
 
+    public override void EnterState()
+    {
+        base.EnterState();
+
+        _animator.SetBool("Dead", true);
+    }
+
+    public override void TimeExpired()
+    {
+        InvokeStateChangeRequest(_transitionStates[0]);
+        base.TimeExpired();
+    }
+
+    public override void ExitState()
+    {
+        _animator.SetBool("Dead", false);
+        base.ExitState();
+        if (OnDeathStateExited != null)
+            OnDeathStateExited.Invoke();
+    }
+}
