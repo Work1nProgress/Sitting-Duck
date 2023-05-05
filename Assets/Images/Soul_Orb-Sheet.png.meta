@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b20f4fce5c07b4c6088800361e2f2dbb
+guid: 0faaa4270831e46548901d7feb082bc4
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -141,442 +141,295 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: the_caned_v2_cane_swing-Sheet_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 256
-        width: 32
-        height: 64
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d6353cd09a48243b78148ee7e8680812
-      internalID: 1471835509
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: the_caned_v2_cane_swing-Sheet_1
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 256
-        width: 32
-        height: 64
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8f22182518d9049228214cb62124fa11
-      internalID: -1135950071
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: the_caned_v2_cane_swing-Sheet_2
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 256
-        width: 32
-        height: 64
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 527ff94b3c9f04e9fb8f8da352790336
-      internalID: 392584548
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: the_caned_v2_cane_swing-Sheet_3
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 256
-        width: 32
-        height: 64
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c57750cf674a04d969eb9c57388eb8c0
-      internalID: 1793324343
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: the_caned_v2_cane_swing-Sheet_4
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 256
-        width: 32
-        height: 64
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d9a4fb19739fd435c8055c51bccf4abe
-      internalID: -285078023
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: the_caned_v2_cane_swing-Sheet_5
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 192
-        width: 32
-        height: 64
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2c856063b00bf415197ab69b5423b804
-      internalID: -947827111
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: the_caned_v2_cane_swing-Sheet_6
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 192
-        width: 32
-        height: 64
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c112e059e296446fb823979a298b2875
-      internalID: -923248241
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: the_caned_v2_cane_swing-Sheet_7
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 192
-        width: 32
-        height: 64
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8e3195dc923c248dcbfa2a79902a9d16
-      internalID: -500134508
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: the_caned_v2_cane_swing-Sheet_8
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 192
-        width: 32
-        height: 64
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2e4f3f13ed8fb4605b6afec3e9a91922
-      internalID: -836296589
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: the_caned_v2_cane_swing-Sheet_9
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 192
-        width: 32
-        height: 64
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a43854bca68c44a7193615e28fdfe7d5
-      internalID: -1308164803
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: the_caned_v2_cane_swing-Sheet_10
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 128
-        width: 32
-        height: 64
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e6acb5c79d77f43e08a6558e0444221e
-      internalID: 1286201319
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: the_caned_v2_cane_swing-Sheet_11
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 128
-        width: 32
-        height: 64
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9295f830ccabd4d3f95822302ad288b5
-      internalID: -1014173072
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: the_caned_v2_cane_swing-Sheet_12
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 128
-        width: 32
-        height: 64
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 34e7f9e69668746ed9b555f6c53bcb44
-      internalID: 1152715379
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: the_caned_v2_cane_swing-Sheet_13
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 128
-        width: 32
-        height: 64
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 56c4420a1594447b79b9fb904e8f2365
-      internalID: 1120214047
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: the_caned_v2_cane_swing-Sheet_14
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 128
-        width: 32
-        height: 64
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0dbc965ffdfee40b49810e0d76c22636
-      internalID: -1557063732
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: the_caned_v2_cane_swing-Sheet_15
+      name: Soul_Orb-Sheet_0
       rect:
         serializedVersion: 2
         x: 0
         y: 64
         width: 32
-        height: 64
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 23a86b4db0fa34ea2870f7b81a663a0c
-      internalID: -1920817566
+      spriteID: 2c2df8b4e80344ec68581d18753d5b33
+      internalID: 93916813
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: the_caned_v2_cane_swing-Sheet_16
+      name: Soul_Orb-Sheet_1
       rect:
         serializedVersion: 2
         x: 32
         y: 64
         width: 32
-        height: 64
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9005048a29d3d43539e6646609aa1205
-      internalID: 1706258840
+      spriteID: 7e982543c1ea347599c303167ba0db00
+      internalID: -2052967987
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: the_caned_v2_cane_swing-Sheet_17
+      name: Soul_Orb-Sheet_2
       rect:
         serializedVersion: 2
         x: 64
         y: 64
         width: 32
-        height: 64
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cc0ba1c2ff58c4505ab91c07c88c95a9
-      internalID: -116043402
+      spriteID: 4fc6060564fe64a0b8324df8bb255bd2
+      internalID: 340725574
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: the_caned_v2_cane_swing-Sheet_18
+      name: Soul_Orb-Sheet_3
       rect:
         serializedVersion: 2
         x: 96
         y: 64
         width: 32
-        height: 64
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3d3bd264dd7ff4993b88afe441647482
-      internalID: -614707575
+      spriteID: 32d4fc4934eea4fdb9db6cd857c69908
+      internalID: -1567188714
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: the_caned_v2_cane_swing-Sheet_19
+      name: Soul_Orb-Sheet_4
       rect:
         serializedVersion: 2
         x: 128
         y: 64
         width: 32
-        height: 64
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b89789669a367492280c10fb1df3f7a1
-      internalID: -401182803
+      spriteID: e3dbd77f4ef3d472eae428e6847b0f51
+      internalID: 2058985644
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: the_caned_v2_cane_swing-Sheet_20
+      name: Soul_Orb-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5f2fa861513c4c6fa63c873e8207307
+      internalID: -1615977921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Soul_Orb-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0cf9e8cb95d04e69b58be4177de1766
+      internalID: 1969109216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Soul_Orb-Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d68281f7cd08d448ea3c9f0d7413991a
+      internalID: -597291468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Soul_Orb-Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef14ebf6b5fb743848e7c8f57033c977
+      internalID: -1264315266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Soul_Orb-Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e45d9ffe27fe74e1bbd514a3c9338104
+      internalID: 9986527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Soul_Orb-Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4cb488b0877494ca88992a9e2484668b
+      internalID: -535779130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Soul_Orb-Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d76590a3a9134aa1a45dbd05364d42b
+      internalID: -1473482406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Soul_Orb-Sheet_12
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 32
-        height: 64
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ca08237fe0f164058b596639e3206f2e
-      internalID: -1644886476
+      spriteID: a54987dec27114421ad27a24b72b28b2
+      internalID: 471520160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Soul_Orb-Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d05b93093b594feab42cc170dbdc04d
+      internalID: -1432536653
       vertices: []
       indices: 
       edges: []
@@ -592,27 +445,20 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      the_caned_v2_cane_swing-Sheet_0: 1471835509
-      the_caned_v2_cane_swing-Sheet_1: -1135950071
-      the_caned_v2_cane_swing-Sheet_10: 1286201319
-      the_caned_v2_cane_swing-Sheet_11: -1014173072
-      the_caned_v2_cane_swing-Sheet_12: 1152715379
-      the_caned_v2_cane_swing-Sheet_13: 1120214047
-      the_caned_v2_cane_swing-Sheet_14: -1557063732
-      the_caned_v2_cane_swing-Sheet_15: -1920817566
-      the_caned_v2_cane_swing-Sheet_16: 1706258840
-      the_caned_v2_cane_swing-Sheet_17: -116043402
-      the_caned_v2_cane_swing-Sheet_18: -614707575
-      the_caned_v2_cane_swing-Sheet_19: -401182803
-      the_caned_v2_cane_swing-Sheet_2: 392584548
-      the_caned_v2_cane_swing-Sheet_20: -1644886476
-      the_caned_v2_cane_swing-Sheet_3: 1793324343
-      the_caned_v2_cane_swing-Sheet_4: -285078023
-      the_caned_v2_cane_swing-Sheet_5: -947827111
-      the_caned_v2_cane_swing-Sheet_6: -923248241
-      the_caned_v2_cane_swing-Sheet_7: -500134508
-      the_caned_v2_cane_swing-Sheet_8: -836296589
-      the_caned_v2_cane_swing-Sheet_9: -1308164803
+      Soul_Orb-Sheet_0: 93916813
+      Soul_Orb-Sheet_1: -2052967987
+      Soul_Orb-Sheet_10: -535779130
+      Soul_Orb-Sheet_11: -1473482406
+      Soul_Orb-Sheet_12: 471520160
+      Soul_Orb-Sheet_13: -1432536653
+      Soul_Orb-Sheet_2: 340725574
+      Soul_Orb-Sheet_3: -1567188714
+      Soul_Orb-Sheet_4: 2058985644
+      Soul_Orb-Sheet_5: -1615977921
+      Soul_Orb-Sheet_6: 1969109216
+      Soul_Orb-Sheet_7: -597291468
+      Soul_Orb-Sheet_8: -1264315266
+      Soul_Orb-Sheet_9: 9986527
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
