@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6176570369151398744
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8195125320994653140}
+  - component: {fileID: 2800301645272350258}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8195125320994653140
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6176570369151398744}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.8146577, y: 12.274925, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2800301645272350258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6176570369151398744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fed7b8620ec68b47b40ac5162ce46c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Mixer: {fileID: -691382262844067722, guid: 0968e8a61ae4a99429b279e76e9226e5, type: 2}
+  sounds:
+  - SoundName: rifle
+    Randomize: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: 1177f7568482341f483bf731d1e71d32, type: 3}
+      Volume: 1
+      RandomPitchAmplitude: 1
+  - SoundName: shotgun
+    Randomize: 1
+    soundItems:
+    - AudioClip: {fileID: 8300000, guid: 76275265d2fce4c99bfb4e092ca4a52c, type: 3}
+      Volume: 1
+      RandomPitchAmplitude: 1
+    - AudioClip: {fileID: 8300000, guid: 108929e70e8ec41a79f455e4b2ada512, type: 3}
+      Volume: 1
+      RandomPitchAmplitude: 1
+  minPitch: -0.1
+  maxPitch: 0.1

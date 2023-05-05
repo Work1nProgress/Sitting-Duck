@@ -71,7 +71,7 @@ public class BulletPool {
             {
                 if (!bullet.IsInitialized)
                 {
-                    m_Bullets[i] = InitializeBullet(i);
+                    bullet = InitializeBullet(i);
                 }
                
                 
