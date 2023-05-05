@@ -48,13 +48,13 @@ MonoBehaviour:
   - poolObject: {fileID: 2988496388571346634, guid: 15db0a133c8b340238d255ac4b3fba99, type: 3}
     initialPoolSize: 1
     maxPoolSize: 1
-  - poolObject: {fileID: 7857731923107750939, guid: 6b7bc4be59e7a491f8214910a3aef5a4, type: 3}
+  - poolObject: {fileID: 995281292037460774, guid: 2fb91077c0c5443e29095723970ef608, type: 3}
     initialPoolSize: 2
     maxPoolSize: 8
-  - poolObject: {fileID: 2370755010369763635, guid: 2fb91077c0c5443e29095723970ef608, type: 3}
+  - poolObject: {fileID: 114376658449410240, guid: 6b7bc4be59e7a491f8214910a3aef5a4, type: 3}
     initialPoolSize: 2
     maxPoolSize: 8
-  - poolObject: {fileID: 7358077560889218892, guid: 213d6bbfc028a4f00b705e6dbfb03bb8, type: 3}
+  - poolObject: {fileID: 6795263029174280421, guid: 213d6bbfc028a4f00b705e6dbfb03bb8, type: 3}
     initialPoolSize: 2
     maxPoolSize: 8
   - poolObject: {fileID: 1368914721132045261, guid: 00ca4a719036ef84fb9b95ba1795e9a5, type: 3}
@@ -157,6 +157,34 @@ MonoBehaviour:
   LookSpeed: 0
   PlayerBulletDamage: 10
   EnemyBulletDamage: 1
+  DroneShootSettings:
+  - Name: Rifle
+    ShootSpeed: 2
+    BulletLifetime: 2
+    AnimateBeforeShotTime: 0
+    BurstDelay: 0.1
+    BurstAmount: 3
+    NumberOfBullets: 1
+    ArcDegrees: 0
+    ShootSFX: rifle
+  - Name: Shotgun
+    ShootSpeed: 1.5
+    BulletLifetime: 0.3
+    AnimateBeforeShotTime: 0.1
+    BurstDelay: 0
+    BurstAmount: 1
+    NumberOfBullets: 4
+    ArcDegrees: 60
+    ShootSFX: shotgun
+  - Name: Chainsaw
+    ShootSpeed: 2
+    BulletLifetime: 0
+    AnimateBeforeShotTime: 0.2
+    BurstDelay: 0
+    BurstAmount: 0
+    NumberOfBullets: 0
+    ArcDegrees: 0
+    ShootSFX: 
 --- !u!114 &249656483032421127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,9 +219,9 @@ MonoBehaviour:
   - WeaponType: 0
     NumberOfDrones: 2
     Drones:
-    - OffsetPosition: {x: -1.5, y: -1, z: 0}
+    - OffsetPosition: {x: -1.5, y: 1, z: 0}
       OffsetRotation: 0
-    - OffsetPosition: {x: 1.5, y: -1, z: 0}
+    - OffsetPosition: {x: 1.5, y: 1, z: 0}
       OffsetRotation: 0
   - WeaponType: 1
     NumberOfDrones: 2
@@ -230,7 +258,7 @@ MonoBehaviour:
     _delay: 0
     _spawnTimeRange:
       randomizeSpawnTime: 0
-      spawnTime: 0.5
+      spawnTime: 5
       minimumSpawnTime: 0
       reduceSpawnTime: 0
       spawnTimeReduction: 0

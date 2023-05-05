@@ -4,11 +4,41 @@ using UnityEngine.Audio;
 [System.Serializable]
 public class Sound
 {
-    [SerializeField]private SoundEnums soundType;
+    public string SoundName;
 
-    [SerializeField]private AudioClip _clip;
+    public bool Randomize;
+    [SerializeField]private SoundItem[] soundItems;
 
-    public AudioClip Clip { get => _clip; }
-    public SoundEnums SoundType { get => soundType;}
+    public SoundItem SoundItem
+    {
+        get
+        {
+            if (Randomize)
+            {
+                return soundItems[Random.Range(0, soundItems.Length)];
+            }
+            else
+            {
+                return soundItems[0];
+            }
+        }
+
+    }
+
+  
+
+   
+
+ 
+}
+
+[System.Serializable]
+    public class SoundItem{
+    public AudioClip AudioClip;
+
+    [Range(-0.5f, 0.5f)]
+    public float Volume = 0.5f;
+    public bool RandomPitchAmplitude;
+
 
 }

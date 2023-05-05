@@ -7,48 +7,57 @@ using UnityEngine;
 public class SoundManager : GenericSingleton<SoundManager>
 {
 
-    
-    [SerializeField]private Sound[] sounds;
-    private Dictionary<SoundEnums,Sound> soundDictionary;
+    [SerializeField]
+    AudioMixerGroup Mixer;
 
-    //private Queue<Sound> soundProcessQueue;
-    protected override void Awake() {
-        
+    [SerializeField] private List<Sound> sounds;
+
+    AudioSource[] clips;
+    [SerializeField]
+    float minPitch, maxPitch;
+
+    protected override void Awake()
+    {
+
         base.Awake();
-        //DontDestroyOnLoad(gameObject);
-        
-        soundDictionary = new Dictionary<SoundEnums, Sound>();
-        //soundProcessQueue = new Queue<Sound>();        
-        foreach(Sound sound in sounds)
+        int nOfClips = 11;
+
+        clips = new AudioSource[nOfClips];
+        for (int i = 0; i < nOfClips; i++)
         {
-            soundDictionary.Add(sound.SoundType,sound);
+            clips[i] = new GameObject().AddComponent<AudioSource>();
+            clips[i].gameObject.transform.SetParent(transform);
+            clips[i].outputAudioMixerGroup = Mixer;
+            if (i > 0)
+            {
+                clips[i].pitch = (maxPitch - minPitch) * ((i - 1f) / (nOfClips - 1f)) + minPitch + 1;
+            }
+            clips[i].name = $"pitch_{clips[i].pitch}";
         }
+
     }
 
 
-    public void Play(SoundEnums soundType,AudioSource source)
+    public void Play(string name)
     {
-        if(soundDictionary.TryGetValue(soundType,out Sound sound))
+
+        var idx = sounds.FindIndex(x => x.SoundName == name);
+        if (idx == -1)
         {
-            source.clip = sound.Clip;
-            source.Play();
-        }        
-    }
-
-    public void Stop(AudioSource source)
-    {
-        source.Stop();
-    }
-
-    public void PlayInstantly(SoundEnums soundType,AudioSource source)
-    {
-        if(soundDictionary.TryGetValue(soundType,out Sound sound))
-        {
-            source.PlayOneShot(sound.Clip);
+            Debug.LogError($"Sound {name} not found");
+            return;
         }
         else
         {
-            Debug.Log("Sound not found.");
+
+            var soundItem = sounds[idx].SoundItem;
+            if (soundItem.RandomPitchAmplitude)
+            {
+                clips[UnityEngine.Random.Range(1, clips.Length)].PlayOneShot(soundItem.AudioClip, soundItem.Volume);
+            }
+            clips[0].PlayOneShot(soundItem.AudioClip, soundItem.Volume);
         }
     }
 }
+
+   

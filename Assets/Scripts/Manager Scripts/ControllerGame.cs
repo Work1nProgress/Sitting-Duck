@@ -24,6 +24,9 @@ public class ControllerGame : ControllerLocal
     private EntityStats _playerEntity;
     private List<EntityStats> _enemyEntities = new List<EntityStats>();
 
+   
+
+
 
 
     #region Debug settings
@@ -43,12 +46,16 @@ public class ControllerGame : ControllerLocal
 
 
     #endregion
-
+    [Header("DamageSettings")]
     [SerializeField]
     int PlayerBulletDamage = 10;
 
     [SerializeField]
     int EnemyBulletDamage = 1;
+
+    [Space()]
+    public DroneShootSettings[] DroneShootSettings;
+
 
 
     public override void Init()
@@ -115,7 +122,7 @@ public class ControllerGame : ControllerLocal
         switch (bulletType)
         {
             case BulletType.Player:
-                stats.Damage(PlayerBulletDamage);
+                stats.Damage(Mathf.CeilToInt(PlayerBulletDamage * Random.Range(0.7f, 1.3f)));
                 break;
             case BulletType.Enemy:
                 stats.Damage(EnemyBulletDamage);
@@ -127,6 +134,30 @@ public class ControllerGame : ControllerLocal
 
 
 
+
+
+}
+
+[System.Serializable]
+public class DroneShootSettings
+{
+    public string Name;
+    public float ShootSpeed;
+   
+    public float BulletLifetime;
+    
+    public float AnimateBeforeShotTime;
+
+    public float BurstDelay;
+
+    public int BurstAmount;
+
+
+    public int NumberOfBullets;
+
+    public float ArcDegrees;
+
+    public string ShootSFX;
 
 
 }
