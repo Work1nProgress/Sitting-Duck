@@ -7,6 +7,9 @@ public class XPSource : PoolObject
     private int _experience;
     private bool _despawn = false;
 
+    [SerializeField]
+    float MaxMagnetDistance, MagnetStrenght;
+
     private CountdownTimer _despawnTimer;
 
     public void Initialize(int xp, float lifespan)
@@ -36,6 +39,19 @@ public class XPSource : PoolObject
     {
         if (_despawn)
             PoolManager.Despawn(this);
+
+        var distance = Vector2.Distance(transform.position, ControllerGame.Instance.PlayerPosition);
+        if (distance < MaxMagnetDistance)
+        {
+            var move = (ControllerGame.Instance.Player.transform.position - transform.position);
+            move = new Vector3(move.x, move.y, 0);
+            if (distance > 0)
+            {
+                move = move.normalized* Mathf.Min(Time.deltaTime * MagnetStrenght / distance, distance);
+            }
+            
+        }
+
 
         _despawnTimer.Update(Time.deltaTime);
     }
