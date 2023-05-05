@@ -82,6 +82,12 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
 
     public void Damage(int ammount)
     {
+        if (_entityType != EntityType.Player)
+        {
+            var spawn = PoolManager.Spawn<FloatingDamageNumber>("FloatingDamageNumber", gameObject.transform, gameObject.transform.position + Vector3.up);
+            spawn.Init(ammount);
+        }
+        
         int newHealth = _health - ammount;
         newHealth = Mathf.Clamp(newHealth, 0, _maxHealth);
 
