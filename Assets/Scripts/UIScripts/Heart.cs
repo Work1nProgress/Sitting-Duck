@@ -13,7 +13,6 @@ public class Heart : MonoBehaviour
     public void ToggleHeart()
     {
         _isBeating = !_isBeating;
-        Debug.Log(_isBeating);
         _beating.SetActive(_isBeating);
         _bleeding.SetActive(!_isBeating);
     }
