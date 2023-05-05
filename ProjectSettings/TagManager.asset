@@ -14,10 +14,10 @@ TagManager:
   - Walls
   - Player
   - 
-  - 
-  - 
-  - 
-  - 
+  - PlayerBullet
+  - PlayerBulletTarget
+  - EnemyBullet
+  - EnemyBulletTarget
   - 
   - 
   - 

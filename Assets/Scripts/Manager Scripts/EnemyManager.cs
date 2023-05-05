@@ -42,7 +42,7 @@ public class EnemyManager : MonoBehaviour
         {
             //Add prefab names to this when they're made and set up in the pooler.
             case SpawnEnemyType.CANED:
-                key = "";
+                key = "CanedEnemy";
                 break;
             case SpawnEnemyType.MONOCLE:
                 key = "";

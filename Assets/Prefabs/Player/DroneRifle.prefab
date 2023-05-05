@@ -9,11 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3146679714670608305}
-  - component: {fileID: 3146679714670608304}
   - component: {fileID: 1402369778}
-  - component: {fileID: -1568448945139682787}
-  - component: {fileID: 2620932504292568454}
   - component: {fileID: 9218414868548490283}
+  - component: {fileID: 2370755010369763635}
   m_Layer: 7
   m_Name: DroneRifle
   m_TagString: Untagged
@@ -36,21 +34,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3146679714670608304
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3146679714670608303}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcda7779b81324681b0b8aa3a80913b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  key: 
-  followRate: 20
-  Animator: {fileID: 9218414868548490283}
 --- !u!212 &1402369778
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -103,65 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-1568448945139682787
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3146679714670608303}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e74ab28cab7a9194eb4257b67ce111f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _firing: 1
---- !u!114 &2620932504292568454
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3146679714670608303}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4b3b583b5c6d4f4cab32fe763227ce5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  renderCamera: {fileID: 0}
-  manualFire: 1
-  bulletSettings: {fileID: 11400000, guid: cb5762bcd3b2a4086b6767957e5759a3, type: 2}
-  spawnSettings: {fileID: 11400000, guid: c1f2955118b0a4486a39c4a7276348b2, type: 2}
-  currentActiveBullets: 0
-  maxActiveBullets: 0
-  seed: 
-  randomiseSeedOnAwake: 1
-  rotateSpeed: 0
-  playingEditorAnimation: 0
-  OnBulletDied:
-    m_PersistentCalls:
-      m_Calls: []
-  OnBulletCancelled:
-    m_PersistentCalls:
-      m_Calls: []
-  OnBulletSpawned:
-    m_PersistentCalls:
-      m_Calls: []
-  OnWeaponFired:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3146679714670608304}
-        m_TargetAssemblyTypeName: DroneBase, GameAssembly
-        m_MethodName: OnFire
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!95 &9218414868548490283
 Animator:
   serializedVersion: 5
@@ -183,3 +107,23 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2370755010369763635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3146679714670608303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c7f9389812fc4c98ae030e443ba3f14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 
+  followRate: 20
+  Animator: {fileID: 9218414868548490283}
+  ShootSpeed: 0.3
+  BulletLifetime: 2
+  AnimateBeforeShotTime: 0.1
+  burstDelay: 0.1
+  burstAmount: 3

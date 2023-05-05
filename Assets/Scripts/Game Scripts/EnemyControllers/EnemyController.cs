@@ -12,6 +12,8 @@ public class EnemyController : PoolObject
 
     protected EnemyState _activeState;
 
+
+
     protected virtual void Awake()
     {
         SetComponentReferences();
@@ -62,6 +64,7 @@ public class EnemyController : PoolObject
         _entityStats.Heal(1000);
         XPSource xpOrb = PoolManager.Spawn<XPSource>("XPOrb", null, transform.position);
         xpOrb.Initialize(_entityStats.GetExperienceValue(), 5);
+        PoolManager.Spawn<PoolObjectTimed>("bloodparticles", null, transform.position);
         PoolManager.Despawn(this);
     }
 }

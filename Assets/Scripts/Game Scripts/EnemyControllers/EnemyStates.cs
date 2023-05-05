@@ -6,7 +6,6 @@ public abstract class EnemyState
 {
     protected Transform _target;
     protected Transform _transform;
-    protected BulletSpawner _bulletSpawner;
     protected EnemyState[] _transitionStates;
     protected CountdownTimer _stateTimer;
     protected string _stateName;
@@ -19,7 +18,6 @@ public abstract class EnemyState
     {
         _target = data.target;
         _transform = data.transform;
-        _bulletSpawner = data.bulletSpawner;
         _transitionStates = (EnemyState[]) data.transitionStates.Clone();
         _stateTimer = new CountdownTimer(data.timeInState, data.timerStartsPaused, false);
         _stateName = data.stateName;
@@ -39,11 +37,30 @@ public abstract class EnemyState
 
     public virtual void DecomissionState() { _stateTimer.OnTimerExpired -= TimeExpired; }
 
+    public virtual void LookAtPosition(Vector3 position)
+    {
+        Vector3 positionDifference = (position - _transform.position).normalized;
+        float angle = Mathf.Atan2(positionDifference.y, positionDifference.x) * Mathf.Rad2Deg;
+        _transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+    }
+
+    public virtual void MoveTowardsPosition(Vector3 position, float speed)
+    {
+        _transform.position = _transform.position +
+                (position - _transform.position).normalized *
+                speed * 0.1f;
+    }
+
+    protected virtual void FireProjectile()
+    {
+        //Projectile projectile = PoolManager.Spawn<Projectile>("Projectile", null, _transform.position + _transform.up * 0.5f, _transform.rotation);
+        //projectile.Initialize(1, EntityType.Player, 0.5f);
+    }
+
     public struct EnemyStateData
     {
         public Transform target;
         public Transform transform;
-        public BulletSpawner bulletSpawner;
         public EnemyState[] transitionStates;
         public float timeInState;
         public bool timerStartsPaused;
@@ -52,7 +69,6 @@ public abstract class EnemyState
         public EnemyStateData(
         Transform target,
         Transform transform,
-        BulletSpawner bulletSpawner,
         EnemyState[] transitionStates,
         float timeInState,
         bool timerStartsPaused,
@@ -60,7 +76,6 @@ public abstract class EnemyState
         {
             this.target = target;
             this.transform = transform;
-            this.bulletSpawner = bulletSpawner;
             this.transitionStates = (EnemyState[]) transitionStates.Clone();
             this.timeInState = timeInState;
             this.timerStartsPaused = timerStartsPaused;
@@ -71,13 +86,76 @@ public abstract class EnemyState
 
 public class ChargingEnemyState : EnemyState
 {
+    float _delay;
+    float _chargeSpeed;
+    float _chargeTime;
+
+    CountdownTimer _chargeDelay;
+    CountdownTimer _chargeDurationTimer;
+    Vector3 _chargePoint;
+
+    bool _charging;
+
+    public ChargingEnemyState(float delay, float speed, float duration)
+    {
+        _delay = delay;
+        _chargeSpeed = speed;
+        _chargeTime = duration;
+
+        _chargeDelay = new CountdownTimer(delay, false, false);
+        _chargeDelay.OnTimerExpired += BeginCharge;
+
+        _chargeDurationTimer = new CountdownTimer(duration, true, false);
+        _chargeDurationTimer.OnTimerExpired += EndCharge;
+    }
+
     public override void EnterState()
     {
         base.EnterState();
+
+        _chargePoint = _target.position;
+        _chargeDurationTimer.Reset();
+
+        if (_delay > 0)
+        {
+            _chargeDelay.SetNewTime(_delay);
+            _chargeDelay.Resume();
+        }
+        else BeginCharge();
+    }
+
+    public override void UpdateState()
+    {
+        base.UpdateState();
+
+        _chargeDelay.Update(Time.deltaTime);
+        _chargeDurationTimer.Update(Time.deltaTime);
+    }
+
+    public override void FixedUpdateState()
+    {
+        base.FixedUpdateState();
+
+        if (_charging)
+            MoveTowardsPosition(_chargePoint, _chargeSpeed);
     }
 
     public override void TimeExpired()
     {
+        InvokeStateChangeRequest(_transitionStates[0]);
+    }
+
+    private void BeginCharge()
+    {
+        _charging = true;
+        _chargeDurationTimer.Resume();
+    }
+
+    private void EndCharge()
+    {
+        _charging = false;
+        _chargeDurationTimer.Reset();
+        _chargeDurationTimer.Pause();
         InvokeStateChangeRequest(_transitionStates[0]);
     }
 }
@@ -89,7 +167,6 @@ public class ApproachPlayerEnemyState : EnemyState
     private float _attackPlayerRadius;
 
     private CountdownTimer _updateTargetPositionTimer;
-
 
     public ApproachPlayerEnemyState(float walkSpeed, float attackPlayerRadius)
     {
@@ -111,8 +188,6 @@ public class ApproachPlayerEnemyState : EnemyState
     public override void EnterState()
     {
         base.EnterState();
-
-        _bulletSpawner?.StopFiring();
     }
 
     public override void UpdateState()
@@ -126,14 +201,8 @@ public class ApproachPlayerEnemyState : EnemyState
     {
         base.FixedUpdateState();
 
-        
-            _transform.position = _transform.position +
-                (_targetPosition - _transform.position).normalized *
-                _walkSpeed * 0.1f;
-
-        Vector3 positionDifference = (_target.position - _transform.position).normalized;
-        float angle = Mathf.Atan2(positionDifference.y, positionDifference.x) * Mathf.Rad2Deg;
-        _transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+        MoveTowardsPosition(_targetPosition, _walkSpeed);
+        LookAtPosition(_target.position);
     }
 
     public override void DecomissionState()
@@ -209,9 +278,7 @@ public class MeleeAttackEnemyState : EnemyState
     {
         base.FixedUpdateState();
 
-        Vector3 positionDifference = (_target.position - _transform.position).normalized;
-        float angle = Mathf.Atan2(positionDifference.y, positionDifference.x) * Mathf.Rad2Deg;
-        _transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+        LookAtPosition(_target.position);
     }
 
     private void BeginAttack()

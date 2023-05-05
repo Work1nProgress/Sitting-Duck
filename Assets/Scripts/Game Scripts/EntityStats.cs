@@ -5,13 +5,17 @@ using UnityEngine;
 public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
 {
     [SerializeField] EntityType _entityType;
-
+    public int MaxHealth => _maxHealth;
     [SerializeField] private int _maxHealth;
+
+    public int Health => _health;
     private int _health;
 
     [SerializeField] private int _experience;
     [SerializeField] private int _startLevel;
     [SerializeField] private int _maxLevel;
+
+  
     private int _currentLevel;
     [SerializeField] private int[] _levelupThresholds;
 
@@ -29,11 +33,17 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
     public event EntityLevelChangeSignature OnLevelUpSuccess;
     public event EntityLevelChangeSignature OnLevelUpFail;
 
+
+    BulletCollider _collider;
     private void Awake()
     {
         _currentLevel = Mathf.Clamp(_startLevel, 1, _maxLevel);
         _experience = Mathf.Abs(_experience);
         _health = _maxHealth;
+
+
+        Debug.Log($"add on bullet hit listener", this);
+        _collider = GetComponent<BulletCollider>();
 
         if(_entityType == EntityType.Player)
         {
@@ -45,9 +55,23 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
         ControllerGame.Instance.AddEntityReference(this, _entityType);
     }
 
+    void OnEnable()
+    {
+        _collider.OnBulletHitEvent += OnBulletHit;
+    }
+
+    void OnDisable()
+    {
+        _collider.OnBulletHitEvent -= OnBulletHit;
+    }
+
     private void Start()
     {
         
+    }
+
+    void OnBulletHit(BulletType bulletType) {
+        ControllerGame.Instance.OnBulletHit(this, bulletType);
     }
 
     private void Update()

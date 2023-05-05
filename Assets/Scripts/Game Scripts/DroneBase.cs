@@ -20,25 +20,22 @@ public class DroneBase : PoolObject
 
     float MaxDistance = 5;
 
-    BulletSpawner bulletSpawner;
 
     [SerializeField]
-    Animator Animator;
+    protected Animator Animator;
 
 
-    public void Init(Vector3 offset, Quaternion rotationOffset)
+
+    public virtual void Init(Vector3 offset, Quaternion rotationOffset)
     {
         this.offset = offset;
         this.rotationOffset = rotationOffset;
         isInitialized = true;
-        bulletSpawner = GetComponent<BulletSpawner>();
-        bulletSpawner?.BeginFiring();
         Animator.SetFloat("Offset", Random.value);
-        //Time.timeScale = 0.1f;
     }
 
 
-    private void Update()
+    protected virtual void Update()
     {
         if (isInitialized)
         {
@@ -48,15 +45,14 @@ public class DroneBase : PoolObject
             var distanceT = Mathf.Min(1,Vector3.Distance(transform.position, targetPosition) / MaxDistance);
             var t = followRate * distanceT;
             transform.position = Vector3.Lerp(transform.position, targetPosition, t * Time.deltaTime);
-            transform.rotation = targetRotation;//Quaternion.Lerp(transform.rotation, targetRotation, t * Time.deltaTime);
+            transform.rotation = targetRotation;
         }
 
 
     }
 
-    public void OnFire()
-    {
-        Animator.SetTrigger("Shoot");
-    }
+    
+
+   
 
 }

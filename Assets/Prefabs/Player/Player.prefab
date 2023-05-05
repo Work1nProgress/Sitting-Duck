@@ -25,8 +25,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 521521780595444387}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -0.1, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: -1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2988496388571346628}
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 209035030, guid: 26e4998ded6ef49a09db3fe28ba66164, type: 3}
+  m_Sprite: {fileID: -735236164, guid: df4333cce23c34f3d9bee282878d3d7f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -181,8 +181,9 @@ GameObject:
   - component: {fileID: 2988496388571346629}
   - component: {fileID: 446671978610672046}
   - component: {fileID: 2795538405735603950}
-  - component: {fileID: 423751046601950062}
-  m_Layer: 7
+  - component: {fileID: 5801177609534820187}
+  - component: {fileID: 6601173424045009222}
+  m_Layer: 12
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -223,6 +224,7 @@ MonoBehaviour:
   MaxAcceleration: 30
   AccelerationMultiplier: 0.08
   MaxCollisionRidealong: 0.3
+  animator: {fileID: 6601173424045009222}
   MaxSteering: 5
 --- !u!50 &2988496388571346629
 Rigidbody2D:
@@ -281,7 +283,7 @@ MonoBehaviour:
   _levelupThresholds: 14000000
   _tags:
   - player
---- !u!114 &423751046601950062
+--- !u!114 &5801177609534820187
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -290,26 +292,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 2988496388571346630}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9add1c9d0cf8e4cb28a0121845c457c6, type: 3}
+  m_Script: {fileID: 11500000, guid: fe2d0ee96050b4438af1beea1a2288ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletLayersToBeHitBy:
-    serializedVersion: 2
-    m_Bits: 0
-  shape: 0
-  radius: 0.5
-  size: {x: 1, y: 1, z: 1}
-  destroyBullet: 1
-  center: {x: 0, y: 0, z: 0}
-  pointA: {x: 0, y: 0, z: 0}
-  pointB: {x: 0, y: 0, z: 0}
-  pointC: {x: 0, y: 0, z: 0}
-  OnCollide:
-    m_PersistentCalls:
-      m_Calls: []
-  bounce: 0
-  lifetimeLoss: 0
-  bounciness: 0
+--- !u!95 &6601173424045009222
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2988496388571346630}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2c3df50e183d846518c1702d2881d3cc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2988496389024406502
 GameObject:
   m_ObjectHideFlags: 0
