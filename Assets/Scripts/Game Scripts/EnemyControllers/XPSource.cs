@@ -43,7 +43,7 @@ public class XPSource : PoolObject
         var distance = Vector2.Distance(transform.position, ControllerGame.Instance.PlayerPosition);
         if (distance < MaxMagnetDistance)
         {
-            var move = (ControllerGame.Instance.Player.transform.position - transform.position);
+            var move = (ControllerGame.Instance.PlayerController.transform.position - transform.position);
             move = new Vector3(move.x, move.y, 0);
             if (distance > 0)
             {

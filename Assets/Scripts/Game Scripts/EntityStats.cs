@@ -17,10 +17,12 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
     [SerializeField] private int _experience;
     [SerializeField] private int _startLevel;
     [SerializeField] private int _maxLevel;
-
+    [SerializeField] private float levelUpXPCoeficient, levelUpStartXP;
   
     private int _currentLevel;
-    [SerializeField] private int[] _levelupThresholds;
+    private int[] _levelupThresholds;
+
+    
 
     [SerializeField]private string[] _tags;
 
@@ -31,6 +33,9 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
 
     public delegate void EntityDeathSignature(EntityStats entityStats);
     public event EntityDeathSignature OnDeath;
+
+    public delegate void EntityXpChangeSignature(int current, int max);
+    public event EntityXpChangeSignature OnXPChanged;
 
     public delegate void EntityLevelChangeSignature(int level);
     public event EntityLevelChangeSignature OnLevelUpSuccess;
@@ -51,6 +56,14 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
         {
             _xpPickupTimer = new CountdownTimer(0.125f, false, true);
             _xpPickupTimer.OnTimerExpired += PickupXPOrbs;
+            _levelupThresholds = new int[_maxLevel];
+            for (int i = 0; i < _maxLevel; i++)
+            {
+
+                _levelupThresholds[i] = (int)(levelUpStartXP + i * levelUpXPCoeficient);
+            }
+
+
         }
 
 
@@ -101,9 +114,11 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
     {
         if (_entityType != EntityType.Player)
         {
-            var pos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 1, -1); 
-            var spawn = PoolManager.Spawn<FloatingDamageNumber>("FloatingDamageNumber", gameObject.transform, pos);
-            spawn.Init(ammount);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(ControllerGame.Instance.MainUIContainer, Camera.main.WorldToScreenPoint(transform.position), null, out var point);
+
+            var currentPos = ControllerGame.Instance.MainUIContainer.InverseTransformVector(point);
+            var spawn = PoolManager.Spawn<FloatingDamageNumber>("FloatingDamageNumber", ControllerGame.Instance.MainUIContainer);
+            spawn.Init(ammount, currentPos);
         }
         
         if (_canHealthChange)
@@ -142,11 +157,12 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
         }
     }
 
-    public int GetExperienceValue() { return _experience; }
+    public int GetExperienceValue => _experience;
+    public int GetMaxExperienceValue => _levelupThresholds[_currentLevel - 1];
     public void ChangeExperienceValue(int change)
     {
         _experience += change;
-
+        OnXPChanged.Invoke(_experience, _levelupThresholds[Mathf.Min(_currentLevel - 1, _levelupThresholds.Length-1)]);
         if (_currentLevel - 1 < _levelupThresholds.Length)
             if(_experience > _levelupThresholds[_currentLevel - 1])
             {

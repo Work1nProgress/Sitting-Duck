@@ -69,10 +69,10 @@ public class ArrowMovementView : MonoBehaviour
 
             var currentPos = transform.parent.InverseTransformVector(point);
             var distance = Vector3.Distance(currentPos, startPos);
-            var isMaxed = Vector3.Distance(currentPos, startPos) * ControllerGame.Instance.Player.GetAccelerationMultiplier >= ControllerGame.Instance.Player.GetMaxAcceleration;
-            if (Vector3.Angle(currentPos - startPos, ControllerGame.Instance.Player.transform.up) > ControllerGame.Instance.DeadZone)
+            var isMaxed = Vector3.Distance(currentPos, startPos) * ControllerGame.Instance.PlayerController.GetAccelerationMultiplier >= ControllerGame.Instance.PlayerController.GetMaxAcceleration;
+            if (Vector3.Angle(currentPos - startPos, ControllerGame.Instance.PlayerController.transform.up) > ControllerGame.Instance.DeadZone)
             {
-                var right = Mathf.Sign(Vector3.Dot(currentPos - startPos, ControllerGame.Instance.Player.transform.right));
+                var right = Mathf.Sign(Vector3.Dot(currentPos - startPos, ControllerGame.Instance.PlayerController.transform.right));
                 var lastRecalculated = right == -1 ? 2 * lastPos - startPos : lastPos;
                 currentPos = startPos + (lastRecalculated - startPos).normalized * distance;
             }
@@ -81,7 +81,7 @@ public class ArrowMovementView : MonoBehaviour
                 lastPos = currentPos;
             }
 
-            if (Vector3.Angle(currentPos - startPos, ControllerGame.Instance.Player.transform.up) > ControllerGame.Instance.ReverseMinAngle)
+            if (Vector3.Angle(currentPos - startPos, ControllerGame.Instance.PlayerController.transform.up) > ControllerGame.Instance.ReverseMinAngle)
             {
                 var color = isMaxed ? Color.red : Color.yellow;
                 ImageArrowLine.color = color;

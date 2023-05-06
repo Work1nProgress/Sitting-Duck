@@ -39,8 +39,8 @@ public class DroneBase : PoolObject
     {
         if (isInitialized)
         {
-            targetPosition = ControllerGame.Instance.Player.transform.position + (ControllerGame.Instance.Player.transform.rotation * offset);
-            targetRotation = ControllerGame.Instance.Player.transform.rotation * rotationOffset;
+            targetPosition = ControllerGame.Instance.PlayerController.transform.position + (ControllerGame.Instance.PlayerController.transform.rotation * offset);
+            targetRotation = ControllerGame.Instance.PlayerController.transform.rotation * rotationOffset;
 
             var distanceT = Mathf.Min(1,Vector3.Distance(transform.position, targetPosition) / MaxDistance);
             var t = followRate * distanceT;

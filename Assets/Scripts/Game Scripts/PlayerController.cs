@@ -63,7 +63,7 @@ public class PlayerController : PoolObject
             animator.SetTrigger("Roll");
             var currentPos = Mouse.current.position.value;
             var magnitude = (StartPos - currentPos).magnitude;
-            if (Vector3.Angle(currentPos - StartPos, ControllerGame.Instance.Player.transform.up) > ControllerGame.Instance.DeadZone)
+            if (Vector3.Angle(currentPos - StartPos, ControllerGame.Instance.PlayerController.transform.up) > ControllerGame.Instance.DeadZone)
             {
                 currentPos = lastPos;
             }
