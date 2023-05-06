@@ -101,7 +101,8 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
     {
         if (_entityType != EntityType.Player)
         {
-            var spawn = PoolManager.Spawn<FloatingDamageNumber>("FloatingDamageNumber", gameObject.transform, gameObject.transform.position + Vector3.up);
+            var pos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 1, -1); 
+            var spawn = PoolManager.Spawn<FloatingDamageNumber>("FloatingDamageNumber", gameObject.transform, pos);
             spawn.Init(ammount);
         }
         

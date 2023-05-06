@@ -63,7 +63,6 @@ public class ControllerGame : ControllerLocal
 
     public override void Init()
     {
-
         m_Instance = this;
         PoolManager.Instance.Init();
         _levelResetTimer = new CountdownTimer(_levelResetDelay, true, false);
