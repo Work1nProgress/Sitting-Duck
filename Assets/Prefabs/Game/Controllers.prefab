@@ -69,6 +69,12 @@ MonoBehaviour:
   - poolObject: {fileID: 4984201115601849450, guid: 4b224d12de4d64cb89691209b4319135, type: 3}
     initialPoolSize: 20
     maxPoolSize: 100
+  - poolObject: {fileID: 2389425310665421312, guid: 9c50d9ad7aca7e44a994a7f661f16b71, type: 3}
+    initialPoolSize: 50
+    maxPoolSize: 500
+  - poolObject: {fileID: 1368914721132045261, guid: ce7512dd5393d1d4d8f7e86b5781ad0f, type: 3}
+    initialPoolSize: 20
+    maxPoolSize: 100
 --- !u!1 &5749553159213732891
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,6 +156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _levelResetDelay: 10
+  OrbDuration: 10
   RotateTowardsArrow: 0
   AllowReverse: 1
   ReverseMinAngle: 130
@@ -219,23 +226,23 @@ MonoBehaviour:
   - WeaponType: 0
     NumberOfDrones: 2
     Drones:
-    - OffsetPosition: {x: -1.5, y: 1, z: 0}
+    - OffsetPosition: {x: -0.75, y: 0.5, z: 0}
       OffsetRotation: 0
-    - OffsetPosition: {x: 1.5, y: 1, z: 0}
+    - OffsetPosition: {x: 0.75, y: 0.5, z: 0}
       OffsetRotation: 0
   - WeaponType: 1
     NumberOfDrones: 2
     Drones:
-    - OffsetPosition: {x: -1.5, y: 0, z: 0}
+    - OffsetPosition: {x: -0.75, y: 0, z: 0}
       OffsetRotation: 90
-    - OffsetPosition: {x: 1.5, y: 0, z: 0}
+    - OffsetPosition: {x: 0.75, y: 0, z: 0}
       OffsetRotation: -90
   - WeaponType: 2
     NumberOfDrones: 2
     Drones:
-    - OffsetPosition: {x: 0, y: 1, z: 0}
+    - OffsetPosition: {x: 0, y: 0.75, z: 0}
       OffsetRotation: 0
-    - OffsetPosition: {x: 0, y: -1, z: 0}
+    - OffsetPosition: {x: 0, y: -0.75, z: 0}
       OffsetRotation: 180
 --- !u!114 &658692819
 MonoBehaviour:
@@ -250,7 +257,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnPatterns:
-  - _enemy: 3
+  - _enemy: 2
     _spawnBatchSize: 1
     _limitSpawnEvents: 0
     _maximumSpawnEvents: 3

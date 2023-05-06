@@ -61,7 +61,7 @@ public class EnemyController : PoolObject
         _animator = GetComponent<Animator>();
     }
 
-    protected void HandleDeath()
+    protected void HandleDeath(EntityStats stats)
     {
         _entityStats.Heal(1000);
         _entityStats._canHealthChange = false;

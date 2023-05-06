@@ -40,6 +40,6 @@ public class ObjectInstance
 
     public void SetParent(Transform parent)
     {
-        gameObject.transform.parent = parent;
+        gameObject.transform.SetParent(parent);
     }
 }

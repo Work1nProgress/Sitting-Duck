@@ -29,7 +29,7 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
     public delegate void EnemyHealthChangeSignature(int oldHealth, int newHealth, int maxHealth);
     public event EnemyHealthChangeSignature OnHealthChanged;
 
-    public delegate void EntityDeathSignature();
+    public delegate void EntityDeathSignature(EntityStats entityStats);
     public event EntityDeathSignature OnDeath;
 
     public delegate void EntityLevelChangeSignature(int level);
@@ -45,7 +45,6 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
         _health = _maxHealth;
 
 
-        Debug.Log($"add on bullet hit listener", this);
         _collider = GetComponent<BulletCollider>();
 
         if(_entityType == EntityType.Player)
@@ -61,20 +60,35 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
     void OnEnable()
     {
         _collider.OnBulletHitEvent += OnBulletHit;
+        _collider.OnTriggerExitEvent += OnChainSawExit;
     }
 
     void OnDisable()
     {
         _collider.OnBulletHitEvent -= OnBulletHit;
+        _collider.OnTriggerExitEvent -= OnChainSawExit;
     }
+
 
     private void Start()
     {
         
     }
 
-    void OnBulletHit(BulletType bulletType) {
-        ControllerGame.Instance.OnBulletHit(this, bulletType);
+    void OnBulletHit(BulletType bulletType, bool chainsaw) {
+        if (!chainsaw)
+        {
+            ControllerGame.Instance.OnBulletHit(this, bulletType);
+        }
+        else
+        {
+            ControllerGame.Instance.AddChainsawDamage(this);
+        }
+    }
+
+    void OnChainSawExit()
+    {
+        ControllerGame.Instance.OnChainSawExit(this);
     }
 
     private void Update()
@@ -87,7 +101,8 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
     {
         if (_entityType != EntityType.Player)
         {
-            var spawn = PoolManager.Spawn<FloatingDamageNumber>("FloatingDamageNumber", gameObject.transform, gameObject.transform.position + Vector3.up);
+            var pos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 1, -1); 
+            var spawn = PoolManager.Spawn<FloatingDamageNumber>("FloatingDamageNumber", gameObject.transform, pos);
             spawn.Init(ammount);
         }
         
@@ -99,7 +114,7 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
             if (newHealth == 0)
             {
                 if (OnDeath != null)
-                    OnDeath.Invoke();
+                    OnDeath.Invoke(this);
                 return;
             }
 
@@ -117,7 +132,7 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
 
             if (newHealth == 0)
             {
-                OnDeath.Invoke();
+                OnDeath.Invoke(this);
                 return;
             }
 

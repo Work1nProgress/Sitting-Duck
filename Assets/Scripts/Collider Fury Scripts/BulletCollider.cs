@@ -7,8 +7,11 @@ public class BulletCollider : MonoBehaviour
 
     string[] split;
 
-    public delegate void OnBulletHit(BulletType bulletType);
+    public delegate void OnBulletHit(BulletType bulletType, bool chainsaw);
     public event OnBulletHit OnBulletHitEvent;
+
+    public delegate void OnTriggerExit();
+    public event OnTriggerExit OnTriggerExitEvent;
 
 
 
@@ -21,17 +24,16 @@ public class BulletCollider : MonoBehaviour
         }
 
         //this handles chainsaw drones
-        if (collision.attachedRigidbody.gameObject.layer == 7 && gameObject.layer == 10)
+        if (!collision.attachedRigidbody.gameObject.name.Contains('_')  && gameObject.layer == 10)
         {
-            Debug.Log($"on trigger enter chainsaw", this);
           
-            OnBulletHitEvent.Invoke(BulletType.Player);
+            OnBulletHitEvent.Invoke(BulletType.Player, true);
             return;
         }
 
         split = collision.transform.name.Split('_');
         (int pool, int id) = (int.Parse(split[0]), int.Parse(split[1]));
-        OnBulletHitEvent.Invoke((BulletType)pool);
+        OnBulletHitEvent.Invoke((BulletType)pool, false);
         BulletManager.Instance.ReturnBullet(pool, id);
     }
 
@@ -45,16 +47,32 @@ public class BulletCollider : MonoBehaviour
         }
 
         //this handles chainsaw drones
-        if (collision.attachedRigidbody.gameObject.layer == 7 && gameObject.layer == 10)
+        if (!collision.attachedRigidbody.gameObject.name.Contains('_') && gameObject.layer == 10)
         {
-            Debug.Log($"on trigger stay chainsaw", this);
-            OnBulletHitEvent.Invoke(BulletType.Player);
+            OnBulletHitEvent.Invoke(BulletType.Player, true);
             return;
         }
 
         split = collision.transform.name.Split('_');
         (int pool, int id) = (int.Parse(split[0]), int.Parse(split[1]));
-        OnBulletHitEvent.Invoke((BulletType)pool);
+        OnBulletHitEvent.Invoke((BulletType)pool, false);
         BulletManager.Instance.ReturnBullet(pool, id);
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (OnBulletHitEvent == null)
+        {
+            return;
+        }
+
+        //this handles chainsaw drones
+        if (!collision.attachedRigidbody.gameObject.name.Contains('_') && gameObject.layer == 10)
+        {
+            OnTriggerExitEvent.Invoke();
+            return;
+        }
+
+      
     }
 }
