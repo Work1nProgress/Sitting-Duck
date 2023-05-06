@@ -20,9 +20,9 @@ public class FloatingDamageNumber : PoolObject
         text.text = _damageAmount.ToString();
         transform.rotation = Quaternion.identity;
         transform.DOScale(new Vector3(2, 2, 2), .5f);
-     //   text.rectTransform.DOShakeAnchorPos(0.3f, ShakeAmount);
-     //   text.rectTransform.DOAnchorPosX(text.rectTransform.anchoredPosition.x + (Random.value - 0.5f) * OffsetX, lifeTime).SetEase(Ease.OutCirc);
-     //   text.rectTransform.DOAnchorPosY(text.rectTransform.anchoredPosition.y + OffsetY, lifeTime).SetEase(Ease.OutCubic);
+        // text.rectTransform.DOShakeAnchorPos(0.3f, ShakeAmount);
+        // text.rectTransform.DOAnchorPosX(text.rectTransform.anchoredPosition.x + (Random.value - 0.5f) * OffsetX, lifeTime).SetEase(Ease.OutCirc);
+        // text.rectTransform.DOAnchorPosY(text.rectTransform.anchoredPosition.y + OffsetY, lifeTime).SetEase(Ease.OutCubic);
         text.DOFade(0, lifeTime).OnComplete(() => PoolManager.Despawn(this));
     }
 

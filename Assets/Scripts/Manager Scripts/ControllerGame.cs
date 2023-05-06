@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using Cinemachine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class ControllerGame : ControllerLocal
 {
@@ -20,6 +21,7 @@ public class ControllerGame : ControllerLocal
     public Vector2 PlayerPosition => new Vector2(playerController.transform.position.x, playerController.transform.position.y);
 
     [SerializeField] private float _levelResetDelay;
+    [SerializeField] private ScreenFader _screenFader;
 
     private CountdownTimer _levelResetTimer;
     private CountdownTimer[] _allTimers;
@@ -205,7 +207,10 @@ public class ControllerGame : ControllerLocal
 
     public void StartCurrentSceneReset(EntityStats player)
     {
-        return;
+        Camera.main.GetComponent<PixelPerfectCamera>().assetsPPU = 128;
+        SoundManager.Instance.Play("screamsplosion");
+        PlayerController.AnimateDeath();
+        _screenFader.StartFade();
         _levelResetTimer.Resume();
         Debug.Log("Resetting scene with delay of: " + _levelResetDelay + " seconds");
     }
