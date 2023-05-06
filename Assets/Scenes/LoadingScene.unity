@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12733836, g: 0.13418841, b: 0.12118524, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -292,6 +292,66 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2800301645272350258, guid: a57af320e7ff649c79dbd8b2ebe2abd3, type: 3}
+      propertyPath: sounds.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2800301645272350258, guid: a57af320e7ff649c79dbd8b2ebe2abd3, type: 3}
+      propertyPath: sounds.Array.data[2].Randomize
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2800301645272350258, guid: a57af320e7ff649c79dbd8b2ebe2abd3, type: 3}
+      propertyPath: sounds.Array.data[2].SoundName
+      value: screamsplosion
+      objectReference: {fileID: 0}
+    - target: {fileID: 2800301645272350258, guid: a57af320e7ff649c79dbd8b2ebe2abd3, type: 3}
+      propertyPath: sounds.Array.data[3].SoundName
+      value: heartbreak
+      objectReference: {fileID: 0}
+    - target: {fileID: 2800301645272350258, guid: a57af320e7ff649c79dbd8b2ebe2abd3, type: 3}
+      propertyPath: sounds.Array.data[2].soundItems.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2800301645272350258, guid: a57af320e7ff649c79dbd8b2ebe2abd3, type: 3}
+      propertyPath: sounds.Array.data[3].soundItems.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2800301645272350258, guid: a57af320e7ff649c79dbd8b2ebe2abd3, type: 3}
+      propertyPath: sounds.Array.data[2].soundItems.Array.data[0].Volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2800301645272350258, guid: a57af320e7ff649c79dbd8b2ebe2abd3, type: 3}
+      propertyPath: sounds.Array.data[2].soundItems.Array.data[1].Volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2800301645272350258, guid: a57af320e7ff649c79dbd8b2ebe2abd3, type: 3}
+      propertyPath: sounds.Array.data[3].soundItems.Array.data[0].Volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2800301645272350258, guid: a57af320e7ff649c79dbd8b2ebe2abd3, type: 3}
+      propertyPath: sounds.Array.data[2].soundItems.Array.data[0].AudioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 848ff40f03316754eac3d61cda2201c3, type: 3}
+    - target: {fileID: 2800301645272350258, guid: a57af320e7ff649c79dbd8b2ebe2abd3, type: 3}
+      propertyPath: sounds.Array.data[2].soundItems.Array.data[1].AudioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 108929e70e8ec41a79f455e4b2ada512, type: 3}
+    - target: {fileID: 2800301645272350258, guid: a57af320e7ff649c79dbd8b2ebe2abd3, type: 3}
+      propertyPath: sounds.Array.data[3].soundItems.Array.data[0].AudioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 23f48bb4f13b34647b5dc7c0ac764036, type: 3}
+    - target: {fileID: 2800301645272350258, guid: a57af320e7ff649c79dbd8b2ebe2abd3, type: 3}
+      propertyPath: sounds.Array.data[2].soundItems.Array.data[0].RandomPitchAmplitude
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2800301645272350258, guid: a57af320e7ff649c79dbd8b2ebe2abd3, type: 3}
+      propertyPath: sounds.Array.data[2].soundItems.Array.data[1].RandomPitchAmplitude
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2800301645272350258, guid: a57af320e7ff649c79dbd8b2ebe2abd3, type: 3}
+      propertyPath: sounds.Array.data[3].soundItems.Array.data[0].RandomPitchAmplitude
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6176570369151398744, guid: a57af320e7ff649c79dbd8b2ebe2abd3, type: 3}
       propertyPath: m_Name
       value: SoundManager

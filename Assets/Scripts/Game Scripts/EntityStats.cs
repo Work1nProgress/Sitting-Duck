@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
@@ -62,8 +63,6 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
 
                 _levelupThresholds[i] = (int)(levelUpStartXP + i * levelUpXPCoeficient);
             }
-
-
         }
 
 
@@ -80,12 +79,6 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
     {
         _collider.OnBulletHitEvent -= OnBulletHit;
         _collider.OnTriggerExitEvent -= OnChainSawExit;
-    }
-
-
-    private void Start()
-    {
-        
     }
 
     void OnBulletHit(BulletType bulletType, bool chainsaw) {
@@ -112,6 +105,9 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
 
     public void Damage(int ammount)
     {
+        if (!_canHealthChange) return;
+        
+        
         if (_entityType != EntityType.Player)
         {
             RectTransformUtility.ScreenPointToLocalPointInRectangle(ControllerGame.Instance.MainUIContainer, Camera.main.WorldToScreenPoint(transform.position), null, out var point);
@@ -120,23 +116,28 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
             var spawn = PoolManager.Spawn<FloatingDamageNumber>("FloatingDamageNumber", ControllerGame.Instance.MainUIContainer);
             spawn.Init(ammount, currentPos);
         }
+
+        int newHealth = _health - ammount;
+        newHealth = Mathf.Clamp(newHealth, 0, _maxHealth);
         
-        if (_canHealthChange)
+        if (_entityType == EntityType.Player)
         {
-            int newHealth = _health - ammount;
-            newHealth = Mathf.Clamp(newHealth, 0, _maxHealth);
-
-            if (newHealth == 0)
-            {
-                if (OnDeath != null)
-                    OnDeath.Invoke(this);
-                return;
-            }
-
-            if (OnHealthChanged != null)
-                OnHealthChanged.Invoke(_health, newHealth, _maxHealth);
-            _health = newHealth;
+            GameFeelManager.Instance.PlayerTookDamageShakeTheCameraFor(0.3f);
+            SoundManager.Instance.Play("heartbreak");
+            _canHealthChange = false;
+            StartCoroutine(CanTakeAgainDamageIn(newHealth > 0 ? 1f : 1000f));
         }
+
+        if (newHealth == 0)
+        {
+            if (OnDeath != null)
+                OnDeath.Invoke(this);
+            return;
+        }
+
+        if (OnHealthChanged != null)
+            OnHealthChanged.Invoke(_health, newHealth, _maxHealth);
+        _health = newHealth;
     }
     public void Heal(int ammount)
     {
@@ -206,6 +207,12 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
         }
 
         return false;
+    }
+
+    public IEnumerator CanTakeAgainDamageIn(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        _canHealthChange = true;
     }
 
     public EntityType GetEntityType() { return _entityType; }
