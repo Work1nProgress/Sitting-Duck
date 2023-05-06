@@ -152,5 +152,5 @@ MonoBehaviour:
   lifeTime: 2
   text: {fileID: 7120190348726525731}
   OffsetX: 4
-  OffsetY: 1
-  ShakeAmount: 0.3
+  OffsetY: 4
+  ShakeAmount: 5

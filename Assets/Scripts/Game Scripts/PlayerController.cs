@@ -147,6 +147,11 @@ public class PlayerController : PoolObject
 
     }
 
+    public void AnimateDeath()
+    {
+        animator.SetTrigger("Death");
+    }
+
 
     bool rotateFromCollision = false;
     float changeFromCollision = 0;
