@@ -23,7 +23,7 @@ public class UnitcubusController : EnemyController
         _chargePlayerState = new ChargingEnemyState(_chargeDelay, _walkSpeed * _chargeSpeedMultiplier, 3);
         _smashEnemyState = new SmashEnemyState(_attackDamage, 0.5f);
 
-        if (ControllerGame.Instance.Player == null)
+        if (ControllerGame.Instance.PlayerController == null)
         {
             StartCoroutine(WaitForPlayer());
             return;
@@ -39,7 +39,7 @@ public class UnitcubusController : EnemyController
     {
         EnemyState.EnemyStateData stateData = new EnemyState.EnemyStateData(
        this,
-       ControllerGame.Instance.Player.transform,
+       ControllerGame.Instance.PlayerController.transform,
        transform,
        _animator,
        new EnemyState[2] { _chargePlayerState, _smashEnemyState },
@@ -68,7 +68,7 @@ public class UnitcubusController : EnemyController
 
     private IEnumerator WaitForPlayer()
     {
-        yield return new WaitUntil(() => ControllerGame.Instance.Player != null);
+        yield return new WaitUntil(() => ControllerGame.Instance.PlayerController != null);
         Init();
     }
 }

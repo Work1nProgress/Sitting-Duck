@@ -221,7 +221,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: 
-  MaxAcceleration: 20
+  MaxAcceleration: 15
   AccelerationMultiplier: 0.08
   MaxCollisionRidealong: 0.3
   animator: {fileID: 6601173424045009222}
@@ -280,8 +280,9 @@ MonoBehaviour:
   _maxHealth: 5
   _experience: 0
   _startLevel: 1
-  _maxLevel: 10
-  _levelupThresholds: 14000000
+  _maxLevel: 100
+  levelUpXPCoeficient: 5
+  levelUpStartXP: 5
   _tags:
   - player
 --- !u!114 &5801177609534820187

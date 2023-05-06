@@ -19,7 +19,7 @@ public class CanedController : EnemyController
         _deathState = new DeathState();
         _deathState.OnDeathStateExited += DespawnSelf;
 
-        if (ControllerGame.Instance.Player == null)
+        if (ControllerGame.Instance.PlayerController == null)
         {
             StartCoroutine(WaitForPlayer());
             return;
@@ -35,7 +35,7 @@ public class CanedController : EnemyController
     {
        EnemyState.EnemyStateData stateData = new EnemyState.EnemyStateData(
        this,
-       ControllerGame.Instance.Player.transform,
+       ControllerGame.Instance.PlayerController.transform,
        transform,
        _animator,
        new EnemyState[1] { _meleeAttackEnemyState },
@@ -59,7 +59,7 @@ public class CanedController : EnemyController
 
     private IEnumerator WaitForPlayer()
     {
-        yield return new WaitUntil(() => ControllerGame.Instance.Player != null);
+        yield return new WaitUntil(() => ControllerGame.Instance.PlayerController != null);
         Init();
     }
 }

@@ -66,7 +66,7 @@ public class EnemyController : PoolObject
         _entityStats.Heal(1000);
         _entityStats._canHealthChange = false;
         XPSource xpOrb = PoolManager.Spawn<XPSource>("XPOrb", null, transform.position);
-        xpOrb.Initialize(_entityStats.GetExperienceValue(), ControllerGame.Instance.OrbDuration);
+        xpOrb.Initialize(_entityStats.GetExperienceValue, ControllerGame.Instance.OrbDuration);
         ChangeState(_deathState);
     }
 

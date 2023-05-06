@@ -19,7 +19,7 @@ public class HeartContainer : MonoBehaviour
     private void Wakey()
     {
         GameManager.Instance.OnSceneLoaded -= Wakey;
-        _playerStats = ControllerGame.Instance.Player.GetComponent<EntityStats>();
+        _playerStats = ControllerGame.Instance.PlayerController.GetComponent<EntityStats>();
         _maxHealth = _playerStats.MaxHealth;
         _currentHealth = _playerStats.Health;
         _playerStats.OnHealthChanged += HealthChanged;

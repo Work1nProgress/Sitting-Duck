@@ -12,16 +12,19 @@ public class ControllerGame : ControllerLocal
     public static ControllerGame Instance => m_Instance;
 
     PlayerController playerController;
-    public PlayerController Player => playerController;
+    public PlayerController PlayerController => playerController;
 
-    public Vector2 PlayerPosition => new Vector2(Player.transform.position.x, Player.transform.position.y);
+    public Vector2 PlayerPosition => new Vector2(playerController.transform.position.x, playerController.transform.position.y);
 
     [SerializeField] private float _levelResetDelay;
 
     private CountdownTimer _levelResetTimer;
     private CountdownTimer[] _allTimers;
 
+    public RectTransform MainUIContainer;
+
     private EntityStats _playerEntity;
+    public EntityStats PlayerEntity => _playerEntity;
     private List<EntityStats> _enemyEntities = new List<EntityStats>();
 
 

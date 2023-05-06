@@ -372,6 +372,7 @@ public class MeleeAttackEnemyState : EnemyState
         ResetAttackTimers();
         Debug.DrawLine(_transform.position, _transform.position + (_attackBoxLength * _transform.up), Color.yellow, _windUpTime);
     }
+    int PlayerLayerMask = LayerMask.GetMask("EnemyBulletTarget");
 
     private void AttackHit()
     {
@@ -385,7 +386,7 @@ public class MeleeAttackEnemyState : EnemyState
             _transform.position +
             (_attackBoxLength / 2 * _transform.up),
             new Vector2(_attackBoxwidth, _attackBoxLength),
-            angle);
+            angle, PlayerLayerMask);
 
         foreach(Collider2D collider in colliders)
         {

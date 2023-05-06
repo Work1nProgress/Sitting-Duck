@@ -10,7 +10,8 @@ public interface IEntityHealth
 
 public interface IExperience
 {
-    public int GetExperienceValue();
+    public int GetExperienceValue { get; }
+    public int GetMaxExperienceValue { get; }
     public void ChangeExperienceValue(int change);
     public int GetLevel();
     public void IncreaseLevel();
