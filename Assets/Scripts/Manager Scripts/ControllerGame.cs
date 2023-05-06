@@ -8,6 +8,9 @@ using Cinemachine;
 public class ControllerGame : ControllerLocal
 {
 
+
+
+
     private static ControllerGame m_Instance;
     public static ControllerGame Instance => m_Instance;
 
@@ -22,10 +25,18 @@ public class ControllerGame : ControllerLocal
     private CountdownTimer[] _allTimers;
 
     public RectTransform MainUIContainer;
+    [SerializeField]
+    LevelUpPopup LevelUpPopup;
 
     private EntityStats _playerEntity;
     public EntityStats PlayerEntity => _playerEntity;
     private List<EntityStats> _enemyEntities = new List<EntityStats>();
+
+    [SerializeField]
+    Upgrade[] Upgrades;
+
+    Dictionary<UpgradeType, float> m_UpgradeValues;
+
 
 
 
@@ -54,7 +65,29 @@ public class ControllerGame : ControllerLocal
     #endregion
     [Header("DamageSettings")]
     [SerializeField]
-    int PlayerBulletDamage = 10;
+    int StartingBulletDamage = 10;
+
+    [SerializeField]
+    int StartingChainsawDamage = 100;
+
+    [SerializeField]
+    int StaringRifleDroneNumber = 2;
+
+    [SerializeField]
+    int StaringShotgunDroneNumber = 2;
+    [SerializeField]
+    int StaringChainsawDroneNumber = 2;
+
+    [SerializeField]
+    int StartingBulletNumber = 3;
+
+    [SerializeField]
+    float StartingBulletSize = 1f;
+
+
+    ControllerDrones drones;
+
+
 
     [SerializeField]
     int EnemyBulletDamage = 1;
@@ -62,11 +95,27 @@ public class ControllerGame : ControllerLocal
     [Space()]
     public DroneShootSettings[] DroneShootSettings;
 
+    public int BulletDamage => StartingBulletDamage + GetUpgradeValueInt(UpgradeType.BulletDamage);
+    public int ChainsawDamage => StartingChainsawDamage + GetUpgradeValueInt(UpgradeType.MeeleDamage);
 
+    public int RifleDroneNumber => StaringRifleDroneNumber + GetUpgradeValueInt(UpgradeType.DroneRifle);
+    public int ShotgunDroneNumber => StaringShotgunDroneNumber + GetUpgradeValueInt(UpgradeType.DroneShotgun);
+    public int ChainsawDroneNumber => StaringChainsawDroneNumber + GetUpgradeValueInt(UpgradeType.DroneChainSaw);
+    public float BulletSize => StartingBulletSize + GetUpgradeValue(UpgradeType.BulletSize);
+    public int BulletNumber => StartingBulletNumber + GetUpgradeValueInt(UpgradeType.BulletAmount);
 
     public override void Init()
     {
         m_Instance = this;
+        m_UpgradeValues = new Dictionary<UpgradeType, float>();
+
+
+        foreach (var upgrade in System.Enum.GetValues(typeof(UpgradeType)))
+        {
+            m_UpgradeValues.Add((UpgradeType)upgrade, 0);
+        }
+
+
         PoolManager.Instance.Init();
         _levelResetTimer = new CountdownTimer(_levelResetDelay, true, false);
         _levelResetTimer.OnTimerExpired += GameManager.Instance.ResetCurrentScene;
@@ -81,7 +130,7 @@ public class ControllerGame : ControllerLocal
         Camera.main.transform.parent.GetComponentInChildren<CinemachineVirtualCamera>().Follow = playerController.transform;
 
 
-        GetComponent<ControllerDrones>().Init();
+        drones = GetComponent<ControllerDrones>().Init();
         GetComponent < EnemyManager>().Init();
         GetComponentInChildren<BulletManager>().Init();
         base.Init();
@@ -102,6 +151,56 @@ public class ControllerGame : ControllerLocal
                 ct.Update(Time.deltaTime);
             }
         }
+
+        var debugUpgrade = UpgradeType.None;
+        if (Keyboard.current.digit1Key.wasReleasedThisFrame)
+        {
+            debugUpgrade = UpgradeType.BulletDamage;
+        }
+        if (Keyboard.current.digit2Key.wasReleasedThisFrame)
+        {
+            debugUpgrade = UpgradeType.MeeleDamage;
+        }
+        if (Keyboard.current.digit3Key.wasReleasedThisFrame)
+        {
+            debugUpgrade = UpgradeType.BulletAmount;
+        }
+        if (Keyboard.current.digit4Key.wasReleasedThisFrame)
+        {
+            debugUpgrade = UpgradeType.BulletSize;
+        }
+        if (Keyboard.current.digit5Key.wasReleasedThisFrame)
+        {
+            debugUpgrade = UpgradeType.DroneRifle;
+        }
+        if (Keyboard.current.digit6Key.wasReleasedThisFrame)
+        {
+            debugUpgrade = UpgradeType.DroneShotgun;
+        }
+        if (Keyboard.current.digit7Key.wasReleasedThisFrame)
+        {
+            debugUpgrade = UpgradeType.DroneChainSaw ;
+        }
+
+        for (int i = 0; i < Upgrades.Length; i++)
+        {
+            if (Upgrades[i].upgradeType == debugUpgrade)
+            {
+                var amount = Upgrades[i].Amount;
+                if (Keyboard.current.shiftKey.isPressed)
+                {
+                    amount = -amount;
+                }
+
+                var fdn = PoolManager.Spawn<FloatingDamageNumber>("FloatingDamageNumber", MainUIContainer);
+                Upgrade(debugUpgrade, amount);
+                fdn.Init($"{debugUpgrade}  {(amount > 0 ? "+" : "")}{amount}", new Vector2(0, -300));
+                return;
+            }
+        }
+        
+
+
     }
 
     public void StartCurrentSceneReset(EntityStats player)
@@ -119,11 +218,85 @@ public class ControllerGame : ControllerLocal
             case EntityType.Player:
                 _playerEntity = entity;
                 _playerEntity.OnDeath += StartCurrentSceneReset;
+                _playerEntity.OnLevelUpSuccess += OnLevelUp;
                 break;
             case EntityType.Enemy:
                 _enemyEntities.Add(entity);
                 break;
         }
+    }
+
+    public int GetUpgradeValueInt(UpgradeType upgrade)
+    {
+        return Mathf.CeilToInt(m_UpgradeValues[upgrade]);
+    }
+
+    public float GetUpgradeValue(UpgradeType upgrade)
+    {
+        return m_UpgradeValues[upgrade];
+    }
+
+    public void Upgrade(UpgradeType upgrade, float amount)
+    {
+
+
+
+        m_UpgradeValues[upgrade] += amount;
+        m_UpgradeValues[upgrade] = Mathf.Max(m_UpgradeValues[upgrade], 0);
+
+
+        if (upgrade == UpgradeType.DroneRifle || upgrade == UpgradeType.DroneShotgun || upgrade == UpgradeType.DroneChainSaw)
+        {
+            m_UpgradeValues[upgrade] = Mathf.Min(m_UpgradeValues[upgrade], 8);
+            drones.Refresh();
+        }
+    }
+
+
+    void OnLevelUp(int level)
+    {
+        List<Upgrade> possibleUpgrades = new List<Upgrade>();
+        List<Upgrade> passedUpgrades = new List<Upgrade>();
+
+        foreach (var u in Upgrades) {
+            if (level % 5 == 0 && level <= 60 && u.Capstone)
+            {
+                if (u.upgradeType == UpgradeType.DroneRifle && RifleDroneNumber < 8)
+                {
+                    possibleUpgrades.Add(u);
+                }
+
+                if (u.upgradeType == UpgradeType.DroneShotgun && ShotgunDroneNumber < 8)
+                {
+                    possibleUpgrades.Add(u);
+                }
+
+                if (u.upgradeType == UpgradeType.DroneChainSaw && ChainsawDroneNumber < 8)
+                {
+                    possibleUpgrades.Add(u);
+                }
+            } else if ((level % 5 != 0 || level > 60) && !u.Capstone ) {
+                possibleUpgrades.Add(u);
+            }
+        }
+        if (possibleUpgrades.Count == 0)
+        {
+            return;
+        }
+        for (int i = 0; i < 3; i++)
+        {
+            int idx = Random.Range(0, possibleUpgrades.Count);
+
+            passedUpgrades.Add(possibleUpgrades[idx]);
+            possibleUpgrades.RemoveAt(idx);
+        }
+
+        LevelUpPopup.Open(passedUpgrades);
+
+
+
+
+
     }
 
     private void OnDestroy()
@@ -144,7 +317,7 @@ public class ControllerGame : ControllerLocal
         }
         if (enemyToDamage.ContainsKey(stats))
         {
-            enemyToDamage[stats] += PlayerBulletDamage * Random.Range(0.7f, 1.3f) * Time.fixedDeltaTime;
+            enemyToDamage[stats] += ChainsawDamage * Random.Range(0.7f, 1.3f) * Time.fixedDeltaTime;
         }
         else
         {
@@ -231,7 +404,7 @@ public class ControllerGame : ControllerLocal
         switch (bulletType)
         {
             case BulletType.Player:
-                stats.Damage(Mathf.CeilToInt(PlayerBulletDamage * Random.Range(0.7f, 1.3f)));
+                stats.Damage(Mathf.CeilToInt(BulletDamage * Random.Range(0.7f, 1.3f)));
                 break;
             case BulletType.Enemy:
                 stats.Damage(EnemyBulletDamage);
@@ -267,6 +440,10 @@ public class DroneShootSettings
     public float ArcDegrees;
 
     public string ShootSFX;
+
+
+    public Vector2[] OffsetPosition;
+    public float[] OffsetRotation;
 
 
 }

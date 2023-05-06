@@ -104,10 +104,10 @@ public class BulletManager : MonoBehaviour
         bp[poolID].ReturnBullet(ID);
     }
 
-    public void RequestBullet(BulletType bulletType, Vector3 position, Vector3 direction, float rotation, float lifetime)
+    public void RequestBullet(BulletType bulletType, Vector3 position, Vector3 direction, float rotation, float lifetime, float size)
     {
 
-        bp[(int)bulletType].RequestBullet(position, direction,rotation, null, lifetime);
+        bp[(int)bulletType].RequestBullet(position, direction,rotation, null, lifetime, size);
     }
 
 }
