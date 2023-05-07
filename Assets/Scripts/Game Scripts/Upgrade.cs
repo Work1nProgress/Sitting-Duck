@@ -19,6 +19,7 @@ public enum UpgradeType
     MeeleDamage,
     BulletAmount,
     BulletSize,
+    MagnetStrength,
 
     DroneRifle,
     DroneShotgun,

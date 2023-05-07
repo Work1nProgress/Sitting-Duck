@@ -91,6 +91,9 @@ public class ControllerGame : ControllerLocal
     [SerializeField]
     float StartingBulletSize = 1f;
 
+    [SerializeField]
+    float StartingMagnetStrength = 7f;
+
 
     ControllerDrones drones;
 
@@ -110,6 +113,7 @@ public class ControllerGame : ControllerLocal
     public int ChainsawDroneNumber => StaringChainsawDroneNumber + GetUpgradeValueInt(UpgradeType.DroneChainSaw);
     public float BulletSize => StartingBulletSize + GetUpgradeValue(UpgradeType.BulletSize);
     public int BulletNumber => StartingBulletNumber + GetUpgradeValueInt(UpgradeType.BulletAmount);
+    public float MagnetStrength => StartingMagnetStrength + GetUpgradeValue(UpgradeType.MagnetStrength);
 
     public override void Init()
     {
@@ -159,51 +163,56 @@ public class ControllerGame : ControllerLocal
             }
         }
 
-        var debugUpgrade = UpgradeType.None;
-        if (Keyboard.current.digit1Key.wasReleasedThisFrame)
+        if (false)
         {
-            debugUpgrade = UpgradeType.BulletDamage;
-        }
-        if (Keyboard.current.digit2Key.wasReleasedThisFrame)
-        {
-            debugUpgrade = UpgradeType.MeeleDamage;
-        }
-        if (Keyboard.current.digit3Key.wasReleasedThisFrame)
-        {
-            debugUpgrade = UpgradeType.BulletAmount;
-        }
-        if (Keyboard.current.digit4Key.wasReleasedThisFrame)
-        {
-            debugUpgrade = UpgradeType.BulletSize;
-        }
-        if (Keyboard.current.digit5Key.wasReleasedThisFrame)
-        {
-            debugUpgrade = UpgradeType.DroneRifle;
-        }
-        if (Keyboard.current.digit6Key.wasReleasedThisFrame)
-        {
-            debugUpgrade = UpgradeType.DroneShotgun;
-        }
-        if (Keyboard.current.digit7Key.wasReleasedThisFrame)
-        {
-            debugUpgrade = UpgradeType.DroneChainSaw ;
-        }
 
-        for (int i = 0; i < Upgrades.Length; i++)
-        {
-            if (Upgrades[i].upgradeType == debugUpgrade)
+            var debugUpgrade = UpgradeType.None;
+            if (Keyboard.current.digit1Key.wasReleasedThisFrame)
             {
-                var amount = Upgrades[i].Amount;
-                if (Keyboard.current.shiftKey.isPressed)
-                {
-                    amount = -amount;
-                }
-
-                var fdn = PoolManager.Spawn<FloatingDamageNumber>("FloatingDamageNumber", MessageContainer);
-                Upgrade(debugUpgrade, amount);
-                fdn.Init($"{debugUpgrade}  {(amount > 0 ? "+" : "")}{amount}");
-                return;
+                debugUpgrade = UpgradeType.BulletDamage;
             }
+            if (Keyboard.current.digit2Key.wasReleasedThisFrame)
+            {
+                debugUpgrade = UpgradeType.MeeleDamage;
+            }
+            if (Keyboard.current.digit3Key.wasReleasedThisFrame)
+            {
+                debugUpgrade = UpgradeType.BulletAmount;
+            }
+            if (Keyboard.current.digit4Key.wasReleasedThisFrame)
+            {
+                debugUpgrade = UpgradeType.BulletSize;
+            }
+            if (Keyboard.current.digit5Key.wasReleasedThisFrame)
+            {
+                debugUpgrade = UpgradeType.DroneRifle;
+            }
+            if (Keyboard.current.digit6Key.wasReleasedThisFrame)
+            {
+                debugUpgrade = UpgradeType.DroneShotgun;
+            }
+            if (Keyboard.current.digit7Key.wasReleasedThisFrame)
+            {
+                debugUpgrade = UpgradeType.DroneChainSaw;
+            }
+
+            for (int i = 0; i < Upgrades.Length; i++)
+            {
+                if (Upgrades[i].upgradeType == debugUpgrade)
+                {
+                    var amount = Upgrades[i].Amount;
+                    if (Keyboard.current.shiftKey.isPressed)
+                    {
+                        amount = -amount;
+                    }
+
+                    var fdn = PoolManager.Spawn<FloatingDamageNumber>("FloatingDamageNumber", MessageContainer);
+                    Upgrade(debugUpgrade, amount);
+                    fdn.Init($"{debugUpgrade}  {(amount > 0 ? "+" : "")}{amount}");
+                    return;
+                }
+            }
+
         }
         
 

@@ -197,12 +197,24 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 1);
         foreach (Collider2D collider in colliders)
         {
-            XPSource xp = collider.GetComponent<XPSource>();
 
-            if (xp != null)
+
+            var pickup = collider.GetComponent<Pickup>();
+            switch (pickup)
             {
-                SoundManager.Instance.Play("xporb");
-                ChangeExperienceValue(xp.Pickup());
+                case XPSource xp:
+                    SoundManager.Instance.Play("xporb");
+                    ChangeExperienceValue(xp.GetExp);
+                    xp.PickupObject();
+                    break;
+
+
+                case HeartSource heart:
+                    SoundManager.Instance.Play("xporb");
+                    Heal(1);
+                    heart.PickupObject();
+                    break;
+
             }
         }
     }
