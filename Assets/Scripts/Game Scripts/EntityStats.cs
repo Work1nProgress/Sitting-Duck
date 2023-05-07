@@ -111,11 +111,11 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
         
         if (_entityType != EntityType.Player)
         {
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(ControllerGame.Instance.MainUIContainer, Camera.main.WorldToScreenPoint(transform.position), null, out var point);
+            //RectTransformUtility.ScreenPointToLocalPointInRectangle(ControllerGame.Instance.MainUIContainer, Camera.main.WorldToScreenPoint(transform.position), null, out var point);
 
-            var currentPos = ControllerGame.Instance.MainUIContainer.InverseTransformVector(point);
+            //var currentPos = ControllerGame.Instance.MainUIContainer.InverseTransformVector(point);
             var spawn = PoolManager.Spawn<FloatingDamageNumber>("FloatingDamageNumber", ControllerGame.Instance.MainUIContainer);
-            spawn.Init(ammount, currentPos);
+            spawn.Init(ammount, transform.position);
         }
 
         if (_bloodVFX != null)

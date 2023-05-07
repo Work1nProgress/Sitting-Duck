@@ -70,7 +70,7 @@ MonoBehaviour:
   m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a6cbdd47a53ca984baa2a8aa91e3af7d, type: 2}
-  m_sharedMaterial: {fileID: -7981232361169918660, guid: a6cbdd47a53ca984baa2a8aa91e3af7d, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 090a3f344a69e476aa0bcb99dcf89efe, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -94,8 +94,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -151,6 +151,8 @@ MonoBehaviour:
   key: 
   lifeTime: 2
   text: {fileID: 7120190348726525731}
-  OffsetX: 4
-  OffsetY: 4
+  OffsetX: 0
+  OffsetY: 100
   ShakeAmount: 5
+  StartOffsetXRange: 30
+  StartOffsetY: 40

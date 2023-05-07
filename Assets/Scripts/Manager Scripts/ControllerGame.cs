@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using Cinemachine;
 using UnityEngine.Experimental.Rendering.Universal;
+using System.Linq;
 
 public class ControllerGame : ControllerLocal
 {
@@ -27,8 +28,12 @@ public class ControllerGame : ControllerLocal
     private CountdownTimer[] _allTimers;
 
     public RectTransform MainUIContainer;
+    public RectTransform MessageContainer;
     [SerializeField]
     LevelUpPopup LevelUpPopup;
+
+    [SerializeField]
+    int CapstoneLevelInterval = 5;
 
     private EntityStats _playerEntity;
     public EntityStats PlayerEntity => _playerEntity;
@@ -194,9 +199,9 @@ public class ControllerGame : ControllerLocal
                     amount = -amount;
                 }
 
-                var fdn = PoolManager.Spawn<FloatingDamageNumber>("FloatingDamageNumber", MainUIContainer);
+                var fdn = PoolManager.Spawn<FloatingDamageNumber>("FloatingDamageNumber", MessageContainer);
                 Upgrade(debugUpgrade, amount);
-                fdn.Init($"{debugUpgrade}  {(amount > 0 ? "+" : "")}{amount}", new Vector2(0, -300));
+                fdn.Init($"{debugUpgrade}  {(amount > 0 ? "+" : "")}{amount}");
                 return;
             }
         }
@@ -260,11 +265,18 @@ public class ControllerGame : ControllerLocal
 
     void OnLevelUp(int level)
     {
+        if (PlayerEntity.Health <= 0)
+        {
+            return;
+        }
         List<Upgrade> possibleUpgrades = new List<Upgrade>();
         List<Upgrade> passedUpgrades = new List<Upgrade>();
 
-        foreach (var u in Upgrades) {
-            if (level % 5 == 0 && level <= 60 && u.Capstone)
+        bool isCapstoneLevel = level % CapstoneLevelInterval == 0;
+        if (isCapstoneLevel)
+        {
+            var capstones = System.Array.FindAll(Upgrades, x => x.Capstone);
+            foreach (var u in capstones)
             {
                 if (u.upgradeType == UpgradeType.DroneRifle && RifleDroneNumber < 8)
                 {
@@ -280,28 +292,31 @@ public class ControllerGame : ControllerLocal
                 {
                     possibleUpgrades.Add(u);
                 }
-            } else if ((level % 5 != 0 || level > 60) && !u.Capstone ) {
-                possibleUpgrades.Add(u);
+            }
+
+           
+        }
+
+        if (possibleUpgrades.Count < 3)
+        {
+            var nonCapstones = System.Array.FindAll(Upgrades, x => !x.Capstone).ToList();
+            while (possibleUpgrades.Count < 3)
+            {
+                var index = Random.Range(0, nonCapstones.Count);
+                possibleUpgrades.Add(nonCapstones[index]);
+                nonCapstones.RemoveAt(index);
             }
         }
-        if (possibleUpgrades.Count == 0)
-        {
-            return;
-        }
+
         for (int i = 0; i < 3; i++)
         {
             int idx = Random.Range(0, possibleUpgrades.Count);
 
             passedUpgrades.Add(possibleUpgrades[idx]);
             possibleUpgrades.RemoveAt(idx);
+
         }
-
         LevelUpPopup.Open(passedUpgrades);
-
-
-
-
-
     }
 
     private void OnDestroy()
@@ -323,6 +338,11 @@ public class ControllerGame : ControllerLocal
         if (enemyToDamage.ContainsKey(stats))
         {
             enemyToDamage[stats] += ChainsawDamage * Random.Range(0.7f, 1.3f) * Time.fixedDeltaTime;
+
+            if (enemyToDamage[stats] > stats.Health)
+            {
+                ApplyChainSawDamage(stats);
+            }
         }
         else
         {

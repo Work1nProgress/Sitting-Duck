@@ -89,6 +89,7 @@ GameObject:
   - component: {fileID: 249656483032421127}
   - component: {fileID: 9049648557668262232}
   - component: {fileID: 658692819}
+  - component: {fileID: 367413262}
   m_Layer: 0
   m_Name: GameControllers
   m_TagString: Untagged
@@ -155,8 +156,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 067bf704aee7a49e39ec8a236d614f93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _levelResetDelay: 10
+  _levelResetDelay: 3
+  _screenFader: {fileID: 0}
   MainUIContainer: {fileID: 0}
+  MessageContainer: {fileID: 0}
   LevelUpPopup: {fileID: 0}
   Upgrades:
   - upgradeType: 1
@@ -390,6 +393,19 @@ MonoBehaviour:
       minimumSpawnTime: 0
       reduceSpawnTime: 0
       spawnTimeReduction: 0
+--- !u!114 &367413262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5749553159213732891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: badd02637c2ceb040863a05dcada1372, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _virtualCamera: {fileID: 0}
 --- !u!1 &7934809518516100438
 GameObject:
   m_ObjectHideFlags: 0
