@@ -57,7 +57,7 @@ MonoBehaviour:
   - poolObject: {fileID: 6795263029174280421, guid: 213d6bbfc028a4f00b705e6dbfb03bb8, type: 3}
     initialPoolSize: 2
     maxPoolSize: 8
-  - poolObject: {fileID: 1368914721132045261, guid: 00ca4a719036ef84fb9b95ba1795e9a5, type: 3}
+  - poolObject: {fileID: -7447009939959710676, guid: 00ca4a719036ef84fb9b95ba1795e9a5, type: 3}
     initialPoolSize: 20
     maxPoolSize: 100
   - poolObject: {fileID: 4202625424547587684, guid: 31e39c2c1844c1e4c92eec5ca2e16d87, type: 3}
@@ -161,6 +161,7 @@ MonoBehaviour:
   MainUIContainer: {fileID: 0}
   MessageContainer: {fileID: 0}
   LevelUpPopup: {fileID: 0}
+  CapstoneLevelInterval: 5
   Upgrades:
   - upgradeType: 1
     Amount: 2
@@ -342,6 +343,7 @@ MonoBehaviour:
     DroneType: 0
   - WeaponType: 2
     DroneType: 0
+  baseShotgunBullets: 5
 --- !u!114 &658692819
 MonoBehaviour:
   m_ObjectHideFlags: 0
