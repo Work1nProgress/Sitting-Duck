@@ -77,6 +77,7 @@ public class LevelUpPopup : MonoBehaviour
         {
             return;
         }
+        SoundManager.Instance.Play("chooseupgrade");
         ControllerGame.Instance.Upgrade(upgrade.upgradeType, upgrade.Amount);
         picked = true;
         Hide();

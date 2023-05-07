@@ -9,26 +9,46 @@ public class FloatingDamageNumber : PoolObject
     private float _damageAmount;
 
     [SerializeField]
-    float OffsetX, OffsetY, ShakeAmount;
+    float OffsetX, OffsetY, ShakeAmount, StartOffsetXRange, StartOffsetY;
 
-    public void Init(int damageAmount, Vector2 position)
+    float startOffsetX;
+
+    Vector3 worldPos;
+
+    public void Init(int damageAmount, Vector3 worldPosition)
     {
-//        Debug.Log(position);
-        text.rectTransform.localPosition = position;
+        worldPos = worldPosition;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(ControllerGame.Instance.MainUIContainer, Camera.main.WorldToScreenPoint(worldPos), null, out var point);
+
+        var currentPos = ControllerGame.Instance.MainUIContainer.InverseTransformVector(point);
+        startOffsetX = Random.Range(-StartOffsetXRange, StartOffsetXRange);
+        //        Debug.Log(position);
+        text.rectTransform.localPosition = new Vector3(currentPos.x + startOffsetX, currentPos.y + StartOffsetY, -1);
         text.alpha = 1;
         _damageAmount = damageAmount;
         text.text = _damageAmount.ToString();
+        text.fontSize = 18f;
         transform.rotation = Quaternion.identity;
+        transform.localScale = new Vector3(1, 1, 1);
         transform.DOScale(new Vector3(2, 2, 2), .5f);
-        // text.rectTransform.DOShakeAnchorPos(0.3f, ShakeAmount);
-        // text.rectTransform.DOAnchorPosX(text.rectTransform.anchoredPosition.x + (Random.value - 0.5f) * OffsetX, lifeTime).SetEase(Ease.OutCirc);
-        // text.rectTransform.DOAnchorPosY(text.rectTransform.anchoredPosition.y + OffsetY, lifeTime).SetEase(Ease.OutCubic);
         text.DOFade(0, lifeTime).OnComplete(() => PoolManager.Despawn(this));
+        DOVirtual.Float(0, 1, lifeTime, Animate);
     }
 
-    public void Init(string message, Vector2 position)
+    void Animate(float value)
     {
-        text.rectTransform.localPosition = position;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(ControllerGame.Instance.MainUIContainer, Camera.main.WorldToScreenPoint(worldPos), null, out var point);
+
+        var currentPos = ControllerGame.Instance.MainUIContainer.InverseTransformVector(point);
+
+        text.rectTransform.localPosition = new Vector3(currentPos.x + startOffsetX, currentPos.y + StartOffsetY + DOVirtual.EasedValue(0, StartOffsetY, value,Ease.OutCubic), -1);
+
+    }
+
+    public void Init(string message)
+    {
+        text.fontSize = 36;
+        transform.SetAsFirstSibling();
         text.alpha = 1;
         text.text = message;
         text.DOFade(0, lifeTime).OnComplete(() => PoolManager.Despawn(this));

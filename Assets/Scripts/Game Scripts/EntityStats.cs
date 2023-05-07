@@ -110,11 +110,11 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
         
         if (_entityType != EntityType.Player)
         {
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(ControllerGame.Instance.MainUIContainer, Camera.main.WorldToScreenPoint(transform.position), null, out var point);
+            //RectTransformUtility.ScreenPointToLocalPointInRectangle(ControllerGame.Instance.MainUIContainer, Camera.main.WorldToScreenPoint(transform.position), null, out var point);
 
-            var currentPos = ControllerGame.Instance.MainUIContainer.InverseTransformVector(point);
+            //var currentPos = ControllerGame.Instance.MainUIContainer.InverseTransformVector(point);
             var spawn = PoolManager.Spawn<FloatingDamageNumber>("FloatingDamageNumber", ControllerGame.Instance.MainUIContainer);
-            spawn.Init(ammount, currentPos);
+            spawn.Init(ammount, transform.position);
         }
 
         int newHealth = _health - ammount;
@@ -167,6 +167,7 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
         if (_currentLevel - 1 < _levelupThresholds.Length)
             if(_experience > _levelupThresholds[_currentLevel - 1])
             {
+                SoundManager.Instance.Play("levelup");
                 _experience -= _levelupThresholds[_currentLevel - 1];
                 IncreaseLevel();
             }
@@ -193,6 +194,7 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
 
             if (xp != null)
             {
+                SoundManager.Instance.Play("xporb");
                 ChangeExperienceValue(xp.Pickup());
             }
         }
