@@ -245,7 +245,7 @@ public class ShootEnemyState : EnemyState
         UpdateTargetPosition();
 
         BulletManager.Instance.RequestBullet(BulletType.Enemy, _transform.position, (_targetPosition - _transform.position).normalized, _transform.localEulerAngles.z, 20f, 1f);
-        _animator.SetBool("Shoot", true);
+        _animator.SetTrigger("Shoot");
     }
 
     public override void FixedUpdateState()
@@ -254,12 +254,6 @@ public class ShootEnemyState : EnemyState
         LookAtPosition(_target.position);
     }
 
-    public override void ExitState()
-    {
-        base.ExitState();
-
-        _animator.SetBool("Shoot", false);
-    }
     public override void UpdateState()
     {
         base.UpdateState();
@@ -390,7 +384,7 @@ public class HoldDistanceToPlayerEnemyState : EnemyState
     {
         base.EnterState();
 
-        _animator.SetBool("Walk", true);
+        _animator.SetTrigger("Hover");
     }
 
     public override void UpdateState()
@@ -412,7 +406,6 @@ public class HoldDistanceToPlayerEnemyState : EnemyState
     {
         base.ExitState();
 
-        _animator.SetBool("Walk", false);
     }
     public override void DecomissionState()
     {
