@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 973201739699793393}
   - component: {fileID: 973201739699793392}
   - component: {fileID: 4357240285149041425}
-  - component: {fileID: 1368914721132045261}
   - component: {fileID: 1996052893867143606}
   - component: {fileID: 922018495364782275}
   - component: {fileID: 5946792963588790175}
+  - component: {fileID: -7447009939959710676}
   m_Layer: 10
   m_Name: TestEnemy
   m_TagString: Untagged
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 50
-  m_Sprite: {fileID: 118145388, guid: 2dce71ffc2b414811ad8a5be537d0058, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e21e5f7aecc6f41259dfbfd10c432570, type: 3}
   m_Color: {r: 0.5188679, g: 0.2227216, b: 0.2227216, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -102,32 +102,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _entityType: 1
+  _bloodVFX: {fileID: 0}
   _canHealthChange: 1
   _maxHealth: 250
   _experience: 5
   _startLevel: 1
   _maxLevel: 10
+  levelUpXPCoeficient: 0
+  levelUpStartXP: 0
   _levelupThresholds: 
   _tags:
   - test enemy
---- !u!114 &1368914721132045261
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 973201739699793398}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57f169e03c825f24faaa21d1265461ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  key: 
-  _walkSpeed: 0.45
-  _chargeSpeedMultiplier: 7
-  _chargePlayerRadius: 15
-  _chargeDelay: 0.75
-  _attackDamage: 1
 --- !u!114 &1996052893867143606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,3 +162,20 @@ CircleCollider2D:
   m_Offset: {x: 0, y: -0.12}
   serializedVersion: 2
   m_Radius: 0.38
+--- !u!114 &-7447009939959710676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973201739699793398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58b665d3400f041bcb64ea1aa696db57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 
+  _walkSpeed: 0.3
+  _attackDamage: 1
+  _range: {x: 5, y: 10}
+  shootDelay: 2

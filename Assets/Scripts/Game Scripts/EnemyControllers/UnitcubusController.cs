@@ -20,7 +20,7 @@ public class UnitcubusController : EnemyController
         _deathState.OnDeathStateExited += DespawnSelf;
 
         _approachPlayerState = new ApproachPlayerEnemyState(_walkSpeed, _chargePlayerRadius);
-        _chargePlayerState = new ChargingEnemyState(_chargeDelay, _walkSpeed * _chargeSpeedMultiplier, 3);
+        _chargePlayerState = new ChargingEnemyState(_chargeDelay, _walkSpeed * _chargeSpeedMultiplier, 3, _attackDamage);
         _smashEnemyState = new SmashEnemyState(_attackDamage, 0.5f);
 
         if (ControllerGame.Instance.PlayerController == null)
