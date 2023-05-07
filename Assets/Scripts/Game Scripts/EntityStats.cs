@@ -167,6 +167,7 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
         if (_currentLevel - 1 < _levelupThresholds.Length)
             if(_experience > _levelupThresholds[_currentLevel - 1])
             {
+                SoundManager.Instance.Play("levelup");
                 _experience -= _levelupThresholds[_currentLevel - 1];
                 IncreaseLevel();
             }
@@ -193,6 +194,7 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
 
             if (xp != null)
             {
+                SoundManager.Instance.Play("xporb");
                 ChangeExperienceValue(xp.Pickup());
             }
         }
