@@ -18,7 +18,7 @@ public class DroneBase : PoolObject
     [SerializeField]
     float followRate;
 
-    float MaxDistance = 5;
+    float MaxDistance = 3;
 
 
     [SerializeField]

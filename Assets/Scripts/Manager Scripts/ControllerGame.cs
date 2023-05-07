@@ -27,6 +27,7 @@ public class ControllerGame : ControllerLocal
     private CountdownTimer[] _allTimers;
 
     public RectTransform MainUIContainer;
+    public RectTransform MessageContainer;
     [SerializeField]
     LevelUpPopup LevelUpPopup;
 
@@ -194,9 +195,9 @@ public class ControllerGame : ControllerLocal
                     amount = -amount;
                 }
 
-                var fdn = PoolManager.Spawn<FloatingDamageNumber>("FloatingDamageNumber", MainUIContainer);
+                var fdn = PoolManager.Spawn<FloatingDamageNumber>("FloatingDamageNumber", MessageContainer);
                 Upgrade(debugUpgrade, amount);
-                fdn.Init($"{debugUpgrade}  {(amount > 0 ? "+" : "")}{amount}", new Vector2(0, -300));
+                fdn.Init($"{debugUpgrade}  {(amount > 0 ? "+" : "")}{amount}");
                 return;
             }
         }
