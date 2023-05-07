@@ -96,6 +96,7 @@ public class PoolManager : LocalSingleton<PoolManager>
             if (idx == -1)
             {
                 Debug.LogError($"Can't despawn {poolObject.key} object not from pool");
+                Destroy(poolObject.gameObject);
                 return;
             }
             else

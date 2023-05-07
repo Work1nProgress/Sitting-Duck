@@ -58,8 +58,8 @@ public class LevelUpPopup : MonoBehaviour
             i++;
         }
         cg.alpha = 0;
-        Time.timeScale = 0;
-        OnShowAnimate();
+        DOVirtual.Float(1, 0, 1f, (x) => Time.timeScale = x).SetUpdate(true).OnComplete(OnShowAnimate);
+
     }
 
 
@@ -85,7 +85,7 @@ public class LevelUpPopup : MonoBehaviour
     void Hide() {
         cg.interactable = false;
         cg.blocksRaycasts = false;
-        cg.DOFade(0, 0.5f).SetUpdate(true).OnComplete(() => Time.timeScale = 1);
+        cg.DOFade(0, 0.5f).SetUpdate(true).OnComplete(() =>DOVirtual.Float(0, 1, 0.5f, (x) => Time.timeScale = x).SetUpdate(true));
     }
 
  
