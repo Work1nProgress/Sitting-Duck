@@ -78,7 +78,6 @@ public class PoolManager : LocalSingleton<PoolManager>
             objectInPool.Reuse(parent, position, rotation);
             _poolDictionary[key].spawned.Add(objectInPool);
             return (T)objectInPool.PoolObject;
-
         }
     }
 
@@ -116,7 +115,6 @@ public class PoolManager : LocalSingleton<PoolManager>
                 }
             }
         }
-
     }
 
     public void ReuseObject(GameObject prefab,Vector3 position,Quaternion rotation)
