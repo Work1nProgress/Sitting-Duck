@@ -100,8 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: 
-  MaxMagnetDistance: 10
-  MagnetStrenght: 4
+  MaxMagnetDistance: 3
+  MagnetStrenght: 7
 --- !u!58 &22240734509713815
 CircleCollider2D:
   m_ObjectHideFlags: 0

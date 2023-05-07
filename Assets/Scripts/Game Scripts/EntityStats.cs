@@ -22,7 +22,7 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
     [SerializeField] private float levelUpXPCoeficient, levelUpStartXP;
   
     private int _currentLevel;
-    private int[] _levelupThresholds;
+    [SerializeField] private int[] _levelupThresholds;
 
     
 

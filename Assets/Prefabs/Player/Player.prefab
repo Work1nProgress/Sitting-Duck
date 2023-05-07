@@ -285,8 +285,9 @@ MonoBehaviour:
   _experience: 0
   _startLevel: 1
   _maxLevel: 100
-  levelUpXPCoeficient: 5
+  levelUpXPCoeficient: 30
   levelUpStartXP: 5
+  _levelupThresholds: 
   _tags:
   - player
 --- !u!114 &5801177609534820187
