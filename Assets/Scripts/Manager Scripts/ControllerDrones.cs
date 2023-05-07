@@ -23,7 +23,7 @@ public class ControllerDrones : MonoBehaviour
 
     
 
-    public void Init()
+    public ControllerDrones Init()
     {
         currentWeaponIndex = 0;
       
@@ -45,6 +45,7 @@ public class ControllerDrones : MonoBehaviour
         ChangeWeapon();
 
         ControllerInput.Instance.OnWeaponChange.AddListener(OnChangeWeaponCallback);
+        return this;
     }
 
     void ChangeWeapon()
@@ -59,10 +60,28 @@ public class ControllerDrones : MonoBehaviour
             drones.Clear();
         }
         var weapon = Weapons[currentWeaponIndex];
-        for (int i = 0; i < weapon.NumberOfDrones; i++)
+
+        var droneAmount = 0;
+        switch (currentWeaponIndex)
+        {
+            case 0:
+                droneAmount = ControllerGame.Instance.RifleDroneNumber;
+                break;
+
+            case 1:
+                droneAmount = ControllerGame.Instance.ShotgunDroneNumber;
+                break;
+
+            case 2:
+                droneAmount = ControllerGame.Instance.ChainsawDroneNumber;
+                break;
+
+        }
+        for (int i = 0; i < droneAmount; i++)
         {
             var drone = PoolManager.Spawn<DroneBase>($"Drone{weapon.WeaponType}", null, ControllerGame.Instance.PlayerPosition);
-            drone.Init(weapon.Drones[i].OffsetPosition, Quaternion.Euler(0,0,weapon.Drones[i].OffsetRotation));
+            drone.Init(ControllerGame.Instance.DroneShootSettings[currentWeaponIndex].OffsetPosition[i],
+                Quaternion.Euler(0,0, ControllerGame.Instance.DroneShootSettings[currentWeaponIndex].OffsetRotation[i]));
             drones.Add(drone);
         }
         var settings = ControllerGame.Instance.DroneShootSettings[currentWeaponIndex];
@@ -88,13 +107,88 @@ public class ControllerDrones : MonoBehaviour
             }
         }
     }
+    public void Refresh()
+    {
+        var weapon = Weapons[currentWeaponIndex];
 
+        var droneAmount = 0;
+        switch (currentWeaponIndex)
+        {
+            case 0:
+                droneAmount = ControllerGame.Instance.RifleDroneNumber;
+                break;
+
+            case 1:
+                droneAmount = ControllerGame.Instance.ShotgunDroneNumber;
+                break;
+
+            case 2:
+                droneAmount = ControllerGame.Instance.ChainsawDroneNumber;
+                break;
+
+        }
+        if (drones.Count > droneAmount)
+        {
+            int i = drones.Count - 1;
+            while (drones.Count > droneAmount)
+            {
+                PoolManager.Despawn(drones[i]);
+                drones.RemoveAt(i);
+                i--;
+            }
+        }
+        else
+        {
+            for (int i = drones.Count; i < droneAmount; i++)
+            {
+                var drone = PoolManager.Spawn<DroneBase>($"Drone{weapon.WeaponType}", null, ControllerGame.Instance.PlayerPosition);
+                drone.Init(ControllerGame.Instance.DroneShootSettings[currentWeaponIndex].OffsetPosition[i],
+                    Quaternion.Euler(0, 0, ControllerGame.Instance.DroneShootSettings[currentWeaponIndex].OffsetRotation[i]));
+                drones.Add(drone);
+            }
+        }
+    }
+
+    int BurstShots
+    {
+        get
+        {
+            int bursts = ControllerGame.Instance.DroneShootSettings[currentWeaponIndex].BurstAmount;
+            if (Weapons[currentWeaponIndex].WeaponType == WeaponType.Rifle)
+            {
+
+                bursts = ControllerGame.Instance.BulletNumber;
+            }
+            return bursts;
+        }
+
+    }
+
+    int NumberOfBullets
+    {
+        get
+        {
+            var numberOfBullets = ControllerGame.Instance.DroneShootSettings[currentWeaponIndex].NumberOfBullets;
+
+            if (Weapons[currentWeaponIndex].WeaponType == WeaponType.Shotgun)
+            {
+
+                numberOfBullets = ControllerGame.Instance.GetUpgradeValueInt(UpgradeType.BulletAmount) + 1;
+            }
+            return numberOfBullets;
+
+        }
+
+    }
 
     #region Shooting
     public void StartShot()
     {
+       
+
+
         burstCounter = 1;
-        if (ControllerGame.Instance.DroneShootSettings[currentWeaponIndex].BurstAmount > 1)
+        if (BurstShots > 1)
         {
           
             BurstTimer.Resume();
@@ -110,7 +204,7 @@ public class ControllerDrones : MonoBehaviour
     {
         Shoot();
         burstCounter++;
-        if (burstCounter >= ControllerGame.Instance.DroneShootSettings[currentWeaponIndex].BurstAmount)
+        if (burstCounter >= BurstShots)
         {
             BurstTimer.Pause();
         }
@@ -123,19 +217,29 @@ public class ControllerDrones : MonoBehaviour
     public void Shoot()
     {
         var settings = ControllerGame.Instance.DroneShootSettings[currentWeaponIndex];
-        if (settings.NumberOfBullets == 0)
+
+      
+
+
+
+        if (NumberOfBullets == 0)
         {
             return;
         }
-        float angleStep = settings.ArcDegrees / settings.NumberOfBullets;
+        float angleStep = settings.ArcDegrees / NumberOfBullets;
        
 
         foreach (var drone in drones)
         {
-            float angle = -(settings.NumberOfBullets / 2) * angleStep;
-            for (int i = 0; i < settings.NumberOfBullets; i++)
+            float angle = -(NumberOfBullets / 2) * angleStep;
+            for (int i = 0; i < NumberOfBullets; i++)
             {
-                BulletManager.Instance.RequestBullet(BulletType.Player, drone.transform.position, Quaternion.Euler(0, 0, angle) * drone.transform.up, drone.transform.localEulerAngles.z + angle, settings.BulletLifetime);
+                BulletManager.Instance.RequestBullet(
+                    BulletType.Player,
+                    drone.transform.position,
+                    Quaternion.Euler(0, 0, angle) * drone.transform.up,
+                    drone.transform.localEulerAngles.z + angle,
+                    settings.BulletLifetime, ControllerGame.Instance.BulletSize);
                 angle += angleStep;
             }
         }
@@ -183,9 +287,8 @@ public class ControllerDrones : MonoBehaviour
 public class Weapons
 {
     public WeaponType WeaponType;
-    public int NumberOfDrones;
+    public UpgradeType DroneType;
 
-    public List<DronePositionSettings> Drones;
 
 
 }
@@ -197,13 +300,6 @@ public enum WeaponType {
     Rifle,
     Shotgun,
     Chainsaw
-}
-
-[System.Serializable]
-public class DronePositionSettings{
-
-    public Vector3 OffsetPosition;
-    public float OffsetRotation;
 }
 
 

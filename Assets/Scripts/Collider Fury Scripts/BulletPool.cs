@@ -62,7 +62,7 @@ public class BulletPool {
         return m_Bullets[i];
     }
 
-    public void RequestBullet(Vector3 position, Vector3 direction, float rotation, Transform parent, float lifetime)
+    public void RequestBullet(Vector3 position, Vector3 direction, float rotation, Transform parent, float lifetime, float size)
     {
         for (int i = 0; i < settings.MaxBullets; i++)
         {
@@ -73,8 +73,8 @@ public class BulletPool {
                 {
                     bullet = InitializeBullet(i);
                 }
-               
-                
+
+                bullet.Bullet.transform.localScale = new Vector3(size, size, size);
                 bullet.Bullet.transform.SetParent(parent);
                 bullet.Bullet.transform.position = position;
                 bullet.Bullet.transform.rotation = Quaternion.Euler(0, 0, rotation);
