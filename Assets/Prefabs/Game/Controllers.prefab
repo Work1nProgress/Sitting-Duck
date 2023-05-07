@@ -206,6 +206,7 @@ MonoBehaviour:
     Capstone: 0
     sprite: {fileID: 21300000, guid: 45918b93d899641f08b0a3e5662d52ec, type: 3}
     Description: +1 Magnet Strength
+  scoreText: {fileID: 0}
   OrbDuration: 10
   RotateTowardsArrow: 0
   AllowReverse: 1
@@ -366,12 +367,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnPatterns:
-  - _enemy: 3
+  - _enemy: 0
     _spawnBatchSize: 1
     _spawnFrequency: 5
     _SpawnRange:
       type: 1
-      start: 1
+      start: 0
       end: 5555
 --- !u!114 &367413262
 MonoBehaviour:

@@ -45,8 +45,10 @@ public class ControllerGame : ControllerLocal
     Dictionary<UpgradeType, float> m_UpgradeValues;
 
 
+    [SerializeField]
+    TMPro.TextMeshProUGUI scoreText;
 
-
+    int Score;
 
     public float OrbDuration = 10;
 
@@ -119,7 +121,7 @@ public class ControllerGame : ControllerLocal
     {
         m_Instance = this;
         m_UpgradeValues = new Dictionary<UpgradeType, float>();
-
+        Score = 0;
 
         foreach (var upgrade in System.Enum.GetValues(typeof(UpgradeType)))
         {
@@ -227,6 +229,13 @@ public class ControllerGame : ControllerLocal
         _screenFader.StartFade();
         _levelResetTimer.Resume();
         Debug.Log("Resetting scene with delay of: " + _levelResetDelay + " seconds");
+        var prevHighScore = PlayerPrefs.GetInt("kills_high", 0);
+        if (Score > prevHighScore)
+        {
+            PlayerPrefs.SetInt("kills_high", Score);
+            PlayerPrefs.Save();
+        }
+
     }
 
 
@@ -271,6 +280,11 @@ public class ControllerGame : ControllerLocal
         }
     }
 
+
+    public void UpdateScore()
+    {   Score++;
+        scoreText.text = $"Kills: {Score}";
+    }
 
     void OnLevelUp(int level)
     {
