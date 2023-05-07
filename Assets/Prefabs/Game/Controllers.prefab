@@ -57,7 +57,7 @@ MonoBehaviour:
   - poolObject: {fileID: 6795263029174280421, guid: 213d6bbfc028a4f00b705e6dbfb03bb8, type: 3}
     initialPoolSize: 2
     maxPoolSize: 8
-  - poolObject: {fileID: 1368914721132045261, guid: 00ca4a719036ef84fb9b95ba1795e9a5, type: 3}
+  - poolObject: {fileID: -7447009939959710676, guid: 8fe7f17dfd95b41038e8abf22662211e, type: 3}
     initialPoolSize: 20
     maxPoolSize: 100
   - poolObject: {fileID: 4202625424547587684, guid: 31e39c2c1844c1e4c92eec5ca2e16d87, type: 3}
@@ -161,6 +161,7 @@ MonoBehaviour:
   MainUIContainer: {fileID: 0}
   MessageContainer: {fileID: 0}
   LevelUpPopup: {fileID: 0}
+  CapstoneLevelInterval: 5
   Upgrades:
   - upgradeType: 1
     Amount: 2
@@ -170,7 +171,7 @@ MonoBehaviour:
   - upgradeType: 2
     Amount: 5
     Capstone: 0
-    sprite: {fileID: -69635780, guid: 97654e45df5e4d74aa8fb3c3118be27e, type: 3}
+    sprite: {fileID: -1621136062, guid: 3d71d71c06dd94da7a93e4f0e80e5001, type: 3}
     Description: Melee damage +2
   - upgradeType: 3
     Amount: 1
@@ -178,7 +179,7 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: 88f181a2ec97240b789c104f5165d6b3, type: 3}
     Description: Bullets amount +1
   - upgradeType: 4
-    Amount: 0.01
+    Amount: 0.25
     Capstone: 0
     sprite: {fileID: 21300000, guid: 3a1e8f2325791438c8e119e9faeafb5e, type: 3}
     Description: Bullets size +1
@@ -203,8 +204,8 @@ MonoBehaviour:
   ReverseMinAngle: 130
   DeadZone: 180
   LookSpeed: 0
-  StartingBulletDamage: 10
-  StartingChainsawDamage: 100
+  StartingBulletDamage: 15
+  StartingChainsawDamage: 70
   StaringRifleDroneNumber: 2
   StaringShotgunDroneNumber: 2
   StaringChainsawDroneNumber: 2
@@ -245,7 +246,7 @@ MonoBehaviour:
     - 180
   - Name: Shotgun
     ShootSpeed: 1.5
-    BulletLifetime: 0.3
+    BulletLifetime: 0.15
     AnimateBeforeShotTime: 0.1
     BurstDelay: 0
     BurstAmount: 1
@@ -342,6 +343,7 @@ MonoBehaviour:
     DroneType: 0
   - WeaponType: 2
     DroneType: 0
+  baseShotgunBullets: 7
 --- !u!114 &658692819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,34 +357,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnPatterns:
-  - _enemy: 2
+  - _enemy: 3
     _spawnBatchSize: 1
-    _limitSpawnEvents: 0
-    _maximumSpawnEvents: 3
+    _limitSpawnEvents: 1
+    _maximumSpawnEvents: 1
     _startWithDelay: 0
     _delay: 0
     _spawnTimeRange:
       randomizeSpawnTime: 0
-      spawnTime: 5
-      minimumSpawnTime: 0
-      reduceSpawnTime: 0
-      spawnTimeReduction: 0
-    _sequenceThroughTimeRanges: 0
-    _timeRanges:
-    - randomizeSpawnTime: 0
       spawnTime: 0
-      minimumSpawnTime: 0
-      reduceSpawnTime: 0
-      spawnTimeReduction: 0
-  - _enemy: 0
-    _spawnBatchSize: 1
-    _limitSpawnEvents: 0
-    _maximumSpawnEvents: 3
-    _startWithDelay: 0
-    _delay: 0
-    _spawnTimeRange:
-      randomizeSpawnTime: 0
-      spawnTime: 0.5
       minimumSpawnTime: 0
       reduceSpawnTime: 0
       spawnTimeReduction: 0
@@ -450,17 +433,53 @@ PrefabInstance:
       value: BulletManager
       objectReference: {fileID: 0}
     - target: {fileID: 55297085178276502, guid: be2cf19b1ab154c8aa4bf1baeb790ae2, type: 3}
+      propertyPath: BulletSettings.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 55297085178276502, guid: be2cf19b1ab154c8aa4bf1baeb790ae2, type: 3}
+      propertyPath: BulletSettings.Array.data[1].ID
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 55297085178276502, guid: be2cf19b1ab154c8aa4bf1baeb790ae2, type: 3}
       propertyPath: BulletSettings.Array.data[0].Speed
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 55297085178276502, guid: be2cf19b1ab154c8aa4bf1baeb790ae2, type: 3}
+      propertyPath: BulletSettings.Array.data[1].Speed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 55297085178276502, guid: be2cf19b1ab154c8aa4bf1baeb790ae2, type: 3}
+      propertyPath: BulletSettings.Array.data[1].Prefab
+      value: 
+      objectReference: {fileID: 1226640097604625738, guid: 3e8c8cf92e7a7450b97a13eb758e9c52, type: 3}
     - target: {fileID: 55297085178276502, guid: be2cf19b1ab154c8aa4bf1baeb790ae2, type: 3}
       propertyPath: BulletSettings.Array.data[0].MaxBullets
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 55297085178276502, guid: be2cf19b1ab154c8aa4bf1baeb790ae2, type: 3}
+      propertyPath: BulletSettings.Array.data[1].MaxBullets
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 55297085178276502, guid: be2cf19b1ab154c8aa4bf1baeb790ae2, type: 3}
+      propertyPath: BulletSettings.Array.data[1].AnimationSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 55297085178276502, guid: be2cf19b1ab154c8aa4bf1baeb790ae2, type: 3}
       propertyPath: BulletSettings.Array.data[0].InitialPoolSize
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 55297085178276502, guid: be2cf19b1ab154c8aa4bf1baeb790ae2, type: 3}
+      propertyPath: BulletSettings.Array.data[1].InitialPoolSize
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 55297085178276502, guid: be2cf19b1ab154c8aa4bf1baeb790ae2, type: 3}
+      propertyPath: BulletSettings.Array.data[1].Sprites.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 55297085178276502, guid: be2cf19b1ab154c8aa4bf1baeb790ae2, type: 3}
+      propertyPath: BulletSettings.Array.data[1].Sprites.Array.data[0]
+      value: 
+      objectReference: {fileID: 725252161, guid: 97654e45df5e4d74aa8fb3c3118be27e, type: 3}
     - target: {fileID: 55297085178276503, guid: be2cf19b1ab154c8aa4bf1baeb790ae2, type: 3}
       propertyPath: m_RootOrder
       value: 1

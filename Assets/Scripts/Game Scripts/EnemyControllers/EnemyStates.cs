@@ -91,9 +91,16 @@ public abstract class EnemyState
 public class ChargingEnemyState : EnemyState
 {
     float _delay;
+
+    private int _attackDamage;
     float _chargeSpeed;
+    private float _hitRange = 7;
     float _chargeTime;
 
+    bool  _hasDamagedPlayer;
+
+
+    CountdownTimer _HitPlayerTimer;
     CountdownTimer _chargeDelay;
     CountdownTimer _chargeDurationTimer;
     Vector3 _chargePoint;
@@ -102,9 +109,12 @@ public class ChargingEnemyState : EnemyState
 
     bool _charging;
 
-    public ChargingEnemyState(float delay, float speed, float duration)
+    public ChargingEnemyState(float delay, float speed, float duration, int damage)
     {
+        _attackDamage = damage;
+        _hasDamagedPlayer = false;
         _delay = delay;
+
         _chargeSpeed = speed;
         _chargeTime = duration;
 
@@ -113,6 +123,31 @@ public class ChargingEnemyState : EnemyState
 
         _chargeDurationTimer = new CountdownTimer(duration, true, false);
         _chargeDurationTimer.OnTimerExpired += EndCharge;
+
+        _HitPlayerTimer = new CountdownTimer(0.1f, false, true);
+        _HitPlayerTimer.OnTimerExpired += () =>
+
+        {
+            if (_hasDamagedPlayer)
+            {
+                return;
+            }
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(_transform.position, _hitRange);
+            foreach (Collider2D collider in colliders)
+            {
+                EntityStats entity = collider.GetComponent<EntityStats>();
+                if (entity != null)
+                    if (entity.GetEntityType() == EntityType.Player)
+                    {
+                        entity.Damage(_attackDamage);
+                        _hasDamagedPlayer = true;
+                        _HitPlayerTimer.Pause();
+                    }
+            }
+
+        };
+
+        
     }
 
     public override void EnterState()
@@ -121,7 +156,6 @@ public class ChargingEnemyState : EnemyState
 
         _chargePoint = _target.position;
         _chargeDurationTimer.Reset();
-        Debug.Log("windupstate", _transform);
         _animator.SetBool("ChargeWindup", true);
 
         if (_delay > 0)
@@ -139,6 +173,7 @@ public class ChargingEnemyState : EnemyState
 
         _chargeDelay.Update(Time.deltaTime);
         _chargeDurationTimer.Update(Time.deltaTime);
+        _HitPlayerTimer.Update(Time.deltaTime);
 
         if (_charging && (_chargePoint - _transform.position).magnitude < 0.5f)
             EndCharge();
@@ -176,6 +211,79 @@ public class ChargingEnemyState : EnemyState
         _animator.SetBool("Charge", false);
         InvokeStateChangeRequest(_transitionStates[0]);
     }
+}
+
+public class ShootEnemyState : EnemyState
+{
+    private Vector3 _targetPosition;
+    private Vector2 _range;
+    private float _waitAfterShot;
+    private CountdownTimer _hitTimer;
+    private CountdownTimer _updateTargetPositionTimer;
+
+    public ShootEnemyState(Vector2 range,float waitAfterShot)
+    {
+        _range = range;
+        _waitAfterShot = waitAfterShot;
+    }
+
+    public override void InitializeState(EnemyStateData data)
+    {
+        base.InitializeState(data);
+        
+        _targetPosition = _target.position;
+        _hitTimer = new CountdownTimer(_waitAfterShot, false, true);
+        _hitTimer.OnTimerExpired += ChangeToNextState;
+        _updateTargetPositionTimer = new CountdownTimer(0.125f, false, true);
+        _updateTargetPositionTimer.OnTimerExpired += UpdateTargetPosition;
+    }
+
+    public override void EnterState()
+    {
+        base.EnterState();
+
+        UpdateTargetPosition();
+
+        BulletManager.Instance.RequestBullet(BulletType.Enemy, _transform.position, (_targetPosition - _transform.position).normalized, _transform.localEulerAngles.z, 20f, 1f);
+        _animator.SetTrigger("Shoot");
+    }
+
+    public override void FixedUpdateState()
+    {
+        base.FixedUpdateState();
+        LookAtPosition(_target.position);
+    }
+
+    public override void UpdateState()
+    {
+        base.UpdateState();
+        _hitTimer.Update(Time.deltaTime);
+        _updateTargetPositionTimer.Update(Time.deltaTime);
+
+    }
+
+    private void UpdateTargetPosition()
+    {
+        if (_target != null)
+            _targetPosition = _target.position;
+    }
+    private void ChangeToNextState()
+    {
+        if (_transitionStates[0] != null){
+
+            InvokeStateChangeRequest(_transitionStates[0]);
+
+        }
+    }
+    public override void DecomissionState()
+    {
+        base.DecomissionState();
+        _hitTimer.OnTimerExpired -= ChangeToNextState;
+        _updateTargetPositionTimer.OnTimerExpired -= UpdateTargetPosition;
+    }
+
+
+
 }
 
 public class SmashEnemyState : EnemyState
@@ -221,6 +329,91 @@ public class SmashEnemyState : EnemyState
         base.TimeExpired();
         InvokeStateChangeRequest(_transitionStates[0]);
     }
+}
+
+public class HoldDistanceToPlayerEnemyState : EnemyState
+{
+    private float _walkSpeed;
+    private Vector3 _targetPosition;
+    private Vector2 _range;
+
+    private CountdownTimer _updateTargetPositionTimer;
+
+
+    public HoldDistanceToPlayerEnemyState(float walkSpeed, Vector2 range)
+    {
+        _walkSpeed = walkSpeed;
+        _range = range;
+
+    }
+
+    public override void InitializeState(EnemyStateData data)
+    {
+        base.InitializeState(data);
+        _targetPosition = _target.position;
+        UpdateTargetPosition();
+
+        _updateTargetPositionTimer = new CountdownTimer(0.125f, false, true);
+        _updateTargetPositionTimer.OnTimerExpired += UpdateTargetPosition;
+    }
+    private void UpdateTargetPosition()
+    {
+        if (_target != null)
+        {
+            var distanceToPlayer = Vector2.Distance(ControllerGame.Instance.PlayerPosition, _transform.position);
+
+            if (distanceToPlayer < _range.x)
+            {
+                _targetPosition = -(_target.position - _transform.position).normalized * 100;
+            }
+            else if (distanceToPlayer > _range.y)
+            {
+                _targetPosition = _target.position;
+            }
+
+            if (distanceToPlayer > _range.x && distanceToPlayer < _range.y)
+            {
+                InvokeStateChangeRequest(_transitionStates[0]);
+                return;
+            }
+
+        }     
+    }
+
+    public override void EnterState()
+    {
+        base.EnterState();
+
+        _animator.SetTrigger("Hover");
+    }
+
+    public override void UpdateState()
+    {
+        base.UpdateState();
+
+        _updateTargetPositionTimer.Update(Time.deltaTime);
+    }
+
+    public override void FixedUpdateState()
+    {
+        base.FixedUpdateState();
+
+        MoveTowardsPosition(_targetPosition, _walkSpeed);
+        LookAtPosition(_target.position);
+    }
+
+    public override void ExitState()
+    {
+        base.ExitState();
+
+    }
+    public override void DecomissionState()
+    {
+        base.DecomissionState();
+        _updateTargetPositionTimer.OnTimerExpired -= UpdateTargetPosition;
+    }
+
+
 }
 
 public class ApproachPlayerEnemyState : EnemyState
