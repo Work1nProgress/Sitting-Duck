@@ -7,12 +7,13 @@ public class MusicPlayer : MonoBehaviour
     AudioSource _source;
 
     [SerializeField] bool _shuffle;
-    [SerializeField] private int _startIndex;
+    private int _startIndex;
     [SerializeField] private AudioClip[] _musicClips;
     int _clipIndex = 0;
 
     private void Awake()
     {
+        _startIndex = GetRandomIndex();
         _clipIndex = Mathf.Clamp(_startIndex, 0, _musicClips.Length - 1);
         _source = GetComponent<AudioSource>();
     }
