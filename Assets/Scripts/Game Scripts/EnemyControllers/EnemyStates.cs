@@ -91,9 +91,16 @@ public abstract class EnemyState
 public class ChargingEnemyState : EnemyState
 {
     float _delay;
+
+    private int _attackDamage;
     float _chargeSpeed;
+    private float _hitRange = 7;
     float _chargeTime;
 
+    bool  _hasDamagedPlayer;
+
+
+    CountdownTimer _HitPlayerTimer;
     CountdownTimer _chargeDelay;
     CountdownTimer _chargeDurationTimer;
     Vector3 _chargePoint;
@@ -102,9 +109,12 @@ public class ChargingEnemyState : EnemyState
 
     bool _charging;
 
-    public ChargingEnemyState(float delay, float speed, float duration)
+    public ChargingEnemyState(float delay, float speed, float duration, int damage)
     {
+        _attackDamage = damage;
+        _hasDamagedPlayer = false;
         _delay = delay;
+
         _chargeSpeed = speed;
         _chargeTime = duration;
 
@@ -113,6 +123,31 @@ public class ChargingEnemyState : EnemyState
 
         _chargeDurationTimer = new CountdownTimer(duration, true, false);
         _chargeDurationTimer.OnTimerExpired += EndCharge;
+
+        _HitPlayerTimer = new CountdownTimer(0.1f, false, true);
+        _HitPlayerTimer.OnTimerExpired += () =>
+
+        {
+            if (_hasDamagedPlayer)
+            {
+                return;
+            }
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(_transform.position, _hitRange);
+            foreach (Collider2D collider in colliders)
+            {
+                EntityStats entity = collider.GetComponent<EntityStats>();
+                if (entity != null)
+                    if (entity.GetEntityType() == EntityType.Player)
+                    {
+                        entity.Damage(_attackDamage);
+                        _hasDamagedPlayer = true;
+                        _HitPlayerTimer.Pause();
+                    }
+            }
+
+        };
+
+        
     }
 
     public override void EnterState()
@@ -121,7 +156,6 @@ public class ChargingEnemyState : EnemyState
 
         _chargePoint = _target.position;
         _chargeDurationTimer.Reset();
-        Debug.Log("windupstate", _transform);
         _animator.SetBool("ChargeWindup", true);
 
         if (_delay > 0)
@@ -139,6 +173,7 @@ public class ChargingEnemyState : EnemyState
 
         _chargeDelay.Update(Time.deltaTime);
         _chargeDurationTimer.Update(Time.deltaTime);
+        _HitPlayerTimer.Update(Time.deltaTime);
 
         if (_charging && (_chargePoint - _transform.position).magnitude < 0.5f)
             EndCharge();
