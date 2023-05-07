@@ -6,6 +6,7 @@ using UnityEngine;
 public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
 {
     [SerializeField] EntityType _entityType;
+    [SerializeField] private GameObject _bloodVFX;
 
     public bool _canHealthChange = true;
 
@@ -21,7 +22,7 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
     [SerializeField] private float levelUpXPCoeficient, levelUpStartXP;
   
     private int _currentLevel;
-    private int[] _levelupThresholds;
+    [SerializeField] private int[] _levelupThresholds;
 
     
 
@@ -117,6 +118,12 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
             spawn.Init(ammount, transform.position);
         }
 
+        if (_bloodVFX != null)
+        {
+            _bloodVFX.gameObject.SetActive(true);
+            _bloodVFX.GetComponent<AutoDisableObject>().StartCountdown();
+        }
+        
         int newHealth = _health - ammount;
         newHealth = Mathf.Clamp(newHealth, 0, _maxHealth);
         
