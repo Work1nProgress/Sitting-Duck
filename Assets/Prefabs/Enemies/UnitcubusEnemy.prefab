@@ -105,12 +105,13 @@ MonoBehaviour:
   _entityType: 1
   _bloodVFX: {fileID: 6230013141736156058}
   _canHealthChange: 1
-  _maxHealth: 150
+  _maxHealth: 250
   _experience: 5
   _startLevel: 1
   _maxLevel: 10
   levelUpXPCoeficient: 0
   levelUpStartXP: 0
+  _levelupThresholds: 
   _tags:
   - test enemy
 --- !u!114 &1368914721132045261

@@ -20,6 +20,8 @@ public class ControllerDrones : MonoBehaviour
     CountdownTimer[] timers;
     int burstCounter;
 
+    [SerializeField] private int baseShotgunBullets = 5;
+
 
     
 
@@ -172,8 +174,7 @@ public class ControllerDrones : MonoBehaviour
 
             if (Weapons[currentWeaponIndex].WeaponType == WeaponType.Shotgun)
             {
-
-                numberOfBullets = ControllerGame.Instance.GetUpgradeValueInt(UpgradeType.BulletAmount) + 1;
+                numberOfBullets = ControllerGame.Instance.GetUpgradeValueInt(UpgradeType.BulletAmount) + baseShotgunBullets;
             }
             return numberOfBullets;
 
