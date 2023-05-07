@@ -9,8 +9,12 @@ public class EnemyManager : MonoBehaviour
 
     List<SpawnLocation> _spawnLocations;
 
+    TimeTracker _timeTracker;
+
     public void Init()
     {
+        _timeTracker = new TimeTracker();
+
         _spawnLocations = new List<SpawnLocation>();
         var spawnLocationsInGame = FindObjectsOfType<SpawnLocation>();
         for(int i = 0; i < spawnLocationsInGame.Length; i++)
@@ -30,8 +34,12 @@ public class EnemyManager : MonoBehaviour
 
     private void Update()
     {
+        _timeTracker.Update();
+
         foreach (SpawnPattern pattern in _spawnPatterns)
-            pattern.Update();
+            pattern.Update(
+                _timeTracker.TimeElapsed,
+                ControllerGame.Instance.PlayerEntity.GetLevel());
     }
 
     private void SpawnEnemy(SpawnEnemyType enemyType)
@@ -70,122 +78,109 @@ public class EnemyManager : MonoBehaviour
 [Serializable]
 public class SpawnPattern
 {
-    [Header("Basic Settings")]
-    [Space(10)]
     [SerializeField] SpawnEnemyType _enemy;
     [Tooltip("How many enemies should be spawned on a spawn event.")]
     [SerializeField] int _spawnBatchSize;
-    [Space(10)]
-    [SerializeField] bool _limitSpawnEvents;
-    [SerializeField] int _maximumSpawnEvents;
-    [Space(20)]
-
-
-    [Header("Time Settings")]
-    [Space(10)]
-    [Tooltip("Delay in seconds before this pattern starts spawning enemies.")]
-    [SerializeField] bool _startWithDelay;
-    [Tooltip("Delay in seconds before this pattern starts spawning enemies.")]
-    [SerializeField] float _delay;
-    [Space(10)]
-    [SerializeField] SpawnTimeRange _spawnTimeRange;
-    [Space(10)]
-    [Tooltip("Sequence through maximum times after spawn events. Sequence starts with the above time range.")]
-    [SerializeField] bool _sequenceThroughTimeRanges;
-    [SerializeField] SpawnTimeRange[] _timeRanges;
-
+    [Tooltip("Spawn enemies every x seconds.")]
+    [SerializeField]float _spawnFrequency;
     CountdownTimer _spawnTimer;
-    CountdownTimer _delayTimer;
-    int _spawnTimeRangeIndex;
-    int _SpawnEventsExecuted = 0;
+    [Space(10)]
+    [SerializeField] SpawnRange _SpawnRange;
+    
+    bool _spawnEnemies;
 
     public delegate void SpawnEnemySignature(SpawnEnemyType enemy);
     public event SpawnEnemySignature OnSpawnEnemy;
 
     public void Initialize()
     {
-        if (_startWithDelay)
-        {
-            _delayTimer = new CountdownTimer(_delay, false, false);
-            _delayTimer.OnTimerExpired += BeginSpawning;
-        }
 
-        _spawnTimer = new CountdownTimer(_spawnTimeRange.GetNewTime(), _startWithDelay, true);
+        _spawnTimer = new CountdownTimer(_spawnFrequency, true, true);
         _spawnTimer.OnTimerExpired += SpawnEnemyBatch;
-
-        if (_sequenceThroughTimeRanges)
-        {
-            _spawnTimeRangeIndex = 0;
-        }
     }
 
-    public void Update()
+    public void Update(float timeElapsed, int playerLevel)
     {
-        if (_delayTimer != null)
-            _delayTimer.Update(Time.deltaTime);
         _spawnTimer.Update(Time.deltaTime);
+
+        switch (_SpawnRange.type)
+        {
+            case SpawnRangeType.LEVEL:
+                if (IsInRange(playerLevel))
+                    BeginSpawning();
+                else StopSpawning();
+                break;
+            case SpawnRangeType.TIME:
+                if (IsInRange(timeElapsed))
+                    BeginSpawning();
+                else StopSpawning();
+                break;
+        }
     }
 
     private void SpawnEnemyBatch()
     {
-        _SpawnEventsExecuted++;
-        if (_SpawnEventsExecuted >= _maximumSpawnEvents &&
-            _limitSpawnEvents)
-            _spawnTimer.Pause();
-
         for (int i = 0; i < _spawnBatchSize; i++)
         {
             if (OnSpawnEnemy != null)
                 OnSpawnEnemy.Invoke(_enemy);
         }
-
-        if (_sequenceThroughTimeRanges)
-        {
-            if (_spawnTimeRangeIndex >= _timeRanges.Length)
-            {
-                _spawnTimer.SetNewTime(_spawnTimeRange.GetNewTime());
-                _spawnTimer.Resume();
-                _spawnTimeRangeIndex = 0;
-            }
-            else
-            {
-                _spawnTimer.SetNewTime(_timeRanges[_spawnTimeRangeIndex].GetNewTime());
-                _spawnTimer.Resume();
-                _spawnTimeRangeIndex++;
-            }
-        }
-
-
     }
 
     private void BeginSpawning()
     {
-        _spawnTimer.Resume();
+        if (!_spawnEnemies)
+        {
+            _spawnEnemies = true;
+            _spawnTimer.Resume();
+        }
+    }
+
+    private void StopSpawning()
+    {
+        if (_spawnEnemies)
+        {
+            _spawnEnemies = false;
+            _spawnTimer.Pause();
+        }
+    }
+
+    private bool IsInRange(float value)
+    {
+        if (value <= _SpawnRange.end &&
+            value >= _SpawnRange.start)
+            return true;
+        else return false;
+    }
+
+    private bool IsInRange(int value)
+    {
+        return IsInRange((float)value);
     }
 }
 
 [Serializable]
-public class SpawnTimeRange
+public class SpawnRange
 {
-    [SerializeField] private bool randomizeSpawnTime;
-    [SerializeField] private float spawnTime;
-    [SerializeField] private float minimumSpawnTime;
-    [Space(10)]
-    [Tooltip("Reduces maximum spawn time after each spawn event. Does not go below minimum spawn time.")]
-    [SerializeField] private bool reduceSpawnTime;
-    [SerializeField] private float spawnTimeReduction;
+    public SpawnRangeType type;
+    public float start;
+    public float end;
+}
 
-    public float GetNewTime()
+public enum SpawnRangeType
+{
+    TIME,
+    LEVEL
+}
+
+public class TimeTracker
+{
+    private float _timeElapsed = 0;
+    public float TimeElapsed => _timeElapsed;
+
+    public void Update()
     {
-        float time = 0;
-        if (!randomizeSpawnTime)
-            return time = spawnTime;
-        else time = UnityEngine.Random.Range(minimumSpawnTime, spawnTime);
-
-        if (reduceSpawnTime)
-            spawnTime = Mathf.Clamp(spawnTime - spawnTimeReduction, minimumSpawnTime, Mathf.Infinity);
-
-        return time;
+        _timeElapsed += Time.deltaTime;
     }
 }
 
