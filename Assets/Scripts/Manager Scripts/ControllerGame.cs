@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 using Cinemachine;
 using UnityEngine.Experimental.Rendering.Universal;
 using System.Linq;
+using DG.Tweening;
 
 public class ControllerGame : ControllerLocal
 {
@@ -33,6 +34,9 @@ public class ControllerGame : ControllerLocal
     LevelUpPopup LevelUpPopup;
 
     [SerializeField]
+    GameOverPopup GameOverPopup;
+
+    [SerializeField]
     int CapstoneLevelInterval = 5;
 
     private EntityStats _playerEntity;
@@ -45,8 +49,10 @@ public class ControllerGame : ControllerLocal
     Dictionary<UpgradeType, float> m_UpgradeValues;
 
 
+    [SerializeField]
+    TMPro.TextMeshProUGUI scoreText;
 
-
+    int Score;
 
     public float OrbDuration = 10;
 
@@ -119,7 +125,7 @@ public class ControllerGame : ControllerLocal
     {
         m_Instance = this;
         m_UpgradeValues = new Dictionary<UpgradeType, float>();
-
+        Score = 0;
 
         foreach (var upgrade in System.Enum.GetValues(typeof(UpgradeType)))
         {
@@ -129,7 +135,7 @@ public class ControllerGame : ControllerLocal
 
         PoolManager.Instance.Init();
         _levelResetTimer = new CountdownTimer(_levelResetDelay, true, false);
-        _levelResetTimer.OnTimerExpired += GameManager.Instance.ResetCurrentScene;
+        //_levelResetTimer.OnTimerExpired += GameManager.Instance.ResetCurrentScene;
 
         _allTimers = new CountdownTimer[]
         {
@@ -225,8 +231,16 @@ public class ControllerGame : ControllerLocal
         SoundManager.Instance.Play("screamsplosion");
         PlayerController.AnimateDeath();
         _screenFader.StartFade();
-        _levelResetTimer.Resume();
+        //_levelResetTimer.Resume();
         Debug.Log("Resetting scene with delay of: " + _levelResetDelay + " seconds");
+        var prevHighScore = PlayerPrefs.GetInt("kills_high", 0);
+        if (Score > prevHighScore)
+        {
+            PlayerPrefs.SetInt("kills_high", Score);
+            PlayerPrefs.Save();
+        }
+        DOVirtual.DelayedCall(1f, () => GameOverPopup.Open(Score, prevHighScore));
+
     }
 
 
@@ -271,6 +285,11 @@ public class ControllerGame : ControllerLocal
         }
     }
 
+
+    public void UpdateScore()
+    {   Score++;
+        scoreText.text = $"Kills: {Score}";
+    }
 
     void OnLevelUp(int level)
     {

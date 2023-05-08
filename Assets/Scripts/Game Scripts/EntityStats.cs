@@ -137,8 +137,17 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
 
         if (newHealth == 0)
         {
+
+
+            if (_entityType != EntityType.Player)
+            {
+                ControllerGame.Instance.UpdateScore();
+            }
             if (OnDeath != null)
                 OnDeath.Invoke(this);
+
+            if (OnHealthChanged != null)
+                OnHealthChanged.Invoke(_health, newHealth, _maxHealth);
             return;
         }
 

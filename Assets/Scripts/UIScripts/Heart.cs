@@ -10,10 +10,10 @@ public class Heart : MonoBehaviour
 
     private bool _isBeating = true;
 
-    public void ToggleHeart()
+    public void ToggleHeart(bool isbeating)
     {
-        _isBeating = !_isBeating;
-        _beating.SetActive(_isBeating);
-        _bleeding.SetActive(!_isBeating);
+
+        _beating.SetActive(isbeating);
+        _bleeding.SetActive(!isbeating);
     }
 }
