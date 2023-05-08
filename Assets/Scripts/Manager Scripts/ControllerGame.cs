@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 using Cinemachine;
 using UnityEngine.Experimental.Rendering.Universal;
 using System.Linq;
+using DG.Tweening;
 
 public class ControllerGame : ControllerLocal
 {
@@ -31,6 +32,9 @@ public class ControllerGame : ControllerLocal
     public RectTransform MessageContainer;
     [SerializeField]
     LevelUpPopup LevelUpPopup;
+
+    [SerializeField]
+    GameOverPopup GameOverPopup;
 
     [SerializeField]
     int CapstoneLevelInterval = 5;
@@ -131,7 +135,7 @@ public class ControllerGame : ControllerLocal
 
         PoolManager.Instance.Init();
         _levelResetTimer = new CountdownTimer(_levelResetDelay, true, false);
-        _levelResetTimer.OnTimerExpired += GameManager.Instance.ResetCurrentScene;
+        //_levelResetTimer.OnTimerExpired += GameManager.Instance.ResetCurrentScene;
 
         _allTimers = new CountdownTimer[]
         {
@@ -227,7 +231,7 @@ public class ControllerGame : ControllerLocal
         SoundManager.Instance.Play("screamsplosion");
         PlayerController.AnimateDeath();
         _screenFader.StartFade();
-        _levelResetTimer.Resume();
+        //_levelResetTimer.Resume();
         Debug.Log("Resetting scene with delay of: " + _levelResetDelay + " seconds");
         var prevHighScore = PlayerPrefs.GetInt("kills_high", 0);
         if (Score > prevHighScore)
@@ -235,6 +239,7 @@ public class ControllerGame : ControllerLocal
             PlayerPrefs.SetInt("kills_high", Score);
             PlayerPrefs.Save();
         }
+        DOVirtual.DelayedCall(1f, () => GameOverPopup.Open(Score, prevHighScore));
 
     }
 

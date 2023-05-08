@@ -164,6 +164,7 @@ MonoBehaviour:
   MainUIContainer: {fileID: 0}
   MessageContainer: {fileID: 0}
   LevelUpPopup: {fileID: 0}
+  GameOverPopup: {fileID: 0}
   CapstoneLevelInterval: 5
   Upgrades:
   - upgradeType: 1
