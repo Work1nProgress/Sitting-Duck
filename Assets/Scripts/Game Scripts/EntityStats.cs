@@ -145,6 +145,9 @@ public class EntityStats : MonoBehaviour, IEntityHealth, IExperience
             }
             if (OnDeath != null)
                 OnDeath.Invoke(this);
+
+            if (OnHealthChanged != null)
+                OnHealthChanged.Invoke(_health, newHealth, _maxHealth);
             return;
         }
 

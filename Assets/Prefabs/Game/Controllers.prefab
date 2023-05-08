@@ -174,7 +174,7 @@ MonoBehaviour:
   - upgradeType: 2
     Amount: 5
     Capstone: 0
-    sprite: {fileID: -1621136062, guid: 3d71d71c06dd94da7a93e4f0e80e5001, type: 3}
+    sprite: {fileID: 21300000, guid: 7ed19025966b7499dbd5e89d0141554c, type: 3}
     Description: Melee damage +2
   - upgradeType: 3
     Amount: 1
@@ -368,12 +368,54 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnPatterns:
   - _enemy: 0
-    _spawnBatchSize: 1
+    _spawnBatchSize: 5
+    _spawnFrequency: 2
+    _SpawnRange:
+      type: 1
+      start: 1
+      end: 10
+  - _enemy: 0
+    _spawnBatchSize: 10
+    _spawnFrequency: 2
+    _SpawnRange:
+      type: 1
+      start: 10
+      end: 20
+  - _enemy: 1
+    _spawnBatchSize: 2
     _spawnFrequency: 5
     _SpawnRange:
       type: 1
-      start: 0
-      end: 5555
+      start: 6
+      end: 20
+  - _enemy: 2
+    _spawnBatchSize: 2
+    _spawnFrequency: 5
+    _SpawnRange:
+      type: 1
+      start: 10
+      end: 20
+  - _enemy: 0
+    _spawnBatchSize: 15
+    _spawnFrequency: 2
+    _SpawnRange:
+      type: 1
+      start: 20
+      end: 40
+  - _enemy: 1
+    _spawnBatchSize: 4
+    _spawnFrequency: 5
+    _SpawnRange:
+      type: 1
+      start: 20
+      end: 40
+  - _enemy: 2
+    _spawnBatchSize: 4
+    _spawnFrequency: 5
+    _SpawnRange:
+      type: 1
+      start: 20
+      end: 40
 --- !u!114 &367413262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -444,7 +486,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 55297085178276502, guid: be2cf19b1ab154c8aa4bf1baeb790ae2, type: 3}
       propertyPath: BulletSettings.Array.data[1].Speed
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 55297085178276502, guid: be2cf19b1ab154c8aa4bf1baeb790ae2, type: 3}
       propertyPath: BulletSettings.Array.data[1].Prefab
@@ -460,7 +502,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 55297085178276502, guid: be2cf19b1ab154c8aa4bf1baeb790ae2, type: 3}
       propertyPath: BulletSettings.Array.data[1].AnimationSpeed
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 55297085178276502, guid: be2cf19b1ab154c8aa4bf1baeb790ae2, type: 3}
       propertyPath: BulletSettings.Array.data[0].InitialPoolSize
@@ -472,12 +514,40 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 55297085178276502, guid: be2cf19b1ab154c8aa4bf1baeb790ae2, type: 3}
       propertyPath: BulletSettings.Array.data[1].Sprites.Array.size
-      value: 1
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 55297085178276502, guid: be2cf19b1ab154c8aa4bf1baeb790ae2, type: 3}
       propertyPath: BulletSettings.Array.data[1].Sprites.Array.data[0]
       value: 
-      objectReference: {fileID: 725252161, guid: 97654e45df5e4d74aa8fb3c3118be27e, type: 3}
+      objectReference: {fileID: -1842475982, guid: 8df97673e339f48d18a012eff98f81ec, type: 3}
+    - target: {fileID: 55297085178276502, guid: be2cf19b1ab154c8aa4bf1baeb790ae2, type: 3}
+      propertyPath: BulletSettings.Array.data[1].Sprites.Array.data[1]
+      value: 
+      objectReference: {fileID: -1234151030, guid: 8df97673e339f48d18a012eff98f81ec, type: 3}
+    - target: {fileID: 55297085178276502, guid: be2cf19b1ab154c8aa4bf1baeb790ae2, type: 3}
+      propertyPath: BulletSettings.Array.data[1].Sprites.Array.data[2]
+      value: 
+      objectReference: {fileID: 1595273337, guid: 8df97673e339f48d18a012eff98f81ec, type: 3}
+    - target: {fileID: 55297085178276502, guid: be2cf19b1ab154c8aa4bf1baeb790ae2, type: 3}
+      propertyPath: BulletSettings.Array.data[1].Sprites.Array.data[3]
+      value: 
+      objectReference: {fileID: -1366230397, guid: 8df97673e339f48d18a012eff98f81ec, type: 3}
+    - target: {fileID: 55297085178276502, guid: be2cf19b1ab154c8aa4bf1baeb790ae2, type: 3}
+      propertyPath: BulletSettings.Array.data[1].Sprites.Array.data[4]
+      value: 
+      objectReference: {fileID: -572555447, guid: 8df97673e339f48d18a012eff98f81ec, type: 3}
+    - target: {fileID: 55297085178276502, guid: be2cf19b1ab154c8aa4bf1baeb790ae2, type: 3}
+      propertyPath: BulletSettings.Array.data[1].Sprites.Array.data[5]
+      value: 
+      objectReference: {fileID: 47613324, guid: 8df97673e339f48d18a012eff98f81ec, type: 3}
+    - target: {fileID: 55297085178276502, guid: be2cf19b1ab154c8aa4bf1baeb790ae2, type: 3}
+      propertyPath: BulletSettings.Array.data[1].Sprites.Array.data[6]
+      value: 
+      objectReference: {fileID: -1346332971, guid: 8df97673e339f48d18a012eff98f81ec, type: 3}
+    - target: {fileID: 55297085178276502, guid: be2cf19b1ab154c8aa4bf1baeb790ae2, type: 3}
+      propertyPath: BulletSettings.Array.data[1].Sprites.Array.data[7]
+      value: 
+      objectReference: {fileID: 1604529681, guid: 8df97673e339f48d18a012eff98f81ec, type: 3}
     - target: {fileID: 55297085178276503, guid: be2cf19b1ab154c8aa4bf1baeb790ae2, type: 3}
       propertyPath: m_RootOrder
       value: 1

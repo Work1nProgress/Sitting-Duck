@@ -27,12 +27,11 @@ public class HeartContainer : MonoBehaviour
 
     private void HealthChanged(int oldhealth, int newhealth, int maxhealth)
     {
-        for (int i = _hearts.Count-1; i >= 0; i--)
+
+        for (int i = 0; i <_hearts.Count; i++)
         {
-            if (i >= newhealth &&  i < oldhealth)
-            {
-                _hearts[i].ToggleHeart();
-            }
+            _hearts[i].ToggleHeart(i < newhealth);
+            
         }
     }
 
