@@ -75,6 +75,9 @@ MonoBehaviour:
   - poolObject: {fileID: 1368914721132045261, guid: ce7512dd5393d1d4d8f7e86b5781ad0f, type: 3}
     initialPoolSize: 20
     maxPoolSize: 100
+  - poolObject: {fileID: 5638552730026641475, guid: c4b1cd56f783d4ac095902ffb9e2469e, type: 3}
+    initialPoolSize: 5
+    maxPoolSize: 10
 --- !u!1 &5749553159213732891
 GameObject:
   m_ObjectHideFlags: 0
@@ -183,21 +186,26 @@ MonoBehaviour:
     Capstone: 0
     sprite: {fileID: 21300000, guid: 3a1e8f2325791438c8e119e9faeafb5e, type: 3}
     Description: Bullets size +1
-  - upgradeType: 5
+  - upgradeType: 6
     Amount: 2
     Capstone: 1
     sprite: {fileID: 1580102581, guid: 8b36a12d3e9a0479ba41f61bb7f9d40c, type: 3}
     Description: +2 Rifle Drones
-  - upgradeType: 6
+  - upgradeType: 7
     Amount: 2
     Capstone: 1
     sprite: {fileID: 2023134790, guid: 65d8b518289fc4faba8a9d969e36d1b7, type: 3}
     Description: +2 Shotgun Drones
-  - upgradeType: 7
+  - upgradeType: 8
     Amount: 2
     Capstone: 1
     sprite: {fileID: 1929001451, guid: 3d71d71c06dd94da7a93e4f0e80e5001, type: 3}
     Description: +2 Chainsaw Drones
+  - upgradeType: 5
+    Amount: 0.05
+    Capstone: 0
+    sprite: {fileID: 21300000, guid: 45918b93d899641f08b0a3e5662d52ec, type: 3}
+    Description: +1 Magnet Strength
   OrbDuration: 10
   RotateTowardsArrow: 0
   AllowReverse: 1
@@ -211,6 +219,7 @@ MonoBehaviour:
   StaringChainsawDroneNumber: 2
   StartingBulletNumber: 3
   StartingBulletSize: 1
+  StartingMagnetStrength: 7
   EnemyBulletDamage: 1
   DroneShootSettings:
   - Name: Rifle
@@ -359,23 +368,11 @@ MonoBehaviour:
   _spawnPatterns:
   - _enemy: 3
     _spawnBatchSize: 1
-    _limitSpawnEvents: 1
-    _maximumSpawnEvents: 1
-    _startWithDelay: 0
-    _delay: 0
-    _spawnTimeRange:
-      randomizeSpawnTime: 0
-      spawnTime: 0
-      minimumSpawnTime: 0
-      reduceSpawnTime: 0
-      spawnTimeReduction: 0
-    _sequenceThroughTimeRanges: 0
-    _timeRanges:
-    - randomizeSpawnTime: 0
-      spawnTime: 0
-      minimumSpawnTime: 0
-      reduceSpawnTime: 0
-      spawnTimeReduction: 0
+    _spawnFrequency: 5
+    _SpawnRange:
+      type: 1
+      start: 1
+      end: 5555
 --- !u!114 &367413262
 MonoBehaviour:
   m_ObjectHideFlags: 0

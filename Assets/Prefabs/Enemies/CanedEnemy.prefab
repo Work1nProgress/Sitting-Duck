@@ -111,6 +111,7 @@ MonoBehaviour:
   _maxLevel: 10
   levelUpXPCoeficient: 0
   levelUpStartXP: 0
+  _levelupThresholds: 
   _tags:
   - test enemy
 --- !u!114 &1996052893867143606
@@ -159,6 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: 
+  chanceToDropHeart: 0.02
   _walkSpeed: 0.3
   _attackPlayerRadius: 1
   _attackDamage: 1

@@ -14,6 +14,9 @@ public class EnemyController : PoolObject
 
     protected Animator _animator;
 
+    [SerializeField]
+    float chanceToDropHeart;
+
 
 
     protected virtual void Awake()
@@ -65,9 +68,21 @@ public class EnemyController : PoolObject
     {
         _entityStats.Heal(1000);
         _entityStats._canHealthChange = false;
-        XPSource xpOrb = PoolManager.Spawn<XPSource>("XPOrb", null, transform.position);
-        xpOrb.Initialize(_entityStats.GetExperienceValue, ControllerGame.Instance.OrbDuration);
+        if (Random.value < chanceToDropHeart)
+        {
+            HeartSource heart = PoolManager.Spawn<HeartSource>("HeartOrb", null, transform.position);
+            heart.Initialize(ControllerGame.Instance.OrbDuration);
+        }
+        else
+        {
+            XPSource xpOrb = PoolManager.Spawn<XPSource>("XPOrb", null, transform.position);
+            xpOrb.Initialize(ControllerGame.Instance.OrbDuration);
+            xpOrb.SetExp(stats.GetExperienceValue);
+
+        }
+       
         ChangeState(_deathState);
+
     }
 
     protected void DespawnSelf()
